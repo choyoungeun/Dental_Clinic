@@ -34,7 +34,7 @@ const Navbar = () => {
               수원<span className="text-[#4da3ff]">세브란스</span>치과의원
             </span>
             <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.12em] text-[#ffffffaa] leading-none">
-              Sunae Severance Dental Clinic
+              Suwon Severance Dental Clinic
             </span>
           </div>
         </Link>
