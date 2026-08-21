@@ -2,100 +2,104 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const services = [
-  { 
-    title: '디지털 임플란트', 
-    eng: 'Digital Implant',
-    desc: '3D 정밀 분석을 통한 오차 없는 식립과 맞춤형 보철로 자연스러운 저작력을 회복합니다.', 
-    image: '/images/digital_implant.jpg', // 임의 경로
-    tags: ['고난도 식립', '맞춤형 지주대']
+  {
+    title: '임플란트',
+    eng: 'Implant Dentistry',
+    desc: 'CT와 구강 상태를 충분히 분석하여 뼈와 잇몸, 최종 보철까지 고려한 치료 계획을 세웁니다.',
+    image: '/images/digital_implant.jpg',
+    tags: ['고난도 임플란트', '골이식'],
   },
-  { 
-    title: '보존 및 신경치료', 
-    eng: 'Endodontics',
-    desc: '발치보다는 보존을 우선으로, 미세 현미경 진단을 통해 자연 치아의 수명을 연장합니다.', 
-    image: '/images/micro_scope.jpg', 
-    tags: ['미세현미경', '치근단절제술']
+  {
+    title: '자연치아 보존',
+    eng: 'Preservation',
+    desc: '발치를 결정하기 전에 자연치아를 유지할 수 있는 가능성을 먼저 살펴보고 필요한 치료 방법을 고민합니다.',
+    image: '/images/micro_scope.jpg',
+    tags: ['신경치료', '치근단 수술'],
   },
-  { 
-    title: '사랑니·구강외과', 
+  {
+    title: '사랑니 · 구강외과',
     eng: 'Oral Surgery',
-    desc: '대학병원급 장비를 활용해 신경 손상 걱정 없는 안전하고 신속한 매복 사랑니 발치를 제공합니다.', 
-    image: '/images/love_teeth.jpg', 
-    tags: ['매복사랑니', '안전 발치']
+    desc: 'CT를 통해 치아와 신경관의 위치관계를 확인하고 현재 상태와 난이도에 맞춰 치료 계획을 세웁니다.',
+    image: '/images/love_teeth.jpg',
+    tags: ['매복 사랑니', '구강외과'],
   },
-  { 
-    title: '심미·보철 진료', 
-    eng: 'Esthetic & Clinic',
-    desc: '기능 회복은 물론, 얼굴 전체의 조화를 고려한 정교한 심미 치료로 자신감 있는 미소를 완성합니다.', 
-    image: '/images/esthetic_dental.png', 
-    tags: ['라미네이트', '충치치료', '치아미백']
+  {
+    title: '보철 · 충치 · 잇몸진료',
+    eng: 'General Dentistry',
+    desc: '고난도 치료뿐 아니라 가족이 오랫동안 믿고 다닐 수 있는 일상적인 치과진료까지 함께합니다.',
+    image: '/images/esthetic_dental.png',
+    tags: ['보철', '충치치료', '치주치료'],
   },
 ];
 
 const Services = () => {
   return (
-    <section className="bg-[#f8f9fa] py-28">
+    <section className="bg-[#f8f9fa] py-28 md:py-36">
       <div className="mx-auto max-w-7xl px-6">
-        
-        {/* 상단 헤더: 디자인적 비대칭 레이아웃 */}
-        <div className="mb-20 flex flex-col md:flex-row md:items-end gap-8">
-          <div className="flex-1">
-            <h2 className="text-[14px] font-black tracking-[0.3em] text-[#2f89fc] uppercase mb-4">
-              Our Medical Philosophy
+        {/* Header */}
+        <div className="mb-20 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-3xl">
+            <h2 className="mb-5 text-[10px] font-bold tracking-[0.32em] text-[#2f89fc] md:text-[11px]">
+              DENTAL CARE
             </h2>
-            <p className="text-4xl md:text-5xl font-extrabold text-[#001d4a] leading-tight tracking-tight">
-              완성도 높은 진료를 위한 <br />
-              <span className="text-[#2f89fc]">전문화된 진료과목</span>
+
+            <p className="text-4xl font-semibold leading-[1.35] tracking-[-0.035em] text-[#071b33] md:text-5xl">
+              어려운 치료부터
+              <br />
+              가족의 일상적인 치과진료까지.
             </p>
           </div>
-          <div className="flex-1 md:max-w-sm border-l border-gray-300 pl-8 py-2">
-            <p className="text-gray-500 leading-relaxed text-[16px]">
-              수원세브란스치과는 각 분야의 전문성을 바탕으로 <br />
-              환자에게 가장 맞는 이상적인 치료 계획을 설계합니다.
+
+          <div className="max-w-sm border-l border-gray-300 pl-7">
+            <p className="text-[14px] leading-[1.9] text-gray-500 md:text-[15px]">
+              치료의 난이도와 관계없이
+              충분히 진단하고 설명한 뒤
+              필요한 치료를 함께 결정합니다.
             </p>
           </div>
         </div>
-        
-        {/* 진료 과목 그리드: 이미지 중심 디자인 */}
-        <div className="grid gap-10 md:grid-cols-2">
+
+        {/* Services */}
+        <div className="grid gap-8 md:grid-cols-2">
           {services.map((item, index) => (
-            <div 
-              key={index} 
-              className="group flex flex-col md:flex-row gap-8 items-center bg-white p-6 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500"
+            <div
+              key={item.title}
+              className="group flex flex-col overflow-hidden bg-white md:flex-row"
             >
-              {/* 이미지 요소: 디자인적 '프레임' 처리 */}
-              <div className="relative w-full md:w-48 h-64 md:h-64 shrink-0 overflow-hidden rounded-xl">
-                <div className="absolute inset-0 z-10 bg-[#001d4a]/10 group-hover:bg-transparent transition-colors duration-500" />
-                <Image 
-                  src={item.image} 
+              <div className="relative h-64 w-full shrink-0 overflow-hidden md:h-auto md:w-[42%]">
+                <Image
+                  src={item.image}
                   alt={item.title}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 />
-                {/* 이미지 위 순번 표시 (디자인 포인트) */}
-                <span className="absolute top-4 left-4 z-20 text-white/50 font-black text-2xl tracking-tighter">
+
+                <div className="absolute inset-0 bg-[#071b33]/10 transition-colors duration-500 group-hover:bg-transparent" />
+
+                <span className="absolute left-5 top-5 text-[11px] font-semibold tracking-[0.2em] text-white/70">
                   0{index + 1}
                 </span>
               </div>
 
-              {/* 텍스트 영역 */}
-              <div className="flex flex-col h-full py-2">
-                <div className="mb-4">
-                  <span className="text-[11px] font-bold tracking-widest text-[#2f89fc] uppercase">
-                    {item.eng}
-                  </span>
-                  <h3 className="mt-1 text-2xl font-black text-[#001d4a]">
-                    {item.title}
-                  </h3>
-                </div>
-                
-                <p className="text-[15px] leading-relaxed text-gray-500 mb-6 break-keep">
+              <div className="flex min-h-[320px] flex-1 flex-col p-8 md:p-10">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#2f89fc]">
+                  {item.eng}
+                </p>
+
+                <h3 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-[#071b33]">
+                  {item.title}
+                </h3>
+
+                <p className="mt-6 text-[14px] leading-[1.9] text-gray-500 md:text-[15px]">
                   {item.desc}
                 </p>
 
-                <div className="mt-auto flex gap-3">
-                  {item.tags.map((tag, i) => (
-                    <span key={i} className="text-[12px] px-3 py-1 bg-gray-100 text-gray-400 font-semibold rounded-full">
+                <div className="mt-auto flex flex-wrap gap-2 pt-8">
+                  {item.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="border border-gray-200 px-3 py-1.5 text-[11px] font-medium text-gray-500"
+                    >
                       {tag}
                     </span>
                   ))}
@@ -105,14 +109,15 @@ const Services = () => {
           ))}
         </div>
 
-        {/* 하단 CTA: 여백을 활용한 미니멀 디자인 */}
-        <div className="mt-20 flex justify-center">
-          <Link 
-            href="/services" 
-            className="group relative flex items-center gap-4 text-[16px] font-black text-[#001d4a] tracking-widest uppercase"
+        {/* CTA */}
+        <div className="mt-16 flex justify-center">
+          <Link
+            href="/services"
+            className="group flex items-center gap-4 text-[13px] font-semibold tracking-[0.12em] text-[#071b33]"
           >
-            {/* <span>View All Subjects</span> */}
-            <div className="w-12 h-[1px] bg-[#001d4a] group-hover:w-20 transition-all duration-300" />
+            진료과목 자세히 보기
+
+            <div className="h-px w-10 bg-[#071b33] transition-all duration-300 group-hover:w-16" />
           </Link>
         </div>
       </div>
