@@ -1,4 +1,5 @@
 import Hero from '@/components/Hero';
+import FloatingBar from '@/components/FloatingBar';
 import BrandStorySection from '@/components/BrandStorySection';
 import BrandPrinciples from '@/components/BrandPrinciples';
 import Services from '@/components/Services';
@@ -13,6 +14,8 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white">
       <MainPopup />
+      
+      <FloatingBar />
 
       {/* 01. BRAND PROMISE */}
       <Hero />
