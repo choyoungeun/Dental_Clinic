@@ -3,7 +3,7 @@ import "./globals.css"; // 디자인을 위해 반드시 필요합니다
 import Script from "next/script"; // Next.js 전용 스크립트 컴포넌트
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { FloatingBar } from '@/components/FloatingBar';
+import FloatingBar from '@/components/FloatingBar';
 
 export const metadata: Metadata = {
   title: {
