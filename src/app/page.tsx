@@ -16,11 +16,13 @@ export default function Home() {
       <MainPopup />
       
       <FloatingBar />
-      {/* 01. 진료 영역 */}
-      <Services />
+     
 
-      {/* 02. BRAND PROMISE */}
+      {/* 01. BRAND PROMISE */}
       <Hero />
+      
+      {/* 02. 진료 영역 */}
+      <Services />
 
       {/* 03. 진료 기준 */}
       <BrandStorySection />
