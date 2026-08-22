@@ -298,47 +298,39 @@ const Hero = () => {
               }
             `}
           >
-            {/* Philosophy */}
             <Link
-              href="#brand-story"
-              className="
-                group
+  href="#services"
+  className="
+    group
+    flex
+    items-center
+    justify-center
+    gap-3
+    bg-white
+    px-6
+    py-4
+    text-[12px]
+    font-semibold
+    text-[#071b33]
+    transition-all
+    duration-300
+    hover:bg-[#eef5fc]
+    md:px-7
+    md:text-[13px]
+  "
+>
+  진료과목 보기
 
-                flex
-                items-center
-                justify-center
-                gap-3
-
-                bg-white
-
-                px-6
-                py-4
-
-                text-[12px]
-                font-semibold
-                text-[#071b33]
-
-                transition-all
-                duration-300
-
-                hover:bg-[#eef5fc]
-
-                md:px-7
-                md:text-[13px]
-              "
-            >
-              진료 철학 알아보기
-
-              <span
-                className="
-                  transition-transform
-                  duration-300
-                  group-hover:translate-x-1
-                "
-              >
-                →
-              </span>
-            </Link>
+  <span
+    className="
+      transition-transform
+      duration-300
+      group-hover:translate-x-1
+    "
+  >
+    →
+  </span>
+</Link>
 
             {/* Booking */}
             <Link
