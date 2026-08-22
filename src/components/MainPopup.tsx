@@ -229,16 +229,7 @@ export const MainPopup = () => {
                   SEVERANCE STANDARD
                 </p>
 
-                <p
-                  className="
-                    mt-1
-                    text-[12px]
-                    font-semibold
-                    text-white
-                  "
-                >
-                  대학병원에서 배운 진료의 기준
-                </p>
+                
               </div>
             </div>
           </div>
@@ -417,7 +408,7 @@ export const MainPopup = () => {
                   >
                     2026년 11월 11일(수)
                     <span className="ml-1 text-[#1d4d83]">
-                      개원
+                      OPEN
                     </span>
                   </p>
                 </div>
@@ -445,10 +436,10 @@ export const MainPopup = () => {
                     </p>
 
                     <p className="mt-1 text-[11px] leading-[1.6] text-gray-600">
-                      경수대로 969
+                      경기도 수원시 장안구 경수대로 969
                       <br />
                       <span className="font-semibold text-[#1d4d83]">
-                        메디컬빌딩 2층
+                        한국메디컬빌딩 2층
                       </span>
                     </p>
                   </div>
