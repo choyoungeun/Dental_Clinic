@@ -16,24 +16,25 @@ export default function Home() {
       <MainPopup />
       
       <FloatingBar />
+      {/* 01. 진료 영역 */}
+      <Services />
 
-      {/* 01. BRAND PROMISE */}
+      {/* 02. BRAND PROMISE */}
       <Hero />
 
-      {/* 02. 대표원장의 경험이 만든 진료 기준 */}
+      {/* 03. 진료 기준 */}
       <BrandStorySection />
 
-      {/* 03. 병원이 지키는 세 가지 원칙 */}
+      {/* 04. 병원이 지키는 세 가지 원칙 */}
       <BrandPrinciples />
 
-      {/* 04. 임상 경험 */}
+      {/* 05. 임상 경험 */}
       <ClinicalCasesSection />
 
-      {/* 05. 진료 기준을 구현하는 장비 */}
+      {/* 06. 진료 장비 */}
       <EquipmentSection />
 
-      {/* 06. 진료 영역 */}
-      <Services />
+    
 
       {/* 07. 의료진 */}
       <Doctors />
