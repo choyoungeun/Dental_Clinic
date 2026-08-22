@@ -164,11 +164,7 @@ const Doctors = () => {
             MEDICAL TEAM
           </p>
 
-          <h3 className="mt-5 text-3xl font-semibold leading-[1.45] tracking-[-0.03em] text-[#071b33] md:text-4xl">
-            의사는 달라도,
-            <br />
-            진료의 기준은 하나여야 합니다.
-          </h3>
+        
 
           <p className="mx-auto mt-7 max-w-2xl text-[14px] leading-[1.95] text-gray-500 md:text-[16px]">
             수원세브란스치과의 의료진은
