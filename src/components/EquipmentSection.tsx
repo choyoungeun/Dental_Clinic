@@ -43,9 +43,9 @@ export const EquipmentSection = () => {
           </p>
 
           <h2 className="mt-5 text-4xl font-semibold leading-[1.35] tracking-[-0.035em] text-[#071b33] md:text-5xl">
-            익숙한 진료 환경을
+          세브란스에서 익숙하게 경험한 진단 환경
             <br />
-            수원에서도 이어갑니다.
+            을 기준으로 장비를 선택합니다.
           </h2>
 
           <p className="mt-7 max-w-2xl text-[15px] leading-[1.95] text-gray-500 md:text-[17px]">
