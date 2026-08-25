@@ -10,8 +10,8 @@ const Navbar = () => {
   // 메뉴 데이터 
   const menuItems = [
     { name: '병원소개', href: '/#brand-story' },
-    { name: '의료진소개', href: '/#doctors' },
     { name: '진료과목', href: '/#services' },
+    { name: '의료진소개', href: '/#doctors' },
     { name: '오시는 길', href: '/#location' },
   ];
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 const treatments = [
   '임플란트',
@@ -20,6 +20,31 @@ const QuickConsultation = () => {
   const [privacy, setPrivacy] = useState(false);
   const [submitState, setSubmitState] = useState<SubmitState>('idle');
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const handleTreatmentSelection = (event: Event) => {
+      const customEvent = event as CustomEvent<string>;
+
+      if (
+        typeof customEvent.detail === 'string' &&
+        treatments.includes(customEvent.detail)
+      ) {
+        setTreatment(customEvent.detail);
+      }
+    };
+
+    window.addEventListener(
+      'select-consultation-treatment',
+      handleTreatmentSelection,
+    );
+
+    return () => {
+      window.removeEventListener(
+        'select-consultation-treatment',
+        handleTreatmentSelection,
+      );
+    };
+  }, []);
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -87,11 +112,11 @@ const QuickConsultation = () => {
                 QUICK CONSULTATION
               </p>
 
-              <h2 className="mt-3 text-[27px] font-semibold leading-[1.3] tracking-[-0.04em] md:text-[34px]">
+              <h2 className="mt-3 text-[30px] font-semibold leading-[1.3] tracking-[-0.04em] md:text-[34px]">
                 간편 상담신청
               </h2>
 
-              <p className="mt-3 max-w-sm text-[20px] leading-[1.75] text-white/60 md:text-[13px]">
+              <p className="mt-3 max-w-sm text-[18px] leading-[1.75] text-white/60 md:text-[13px]">
                 궁금하신 진료를 선택해 남겨주시면
                 <br className="hidden md:block" />
                 확인 후 상담을 도와드립니다.
@@ -111,13 +136,11 @@ const QuickConsultation = () => {
                 </div>
 
                 <div>
-                  <p className="text-[12px] text-white/45">
-                    상담 내용을 확인한 후 순차적으로 연락드립니다. 
+                  <p className="text-[15px] text-white/45">
+                    상담 내용을 확인한 후
                   </p>
-                  
-                  <p className="mt-0.5 text-[12px] font-semibold">
-                  
-                    ※ 수집된 정보는 상담 안내 목적으로만 사용되며, 용도 외 일절 사용되지 않습니다.
+                  <p className="mt-0.5 text-[15px] font-semibold">
+                    순차적으로 연락드립니다.
                   </p>
                 </div>
               </div>
@@ -198,7 +221,7 @@ const QuickConsultation = () => {
                   className="mt-[2px] h-4 w-4 accent-[#176fc2]"
                 />
 
-                <span className="text-[13px] leading-[1.55] text-gray-400 md:text-[10px]">
+                <span className="text-[12px] leading-[1.55] text-gray-400 md:text-[10px]">
                   상담을 위한 개인정보 수집·이용에 동의합니다.
                   <br />
                   <span className="text-gray-300">
