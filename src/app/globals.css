@@ -1,5 +1,7 @@
 @import "tailwindcss";
-
+html {
+  scroll-behavior: smooth;
+}
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -50,5 +52,40 @@ body {
   100% {
     transform: translateY(250%);
     opacity: 0;
+  }
+}
+
+/* =========================================================
+   EDUCATION / ACADEMIC MARQUEE
+========================================================= */
+
+@keyframes credentialMarquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 8px));
+  }
+}
+
+.credential-marquee {
+  animation: credentialMarquee 30s linear infinite;
+  will-change: transform;
+}
+
+.credential-marquee:hover {
+  animation-play-state: paused;
+}
+
+@media (max-width: 767px) {
+  .credential-marquee {
+    animation-duration: 24s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .credential-marquee {
+    animation: none;
   }
 }

@@ -7,12 +7,12 @@ import Image from 'next/image';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // 메뉴 데이터 (홈 삭제됨)
+  // 메뉴 데이터 
   const menuItems = [
-    { name: '병원소개', href: '/about' },
-    { name: '의료진소개', href: '/doctors' },
-    { name: '진료과목', href: '/services' },
-    { name: '오시는 길', href: '/contact' },
+    { name: '병원소개', href: '/#brand-story' },
+    { name: '의료진소개', href: '/#doctors' },
+    { name: '진료과목', href: '/#services' },
+    { name: '오시는 길', href: '/#location' },
   ];
 
   return (

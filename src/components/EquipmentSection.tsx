@@ -34,7 +34,7 @@ const equipmentList = [
 
 export const EquipmentSection = () => {
   return (
-    <section className="overflow-hidden bg-white py-28 md:py-36">
+    <section className="overflow-hidden bg-white py-16 md:py-20">
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}
         <div className="max-w-4xl">
@@ -56,7 +56,7 @@ export const EquipmentSection = () => {
         </div>
 
         {/* Equipment */}
-        <div className="mt-20 space-y-8">
+        <div className="mt-12 space-y-5">
           {equipmentList.map((item, index) => (
             <div
               key={item.id}
@@ -94,7 +94,7 @@ export const EquipmentSection = () => {
                   {item.desc}
                 </p>
 
-                <div className="mt-9 border-t border-gray-200 pt-7">
+                <div className="mt-6 border-t border-gray-200 pt-5">
                   <p className="text-[10px] font-semibold tracking-[0.2em] text-gray-400">
                     WHY WE CHOSE IT
                   </p>

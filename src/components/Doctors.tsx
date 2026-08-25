@@ -2,10 +2,10 @@ import Image from 'next/image';
 
 const Doctors = () => {
   return (
-    <section className="bg-white py-28 md:py-36">
+    <section id="doctors" className="scroll-mt-24 bg-white py-16 md:py-20">
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}
-        <div className="mb-16">
+        <div className="mb-10">
           <p className="text-[10px] font-bold tracking-[0.32em] text-[#2f89fc] md:text-[11px]">
             REPRESENTATIVE DIRECTOR
           </p>
@@ -51,7 +51,7 @@ const Doctors = () => {
             </p>
 
             {/* Career */}
-            <div className="mt-14 grid gap-12 md:grid-cols-2">
+            <div className="mt-9 grid gap-12 md:grid-cols-2">
               <div>
                 <h4 className="border-b border-gray-200 pb-4 text-[11px] font-bold tracking-[0.18em] text-[#071b33]">
                   EDUCATION & CAREER
@@ -126,7 +126,7 @@ const Doctors = () => {
             </div>
 
             {/* Short philosophy */}
-            <div className="mt-14 border-l-2 border-[#2f89fc] pl-7">
+            <div className="mt-9 border-l-2 border-[#2f89fc] pl-7">
               <p className="max-w-2xl text-[16px] leading-[1.95] text-gray-500">
                 많은 치료를 경험할수록
                 더 많이 치료하는 것보다
@@ -159,7 +159,7 @@ const Doctors = () => {
         </div>
 
         {/* Medical Team Branding */}
-        <div className="mt-32 border-t border-gray-200 pt-24 text-center">
+        <div className="mt-10 border-t border-gray-200 pt-12 text-center">
           <p className="text-[10px] font-bold tracking-[0.32em] text-[#2f89fc] md:text-[11px]">
             MEDICAL TEAM
           </p>
@@ -175,7 +175,7 @@ const Doctors = () => {
           {/*
             페이닥터 채용 후 여기에 의료진 카드 추가
 
-            <div className="mt-16 grid md:grid-cols-2 gap-8">
+            <div className="mt-10 grid md:grid-cols-2 gap-8">
               ...
             </div>
           */}

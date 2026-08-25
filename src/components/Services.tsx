@@ -1,220 +1,176 @@
 import Image from 'next/image';
-import Link from 'next/link';
 
 const services = [
   {
     title: '임플란트',
-    subtitle: '정밀 진단부터 고난도 케이스까지',
     eng: 'IMPLANT',
-    desc: 'CT 기반 3D 분석을 통해 잇몸뼈와 신경 위치를 확인하고, 상태에 맞는 임플란트 치료 계획을 세웁니다.',
+    desc: '정밀 진단부터 골이식·상악동·재수술 상담까지',
     image: '/images/digital_implant.jpg',
-    points: [
-      '고난도 임플란트',
-      '골이식',
-      '상악동 거상술',
-      '재수술 상담',
-    ],
-    emphasis: true,
+    icon: 'implant',
   },
   {
     title: '자연치아 보존',
-    subtitle: '가능하다면 내 치아를 먼저',
-    eng: 'PRESERVATION',
-    desc: '발치를 결정하기 전에 자연치아를 유지할 수 있는 가능성을 먼저 살펴보고 신경치료와 보존치료를 계획합니다.',
+    eng: 'TOOTH PRESERVATION',
+    desc: '신경치료·재신경치료·자연치아 보존 치료',
     image: '/images/micro_scope.jpg',
-    points: [
-      '신경치료',
-      '재신경치료',
-      '치근단 수술',
-      '자연치아 보존',
-    ],
+    icon: 'tooth',
   },
   {
     title: '사랑니 · 구강외과',
-    subtitle: '복잡한 매복 사랑니까지 신중하게',
     eng: 'ORAL SURGERY',
-    desc: 'CT로 치아와 신경관의 위치관계를 확인하고, 매복 상태와 난이도에 맞춰 치료 방향을 결정합니다.',
+    desc: '매복 사랑니와 구강외과 진료',
     image: '/images/love_teeth.jpg',
-    points: [
-      '매복 사랑니',
-      '수평 매복',
-      '구강외과',
-      '수술 후 관리',
-    ],
+    icon: 'surgery',
   },
   {
-    title: '보철 · 충치 · 잇몸',
-    subtitle: '가족이 오래 다닐 수 있는 기본진료',
-    eng: 'GENERAL DENTISTRY',
-    desc: '충치, 크라운, 잇몸치료, 스케일링 등 일상적인 치과진료부터 복합 보철까지 폭넓게 진료합니다.',
+    title: '충치치료',
+    eng: 'RESTORATIVE CARE',
+    desc: '레진·인레이 등 필요한 범위만 치료',
     image: '/images/esthetic_dental.png',
-    points: [
-      '충치치료',
-      '크라운·보철',
-      '잇몸치료',
-      '스케일링',
-    ],
+    icon: 'cavity',
+  },
+  {
+    title: '보철치료',
+    eng: 'PROSTHODONTIC CARE',
+    desc: '크라운·브릿지 등 기능을 고려한 보철치료',
+    image: '/images/dentistry.jpg',
+    icon: 'crown',
+  },
+  {
+    title: '잇몸치료',
+    eng: 'PERIODONTAL CARE',
+    desc: '스케일링부터 단계별 치주치료와 관리',
+    image: '/images/clinic_room.jpg',
+    icon: 'gum',
   },
 ];
+
+const ServiceIcon = ({ type }: { type: string }) => {
+  const common = 'h-5 w-5 md:h-6 md:w-6';
+
+  if (type === 'implant') {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className={common}>
+        <path d="M8 3h8l-1 5H9L8 3Z" />
+        <path d="M10 8v4m4-4v4M9 12h6M10 15h4M11 18h2M12 12v9" />
+      </svg>
+    );
+  }
+
+  if (type === 'surgery') {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className={common}>
+        <path d="M7 4c2 2 3 3 5 3s3-1 5-3c2 4 1 8 0 11-1 3-2 6-4 6-1 0-1-4-1-6 0 2 0 6-1 6-2 0-3-3-4-6-1-3-2-7 0-11Z" />
+        <path d="m17.5 6.5 3 3m-1.5-4.5 1.5 1.5M18 9l-2 2" />
+      </svg>
+    );
+  }
+
+  if (type === 'crown') {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className={common}>
+        <path d="m5 8 3 3 4-6 4 6 3-3-1 9H6L5 8Z" />
+        <path d="M7 20h10" />
+      </svg>
+    );
+  }
+
+  if (type === 'gum') {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className={common}>
+        <path d="M7 4c2 2 3 3 5 3s3-1 5-3c2 4 1 8 0 11-1 3-2 6-4 6-1 0-1-4-1-6 0 2 0 6-1 6-2 0-3-3-4-6-1-3-2-7 0-11Z" />
+        <path d="M5 14c4-2 10-2 14 0" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" className={common}>
+      <path d="M7 4c2 2 3 3 5 3s3-1 5-3c2 4 1 8 0 11-1 3-2 6-4 6-1 0-1-4-1-6 0 2 0 6-1 6-2 0-3-3-4-6-1-3-2-7 0-11Z" />
+      {type === 'cavity' && <circle cx="12" cy="10" r="1.5" />}
+    </svg>
+  );
+};
 
 const Services = () => {
   return (
     <section
       id="services"
-      className="bg-white py-24 md:py-32"
+      className="scroll-mt-24 bg-[#f5f7fa] py-14 md:py-18"
     >
-      <div className="mx-auto max-w-7xl px-5 md:px-6">
-        {/* =====================================
-            HEADER
-        ====================================== */}
-        <div className="mb-14 md:mb-18">
-          <p className="text-[10px] font-bold tracking-[0.32em] text-[#2f89fc] md:text-[11px]">
-            DENTAL CARE
-          </p>
-
-          <div className="mt-5 flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h2 className="text-3xl font-semibold leading-[1.4] tracking-[-0.035em] text-[#071b33] md:text-5xl">
-                필요한 진료를
-                <br />
-                제대로 받을 수 있도록.
-              </h2>
-            </div>
-
-            <p className="max-w-md text-[14px] leading-[1.9] text-gray-500 md:text-[15px]">
-              임플란트와 고난도 치료부터
-              자연치아 보존, 사랑니, 충치·보철·잇몸진료까지
-              한 곳에서 체계적으로 진료합니다.
+      <div className="mx-auto max-w-7xl px-4 md:px-6">
+        <div className="mb-7 flex items-end justify-between gap-5 md:mb-9">
+          <div>
+            <p className="text-[10px] font-bold tracking-[0.28em] text-[#2f89fc]">
+              DENTAL CARE
             </p>
+            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#071b33] md:text-4xl">
+              주요 진료과목
+            </h2>
           </div>
+
+          
         </div>
 
-        {/* =====================================
-            SERVICE GRID
-        ====================================== */}
-        <div className="grid gap-5 md:grid-cols-2">
-          {services.map((item, index) => (
+        <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 md:gap-4">
+          {services.map((item) => (
             <article
               key={item.title}
-              className={`
-                group
-                relative
-                overflow-hidden
-                border
-                transition-all
-                duration-300
-                ${
-                  item.emphasis
-                    ? 'border-[#2f89fc]/30 bg-[#f8fbff]'
-                    : 'border-gray-200 bg-white'
-                }
-              `}
+              className="group overflow-hidden rounded-[16px] border border-[#dfe5ec] bg-white shadow-[0_8px_28px_rgba(7,27,51,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(7,27,51,0.12)]"
             >
-              <div className="grid md:grid-cols-[42%_58%]">
-                {/* IMAGE */}
-                <div className="relative min-h-[230px] overflow-hidden md:min-h-[360px]">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                  />
+              <div className="relative h-[108px] overflow-hidden md:h-[160px]">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#071b33]/55 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#071b33]/60 via-[#071b33]/10 to-transparent" />
 
-                  <div className="absolute bottom-5 left-5">
-                    <span className="text-[10px] font-semibold tracking-[0.25em] text-white/70">
-                      0{index + 1} / {item.eng}
-                    </span>
-                  </div>
+                <div className="absolute bottom-3 left-3 flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white/95 text-[#176fc2] shadow-md md:bottom-4 md:left-4 md:h-11 md:w-11">
+                  <ServiceIcon type={item.icon} />
                 </div>
+              </div>
 
-                {/* CONTENT */}
-                <div className="flex flex-col p-7 md:p-9">
-                  {item.emphasis && (
-                    <span className="mb-4 inline-flex w-fit border border-[#2f89fc]/20 bg-[#2f89fc]/5 px-3 py-1.5 text-[10px] font-bold tracking-[0.14em] text-[#2f89fc]">
-                      CORE TREATMENT
-                    </span>
-                  )}
+              <div className="p-3.5 md:p-5">
+                <h3 className="text-[16px] font-bold tracking-[-0.025em] text-[#071b33] md:text-[21px]">
+                  {item.title}
+                </h3>
 
-                  <p className="text-[12px] font-semibold text-[#2f89fc]">
-                    {item.subtitle}
-                  </p>
+                <p className="mt-1.5 line-clamp-2 text-[10.5px] leading-[1.6] text-gray-500 md:mt-2 md:text-[13px]">
+                  {item.desc}
+                </p>
 
-                  <h3 className="mt-2 text-2xl font-semibold tracking-[-0.025em] text-[#071b33] md:text-3xl">
-                    {item.title}
-                  </h3>
-
-                  <p className="mt-5 text-[14px] leading-[1.9] text-gray-500">
-                    {item.desc}
-                  </p>
-
-                  <ul className="mt-7 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-gray-100 pt-6">
-                    {item.points.map((point) => (
-                      <li
-                        key={point}
-                        className="flex items-center gap-2 text-[12px] font-medium text-gray-600"
-                      >
-                        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#2f89fc]" />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="mt-8">
-                    <Link
-                      href="/services"
-                      className="inline-flex items-center gap-3 text-[12px] font-semibold text-[#071b33]"
-                    >
-                      자세히 보기
-                      <span className="transition-transform duration-300 group-hover:translate-x-1">
-                        →
-                      </span>
-                    </Link>
-                  </div>
+                <div className="mt-3 flex items-center gap-2">
+                  <span className="h-px w-5 bg-[#2f89fc]" />
+                  <span className="text-[9px] font-bold tracking-[0.12em] text-[#2f89fc] md:text-[10px]">
+                    {item.eng}
+                  </span>
                 </div>
               </div>
             </article>
           ))}
         </div>
 
-        {/* =====================================
-            COMMERCIAL CTA
-        ====================================== */}
-        <div className="mt-10 bg-[#071b33] px-6 py-8 text-white md:flex md:items-center md:justify-between md:px-10">
+        <div className="mt-5 flex flex-col gap-3 rounded-[14px] bg-[#001d4a] px-5 py-4 text-white md:flex-row md:items-center md:justify-between md:px-6">
           <div>
-            <p className="text-[10px] font-semibold tracking-[0.28em] text-[#79b6ff]">
-              NEED A CONSULTATION?
+            <p className="text-[15px] font-semibold md:text-[17px]">
+              어떤 진료가 필요한지 잘 모르시겠다면
             </p>
-
-            <h3 className="mt-3 text-2xl font-semibold leading-[1.45] md:text-3xl">
-              어떤 치료가 필요한지
-              <br className="md:hidden" />
-              먼저 상담해보세요.
-            </h3>
-
-            <p className="mt-3 text-[13px] leading-[1.8] text-white/55">
-              현재 상태를 확인한 뒤 치료가 필요한 이유와 가능한 방법을 설명드립니다.
+            <p className="mt-0.5 text-[11px] text-white/55 md:text-[12px]">
+              현재 상태를 확인한 뒤 필요한 치료부터 설명드립니다.
             </p>
           </div>
 
-          <div className="mt-6 flex gap-3 md:mt-0">
-            <Link
-              href="https://booking.naver.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white px-6 py-4 text-[12px] font-semibold text-[#071b33] transition hover:bg-gray-100"
-            >
-              네이버 예약
-            </Link>
-
-            <a
-              href="tel:0311234567"
-              className="border border-white/25 px-6 py-4 text-[12px] font-semibold text-white transition hover:bg-white hover:text-[#071b33]"
-            >
-              전화 문의
-            </a>
-          </div>
+          <a
+            href="https://booking.naver.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-10 shrink-0 items-center justify-center rounded-lg bg-white px-5 text-[11px] font-bold text-[#071b33] transition hover:bg-[#edf5ff]"
+          >
+            진료 상담 예약 →
+          </a>
         </div>
       </div>
     </section>

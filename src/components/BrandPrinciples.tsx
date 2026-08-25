@@ -21,7 +21,7 @@ const principles = [
 
 const BrandPrinciples = () => {
   return (
-    <section className="relative overflow-hidden bg-[#071b33] px-6 py-28 text-white md:py-36">
+    <section className="relative overflow-hidden bg-[#071b33] px-6 py-16 text-white md:py-20">
       <div className="pointer-events-none absolute -right-32 top-0 h-[420px] w-[420px] rounded-full bg-[#2f89fc]/10 blur-3xl" />
 
       <div className="relative z-10 mx-auto max-w-7xl">
@@ -36,23 +36,23 @@ const BrandPrinciples = () => {
             먼저 세웁니다.
           </h2>
 
-          <p className="mt-6 max-w-xl text-[15px] leading-[1.9] text-white/50 md:text-[17px]">
+          <p className="mt-4 max-w-xl text-[15px] leading-[1.9] text-white/50 md:text-[17px]">
             의료진이 달라져도,
             수원세브란스치과가 지키는 진료의 기준은 같아야 한다고 생각합니다.
           </p>
         </div>
 
-        <div className="mt-20 grid gap-0 md:grid-cols-3">
+        <div className="mt-12 grid gap-0 md:grid-cols-3">
           {principles.map((item) => (
             <div
               key={item.number}
-              className="group border-t border-white/15 py-10 md:border-l md:border-t-0 md:px-10 md:py-4 md:first:border-l-0"
+              className="group border-t border-white/15 py-7 md:border-l md:border-t-0 md:px-10 md:py-4 md:first:border-l-0"
             >
               <span className="text-[10px] tracking-[0.28em] text-white/30">
                 {item.number} / {item.eng}
               </span>
 
-              <h3 className="mt-8 text-xl font-semibold leading-[1.5] text-white md:text-2xl">
+              <h3 className="mt-5 text-xl font-semibold leading-[1.5] text-white md:text-2xl">
                 {item.title}
               </h3>
 
@@ -60,7 +60,7 @@ const BrandPrinciples = () => {
                 {item.desc}
               </p>
 
-              <div className="mt-8 h-px w-8 bg-[#79b6ff]/60 transition-all duration-500 group-hover:w-16" />
+              <div className="mt-5 h-px w-8 bg-[#79b6ff]/60 transition-all duration-500 group-hover:w-16" />
             </div>
           ))}
         </div>

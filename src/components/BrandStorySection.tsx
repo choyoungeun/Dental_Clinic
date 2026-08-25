@@ -9,8 +9,8 @@ const BrandStorySection = () => {
         overflow-hidden
         bg-white
         px-6
-        py-28
-        md:py-44
+        py-16
+        md:py-24
       "
     >
       {/* Decorative light */}
@@ -84,12 +84,12 @@ const BrandStorySection = () => {
 
         <div
           className="
-            mt-24
+            mt-14
             grid
-            gap-20
+            gap-12
 
             md:grid-cols-2
-            md:gap-28
+            md:gap-16
           "
         >
           {/* Left */}

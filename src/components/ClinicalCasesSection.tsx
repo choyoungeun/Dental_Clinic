@@ -111,10 +111,10 @@ export const ClinicalCasesSection = () => {
   const currentCase = clinicalCases[currentIndex];
 
   return (
-    <section className="overflow-hidden bg-[#f7f8fa] py-28 md:py-36">
+    <section className="overflow-hidden bg-[#f7f8fa] py-16 md:py-20">
       <div className="mx-auto max-w-[1400px] px-4 md:px-8">
         {/* Header */}
-        <div className="mb-14 flex flex-col justify-between gap-8 md:flex-row md:items-end">
+        <div className="mb-8 flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <div>
             <span className="block text-[10px] font-bold tracking-[0.32em] text-[#2f89fc] md:text-[11px]">
               CLINICAL EXPERIENCE
@@ -232,7 +232,7 @@ export const ClinicalCasesSection = () => {
         </div>
 
         {/* Legal note */}
-        <div className="mt-10 border-t border-gray-200 pt-6">
+        <div className="mt-6 border-t border-gray-200 pt-6">
           <p className="text-[11px] leading-[1.8] text-gray-400">
             치료 결과와 기간은 개인의 구강 상태, 골 상태,
             전신 상태 및 치료 과정에 따라 달라질 수 있습니다.

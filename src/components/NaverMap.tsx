@@ -35,7 +35,7 @@ const location = new naver.maps.LatLng(37.3039347, 127.0047247);
 
     const mapOptions = {
       center: location,
-      zoom: 16, // 대로변과 주변 건물(장안구청 등)이 잘 보이는 알맞은 줌 수치
+      zoom: 16.8, // 대로변과 주변 건물(장안구청 등)이 잘 보이는 알맞은 줌 수치
       // --- 모든 컨트롤 제거 설정 ---
       scaleControl: false,      // 거리 표시 제거
       mapDataControl: false,    // 네이버 로고(데이터 정보) 제거
