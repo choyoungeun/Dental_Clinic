@@ -1,446 +1,209 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+
+const slides = [
+  {
+    image: '/images/loby.jpg',
+    label: 'SPACE',
+    caption: '약 100평 규모의 여유로운 진료 환경',
+  },
+  {
+    image: '/images/clinic_room.jpg',
+    label: 'CARE',
+    caption: '체어 10대 이상의 진료 공간',
+  },
+  {
+    image: '/images/digital_implant.jpg',
+    label: 'DIAGNOSTIC',
+    caption: '정밀 진단을 위한 디지털 시스템',
+  },
+];
+
+const usp = [
+  {
+    eyebrow: 'MEDICAL STAFF',
+    title: '연세대 치대 · 세브란스',
+    detail: '연세대 치대 우등졸업 · 신촌세브란스 임상경험 · 前 2차 종합병원 치과과장',
+  },
+  {
+    eyebrow: 'SPACE',
+    title: '약 100평 · 체어 10대+',
+    detail: '여유로운 진료공간과 상담공간을 갖춘 쾌적한 진료 환경',
+  },
+  {
+    eyebrow: 'DIAGNOSTIC',
+    title: '정밀 진단 시스템',
+    detail: '세브란스 치과병원 동일 모델 장비를 포함한 디지털 진단 환경',
+  },
+];
 
 const Hero = () => {
-  const [loaded, setLoaded] = useState(false);
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoaded(true);
-    }, 120);
+    const timer = window.setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 4800);
 
-    return () => clearTimeout(timer);
+    return () => window.clearInterval(timer);
   }, []);
 
+  const goConsultation = () => {
+    document
+      .getElementById('consultation')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const goDoctors = () => {
+    document
+      .getElementById('doctors')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
-    <section
-      className="
-        relative
-        h-[680px]
-        w-full
-        overflow-hidden
-        md:h-[820px]
-      "
-    >
-      {/* ======================================================
-          BACKGROUND IMAGE
-      ====================================================== */}
-      <div className="absolute inset-0">
-        <Image
-          src="/images/Sev2018.jpg"
-          alt="수원세브란스치과 진료 환경"
-          fill
-          priority
-          className="
-            scale-[1.02]
-            object-cover
-            object-center
-          "
-        />
+    <section className="relative overflow-hidden bg-[#06182e] text-white">
+      <div className="grid min-h-[760px] lg:min-h-[690px] lg:grid-cols-[1.02fr_0.98fr]">
+        {/* LEFT */}
+        <div className="relative z-20 flex items-center overflow-hidden px-5 pb-12 pt-28 md:px-10 lg:px-12 xl:px-20">
+          {/* 세브란스병원 배경 - 왼쪽 텍스트 영역에만 적용 */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/images/Sev2018.jpg"
+              alt=""
+              fill
+              priority
+              aria-hidden="true"
+              sizes="(max-width: 1024px) 100vw, 52vw"
+              className="object-cover object-center opacity-55"
+            />
 
-        {/* 전체 Navy Tone */}
-        <div className="absolute inset-0 bg-[#031325]/45" />
+            {/* 텍스트 가독성을 위한 딥 네이비 오버레이 */}
+            <div className="absolute inset-0 bg-[#06182e]/38" />
 
-        {/* 왼쪽 텍스트 가독성을 위한 Gradient */}
-        <div
-          className="
-            absolute
-            inset-0
-            bg-gradient-to-r
-            from-[#031325]/95
-            via-[#031325]/65
-            to-[#031325]/10
-          "
-        />
+            {/* 오른쪽 슬라이더 방향으로 자연스럽게 이어지는 그라데이션 */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#06182e]/18 via-[#06182e]/24 to-[#06182e]/62" />
 
-        {/* 아래쪽 깊이감 */}
-        <div
-          className="
-            absolute
-            inset-0
-            bg-gradient-to-t
-            from-[#031325]/50
-            via-transparent
-            to-[#031325]/10
-          "
-        />
-      </div>
-
-      {/* ======================================================
-          HERO CONTENT
-      ====================================================== */}
-      <div
-        className="
-          relative
-          z-10
-          mx-auto
-          flex
-          h-full
-          max-w-7xl
-          items-center
-          px-6
-          md:px-8
-        "
-      >
-        <div className="max-w-4xl text-white">
-
-          {/* --------------------------------------------------
-              01. BRAND EYEBROW
-          -------------------------------------------------- */}
-          <p
-            className={`
-              mb-6
-
-              text-[10px]
-              font-semibold
-              tracking-[0.30em]
-              text-[#87bbf5]
-
-              transition-all
-              duration-1000
-              ease-out
-
-              md:text-[12px]
-
-              ${
-                loaded
-                  ? 'translate-y-0 opacity-100'
-                  : 'translate-y-5 opacity-0'
-              }
-            `}
-          >
-            SEVERANCE STANDARD · CLINICAL EXPERIENCE
-          </p>
-
-          {/* --------------------------------------------------
-              02. MAIN BRAND MESSAGE
-          -------------------------------------------------- */}
-          <h1
-            className={`
-              text-[36px]
-              font-semibold
-              leading-[1.35]
-              tracking-[-0.04em]
-
-              transition-all
-              delay-150
-              duration-1000
-              ease-out
-
-              md:text-[58px]
-              lg:text-[64px]
-
-              ${
-                loaded
-                  ? 'translate-y-0 opacity-100'
-                  : 'translate-y-8 opacity-0'
-              }
-            `}
-          >
-            세브란스에서 배운 기준,
-            <br />
-
-            <span className="text-white">
-              종합병원에서 쌓은 경험.
-            </span>
-          </h1>
-
-          {/* --------------------------------------------------
-              03. BRAND SLOGAN
-          -------------------------------------------------- */}
-          <p
-            className={`
-              mt-7
-
-              text-[18px]
-              font-medium
-              leading-[1.7]
-              tracking-[-0.02em]
-              text-white/90
-
-              transition-all
-              delay-300
-              duration-1000
-              ease-out
-
-              md:text-[23px]
-
-              ${
-                loaded
-                  ? 'translate-y-0 opacity-100'
-                  : 'translate-y-8 opacity-0'
-              }
-            `}
-          >
-            오늘보다 10년 뒤의 치아를 생각합니다.
-          </p>
-
-          {/* --------------------------------------------------
-              04. CAREER / TRUST POINT
-          -------------------------------------------------- */}
-          <div
-            className={`
-              mt-9
-
-              flex
-              max-w-3xl
-              flex-col
-              gap-y-2
-
-              text-[12px]
-              font-medium
-              leading-relaxed
-              text-white/60
-
-              transition-all
-              delay-500
-              duration-1000
-              ease-out
-
-              sm:flex-row
-              sm:flex-wrap
-              sm:gap-x-3
-
-              md:text-[14px]
-
-              ${
-                loaded
-                  ? 'translate-y-0 opacity-100'
-                  : 'translate-y-8 opacity-0'
-              }
-            `}
-          >
-            <span>
-              연세대학교 치과대학 우등졸업
-            </span>
-
-            <span className="hidden text-white/25 sm:inline">
-              ·
-            </span>
-
-            <span>
-              신촌 세브란스 치과대학병원
-            </span>
-
-            <span className="hidden text-white/25 sm:inline">
-              ·
-            </span>
-
-            <span>
-              前 종합병원 치과 과장
-            </span>
+            {/* 하단 가독성 보강 */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#06182e]/22 via-transparent to-transparent" />
           </div>
 
-          {/* --------------------------------------------------
-              05. UNIVERSITY HOSPITAL EQUIPMENT MESSAGE
-          -------------------------------------------------- */}
-          <div
-            className={`
-              mt-7
-
-              border-l
-              border-[#79b6ff]/60
-
-              pl-4
-
-              transition-all
-              delay-[600ms]
-              duration-1000
-              ease-out
-
-              ${
-                loaded
-                  ? 'translate-y-0 opacity-100'
-                  : 'translate-y-8 opacity-0'
-              }
-            `}
-          >
-            <p
-              className="
-                text-[12px]
-                font-medium
-                leading-[1.8]
-                text-white/70
-
-                md:text-[14px]
-              "
-            >
-              대학병원에서 익숙하게 경험한
-              <br className="sm:hidden" />
-              {' '}
-              정밀 진단 환경까지.
+          <div className="relative z-10 mx-auto w-full max-w-[720px] lg:mx-0">
+            <p className="text-[9px] font-bold tracking-[0.28em] text-[#7db9ff] md:text-[10px]">
+              YONSEI · SEVERANCE · GENERAL HOSPITAL EXPERIENCE
             </p>
-          </div>
 
-          {/* --------------------------------------------------
-              06. CTA
-          -------------------------------------------------- */}
-          <div
-            className={`
-              mt-10
-
-              flex
-              flex-wrap
-              gap-3
-
-              transition-all
-              delay-700
-              duration-1000
-              ease-out
-
-              ${
-                loaded
-                  ? 'translate-y-0 opacity-100'
-                  : 'translate-y-8 opacity-0'
-              }
-            `}
-          >
-            <Link
-  href="#services"
-  className="
-    group
-    flex
-    items-center
-    justify-center
-    gap-3
-    bg-white
-    px-6
-    py-4
-    text-[12px]
-    font-semibold
-    text-[#071b33]
-    transition-all
-    duration-300
-    hover:bg-[#eef5fc]
-    md:px-7
-    md:text-[13px]
-  "
->
-  진료과목 보기
-
-  <span
-    className="
-      transition-transform
-      duration-300
-      group-hover:translate-x-1
-    "
-  >
-    →
-  </span>
-</Link>
-
-            {/* Booking */}
-            <Link
-              href="https://booking.naver.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                group
-
-                flex
-                items-center
-                justify-center
-                gap-3
-
-                border
-                border-white/30
-
-                bg-white/5
-
-                px-6
-                py-4
-
-                text-[12px]
-                font-semibold
-                text-white
-
-                backdrop-blur-sm
-
-                transition-all
-                duration-300
-
-                hover:border-white
-                hover:bg-white
-                hover:text-[#071b33]
-
-                md:px-7
-                md:text-[13px]
-              "
-            >
-              진료 예약하기
-
-              <span
-                className="
-                  transition-transform
-                  duration-300
-                  group-hover:translate-x-1
-                "
-              >
-                →
+            <h1 className="mt-5 text-[38px] font-semibold leading-[1.18] tracking-[-0.055em] md:text-[54px] lg:text-[58px]">
+              세브란스에서의
+              <br />
+              진료 기준,
+              <br />
+              <span className="text-[#8ec5ff]">
+                종합병원에서 쌓은 경험.
               </span>
-            </Link>
+            </h1>
+
+            <p className="mt-6 max-w-xl text-[15px] leading-[1.85] text-white/68 md:text-[17px]">
+              연세대학교 치과대학을 졸업하고 신촌세브란스 치과대학병원과
+              2차 종합병원에서 임상 경험을 쌓은 대표원장이
+              직접 진료합니다.
+            </p>
+
+            <div className="mt-7 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={goConsultation}
+                className="flex h-12 min-w-[150px] items-center justify-center rounded-xl bg-white px-5 text-[12px] font-bold text-[#071b33] transition hover:bg-[#eaf3ff]"
+              >
+                진료 상담하기
+              </button>
+
+              <button
+                type="button"
+                onClick={goDoctors}
+                className="flex h-12 min-w-[150px] items-center justify-center rounded-xl border border-white/20 bg-white/[0.06] px-5 text-[12px] font-bold text-white transition hover:bg-white/10"
+              >
+                의료진 자세히 보기
+              </button>
+            </div>
+
+            {/* USP */}
+            <div className="mt-9 grid gap-2.5 md:grid-cols-3">
+              {usp.map((item) => (
+                <div
+                  key={item.eyebrow}
+                  className="rounded-[14px] border border-white/10 bg-white/[0.055] p-4 backdrop-blur-md"
+                >
+                  <p className="text-[8px] font-bold tracking-[0.16em] text-[#7db9ff]">
+                    {item.eyebrow}
+                  </p>
+
+                  <p className="mt-1.5 text-[13px] font-bold text-white">
+                    {item.title}
+                  </p>
+
+                  <p className="mt-1.5 text-[10px] leading-[1.6] text-white/48">
+                    {item.detail}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* ======================================================
-          SCROLL INDICATOR
-      ====================================================== */}
-      <div
-        className={`
-          absolute
-          bottom-8
-          left-1/2
-          z-10
+        {/* RIGHT VISUAL */}
+        <div className="relative min-h-[360px] lg:min-h-0">
+          {slides.map((slide, index) => (
+            <div
+              key={slide.image}
+              className={[
+                'absolute inset-0 transition-opacity duration-1000',
+                current === index ? 'opacity-100' : 'opacity-0',
+              ].join(' ')}
+            >
+              <Image
+                src={slide.image}
+                alt={slide.caption}
+                fill
+                priority={index === 0}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
 
-          hidden
-          -translate-x-1/2
-          flex-col
-          items-center
-          gap-3
+              <div className="absolute inset-0 bg-gradient-to-r from-[#06182e] via-[#06182e]/25 to-transparent lg:from-[#06182e]/65 lg:via-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#06182e]/65 via-transparent to-transparent" />
+            </div>
+          ))}
 
-          transition-all
-          delay-1000
-          duration-1000
+          {/* visual caption */}
+          <div className="absolute bottom-6 left-5 right-5 z-10 flex items-end justify-between gap-4 md:bottom-8 md:left-8 md:right-8">
+            <div className="rounded-xl border border-white/15 bg-[#06182e]/55 px-4 py-3 backdrop-blur-md">
+              <p className="text-[8px] font-bold tracking-[0.2em] text-[#8ec5ff]">
+                {slides[current].label}
+              </p>
+              <p className="mt-1 text-[12px] font-semibold text-white md:text-[13px]">
+                {slides[current].caption}
+              </p>
+            </div>
 
-          md:flex
-
-          ${
-            loaded
-              ? 'opacity-100'
-              : 'opacity-0'
-          }
-        `}
-      >
-        <span
-          className="
-            text-[8px]
-            font-medium
-            tracking-[0.32em]
-            text-white/35
-          "
-        >
-          SCROLL
-        </span>
-
-        <div className="relative h-12 w-px overflow-hidden bg-white/15">
-          <div
-            className="
-              absolute
-              left-0
-              top-0
-
-              h-5
-              w-px
-
-              animate-[scrollLine_2s_ease-in-out_infinite]
-
-              bg-white/70
-            "
-          />
+            <div className="flex gap-1.5">
+              {slides.map((_, index) => (
+                <button
+                  type="button"
+                  key={index}
+                  onClick={() => setCurrent(index)}
+                  aria-label={`${index + 1}번째 슬라이드`}
+                  className={[
+                    'h-[3px] rounded-full transition-all',
+                    current === index
+                      ? 'w-8 bg-white'
+                      : 'w-3 bg-white/30',
+                  ].join(' ')}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

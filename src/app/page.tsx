@@ -3,6 +3,7 @@ import QuickConsultation from '@/components/QuickConsultation';
 import Hero from '@/components/Hero';
 import FloatingBar from '@/components/FloatingBar';
 import AffiliationsCarousel from '@/components/AffiliationsCarousel';
+import SpecialCareEnvironment from '@/components/SpecialCareEnvironment';
 import BrandStorySection from '@/components/BrandStorySection';
 import BrandPrinciples from '@/components/BrandPrinciples';
 import Services from '@/components/Services';
@@ -27,34 +28,37 @@ export default function Home() {
       {/* 02. 교육 · 임상경험 · 학술활동 자동 슬라이드 */}
       <AffiliationsCarousel />
 
-      {/* 03. 진료 영역 */}
+      {/* 3. 의료진 · 공간 · 장비 3대 강점 */}
+      <SpecialCareEnvironment />
+
+      {/* 04. 진료 영역 */}
       <Services />
 
       {/* 간편 상담 신청 */}
       <QuickConsultation />
 
-      {/* 04. 진료 기준 */}
+      {/* 05. 진료 기준 */}
       <BrandStorySection />
 
-      {/* 05. 병원이 지키는 세 가지 원칙 */}
+      {/* 06. 병원이 지키는 세 가지 원칙 */}
       <BrandPrinciples />
 
-      {/* 06. 임상 경험 */}
+      {/* 07. 임상 경험 */}
       <ClinicalCasesSection />
 
-      {/* 07. 진료 장비 */}
+      {/* 08. 진료 장비 */}
       <EquipmentSection />
 
       {/* 치과 둘러보기 */}
       <InteriorSection />
 
-      {/* 08. 의료진 */}
+      {/* 09. 의료진 */}
       <Doctors />
 
-      {/* 09. 오시는 길 */}
+      {/* 10. 오시는 길 */}
       <Contact />
 
-      {/* 10. FINAL BRAND MESSAGE - YONSEI LAUREL */}
+      {/* 11. FINAL BRAND MESSAGE - YONSEI LAUREL */}
 <section className="relative overflow-hidden bg-white px-5 py-14 text-center md:py-20">
 
 

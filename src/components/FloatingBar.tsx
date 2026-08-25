@@ -1,258 +1,71 @@
 'use client';
 
-import Link from 'next/link';
+const PHONE = '031-000-0000'; // TODO: 실제 대표번호로 교체
+const NAVER_RESERVATION_URL = 'https://booking.naver.com/'; // TODO: 실제 네이버 예약 URL로 교체
 
 const FloatingBar = () => {
+  const goConsultation = () => {
+    document
+      .getElementById('consultation')
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
-    <>
-      {/* =========================================================
-          DESKTOP FLOATING BAR
-          - 태블릿/PC에서만 표시
-          - 팝업보다 낮은 z-index(z-40)
-      ========================================================= */}
-      <aside
-        className="
-          fixed
-          right-5
-          top-1/2
-          z-40
-          hidden
-          -translate-y-1/2
-          flex-col
-          overflow-hidden
-          rounded-2xl
-          border
-          border-gray-200/80
-          bg-white/95
-          shadow-[0_12px_40px_rgba(7,27,51,0.15)]
-          backdrop-blur-md
-          md:flex
-        "
-        aria-label="빠른 메뉴"
-      >
-        {/* 전화 문의 */}
+    <div className="fixed bottom-0 left-0 right-0 z-[90] border-t border-[#dfe5ec] bg-white/95 shadow-[0_-10px_30px_rgba(7,27,51,0.10)] backdrop-blur-md md:bottom-5 md:left-1/2 md:right-auto md:w-[640px] md:-translate-x-1/2 md:overflow-hidden md:rounded-2xl md:border">
+      <div className="grid h-[62px] grid-cols-[0.8fr_1.4fr_0.8fr] md:h-[64px]">
         <a
-          href="tel:0310000000"
-          className="
-            group
-            flex
-            h-[82px]
-            w-[82px]
-            flex-col
-            items-center
-            justify-center
-            gap-2
-            border-b
-            border-gray-100
-            text-[#071b33]
-            transition-all
-            duration-300
-            hover:bg-[#071b33]
-            hover:text-white
-          "
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.7"
-            className="h-5 w-5"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.362-.271.527-.734.417-1.173L6.963 3.102A1.125 1.125 0 005.872 2.25H4.5A2.25 2.25 0 002.25 4.5v2.25z"
-            />
-          </svg>
-
-          <span className="text-[11px] font-semibold">
-            전화문의
-          </span>
-        </a>
-
-        {/* 네이버 예약 */}
-        <Link
-          href="https://booking.naver.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="
-            group
-            flex
-            h-[82px]
-            w-[82px]
-            flex-col
-            items-center
-            justify-center
-            gap-2
-            border-b
-            border-gray-100
-            text-[#071b33]
-            transition-all
-            duration-300
-            hover:bg-[#03C75A]
-            hover:text-white
-          "
-        >
-          <div
-            className="
-              flex
-              h-6
-              w-6
-              items-center
-              justify-center
-              rounded-md
-              bg-[#03C75A]
-              text-[12px]
-              font-black
-              text-white
-              transition-all
-              group-hover:bg-white
-              group-hover:text-[#03C75A]
-            "
-          >
-            N
-          </div>
-
-          <span className="text-[11px] font-semibold">
-            네이버예약
-          </span>
-        </Link>
-
-        {/* 카카오 상담 */}
-        <Link
-          href="#"
-          className="
-            group
-            flex
-            h-[82px]
-            w-[82px]
-            flex-col
-            items-center
-            justify-center
-            gap-2
-            text-[#071b33]
-            transition-all
-            duration-300
-            hover:bg-[#FEE500]
-          "
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="h-6 w-6"
-          >
-            <path d="M12 3C6.477 3 2 6.582 2 11c0 2.835 1.847 5.326 4.63 6.75L5.45 22l4.842-2.9c.556.067 1.126.1 1.708.1 5.523 0 10-3.582 10-8.2S17.523 3 12 3z" />
-          </svg>
-
-          <span className="text-[11px] font-semibold">
-            카카오상담
-          </span>
-        </Link>
-      </aside>
-
-      {/* =========================================================
-          MOBILE BOTTOM BAR
-          - 모바일에서만 표시
-          - 우측 Floating Bar는 모바일에서 완전히 제거
-          - MainPopup(z-[9999])보다 낮은 z-40
-      ========================================================= */}
-      <nav
-        className="
-          fixed
-          bottom-0
-          left-0
-          right-0
-          z-40
-          grid
-          grid-cols-2
-          border-t
-          border-gray-200
-          bg-white/95
-          shadow-[0_-6px_25px_rgba(7,27,51,0.08)]
-          backdrop-blur-xl
-          md:hidden
-        "
-        aria-label="모바일 빠른 메뉴"
-      >
-        {/* 전화 */}
-        <a
-          href="tel:0310000000"
-          className="
-            flex
-            h-[62px]
-            items-center
-            justify-center
-            gap-2.5
-            text-[13px]
-            font-semibold
-            text-[#071b33]
-            transition
-            active:bg-gray-100
-          "
+          href={`tel:${PHONE.replaceAll('-', '')}`}
+          className="flex flex-col items-center justify-center gap-1 text-[#071b33] transition hover:bg-[#f6f8fb]"
         >
           <svg
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="1.8"
-            className="h-[18px] w-[18px]"
+            className="h-4 w-4"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.362-.271.527-.734.417-1.173L6.963 3.102A1.125 1.125 0 005.872 2.25H4.5A2.25 2.25 0 002.25 4.5v2.25z"
-            />
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z" />
           </svg>
-
-          전화 문의
+          <span className="text-[9px] font-bold md:text-[10px]">
+            전화상담
+          </span>
         </a>
 
-        {/* 네이버 예약 */}
-        <Link
-          href="https://booking.naver.com/"
+        <a
+          href={NAVER_RESERVATION_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="
-            flex
-            h-[62px]
-            items-center
-            justify-center
-            gap-2.5
-            bg-[#071b33]
-            text-[13px]
-            font-semibold
-            text-white
-            transition
-            active:bg-[#0c2b50]
-          "
+          className="flex items-center justify-center gap-2 bg-[#03C75A] px-4 text-white transition hover:brightness-95"
         >
-          <span
-            className="
-              flex
-              h-[20px]
-              w-[20px]
-              items-center
-              justify-center
-              rounded
-              bg-[#03C75A]
-              text-[10px]
-              font-black
-              text-white
-            "
-          >
+          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-white text-[13px] font-black text-[#03C75A]">
             N
           </span>
+          <span className="text-[11px] font-bold md:text-[12px]">
+            네이버 예약하기
+          </span>
+        </a>
 
-          네이버 예약
-        </Link>
-      </nav>
-
-      {/*
-        모바일 하단 고정바가 본문 마지막 내용을 가리는 것을 방지.
-        필요 없다면 삭제해도 됨.
-      */}
-      <div className="h-[62px] md:hidden" />
-    </>
+        <button
+          type="button"
+          onClick={goConsultation}
+          className="flex flex-col items-center justify-center gap-1 text-[#071b33] transition hover:bg-[#f6f8fb]"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            className="h-4 w-4"
+          >
+            <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z" />
+            <path d="M8 9h8M8 13h5" />
+          </svg>
+          <span className="text-[9px] font-bold md:text-[10px]">
+            간편상담
+          </span>
+        </button>
+      </div>
+    </div>
   );
 };
 

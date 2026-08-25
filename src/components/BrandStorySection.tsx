@@ -1,258 +1,45 @@
-import Reveal from '@/components/Reveal';
-
 const BrandStorySection = () => {
   return (
     <section
       id="brand-story"
-      className="
-        relative
-        overflow-hidden
-        bg-white
-        px-6
-        py-16
-        md:py-24
-      "
+      className="scroll-mt-24 bg-white py-14 md:py-18"
     >
-      {/* Decorative light */}
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -right-40
-          top-20
-
-          h-[500px]
-          w-[500px]
-
-          rounded-full
-
-          bg-[#2f89fc]/5
-          blur-[120px]
-        "
-      />
-
-      <div className="relative z-10 mx-auto max-w-6xl">
-        <Reveal>
-          <p
-            className="
-              text-[10px]
-              font-bold
-              tracking-[0.34em]
-              text-[#2f89fc]
-
-              md:text-[11px]
-            "
-          >
-            CLINICAL EXPERIENCE
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 md:px-6 lg:grid-cols-[0.82fr_1.18fr] lg:gap-14">
+        {/* LEFT */}
+        <div>
+          <p className="text-[10px] font-bold tracking-[0.28em] text-[#2f89fc]">
+            OUR STANDARD
           </p>
-        </Reveal>
 
-        <div className="mt-7">
-          <Reveal delay={100}>
-            <p
-              className="
-                text-4xl
-                font-semibold
-                leading-[1.4]
-                tracking-[-0.04em]
-                text-[#071b33]
+          <h2 className="mt-3 text-3xl font-semibold leading-[1.35] tracking-[-0.045em] text-[#071b33] md:text-4xl">
+            치료가 복잡할수록
+            <br />
+            처음의 진단이 중요합니다.
+          </h2>
 
-                md:text-6xl
-              "
-            >
-              경험이 많아질수록
-            </p>
-          </Reveal>
-
-          <Reveal delay={250}>
-            <p
-              className="
-                mt-1
-                text-4xl
-                font-semibold
-                leading-[1.4]
-                tracking-[-0.04em]
-                text-[#071b33]
-
-                md:text-6xl
-              "
-            >
-              치료는 더 신중해졌습니다.
-            </p>
-          </Reveal>
+          <div className="mt-6 h-px w-16 bg-[#2f89fc]" />
         </div>
 
-        <div
-          className="
-            mt-14
-            grid
-            gap-12
+        {/* RIGHT */}
+        <div>
+          <p className="text-[15px] leading-[1.9] text-[#344a61] md:text-[16px]">
+           난이도 높은 임플란트, 신경과 가까운 매복 사랑니, 재신경치료까지.
+          동네 치과에서 "대학병원으로 가셔야 합니다"라는 말을 듣고 불안하셨던 경험이 있으실 겁니다.
+          </p>
 
-            md:grid-cols-2
-            md:gap-16
-          "
-        >
-          {/* Left */}
-          <div className="space-y-14">
-            <Reveal delay={100}>
-              <div>
-                <p
-                  className="
-                    text-[10px]
-                    font-semibold
-                    tracking-[0.26em]
-                    text-gray-400
-                  "
-                >
-                  01 / FOUNDATION
-                </p>
+          <p className="mt-5 text-[14px] leading-[1.9] text-gray-500 md:text-[15px]">
+            수원세브란스치과는 연세대학교 치과대학을 졸업하고
+            신촌세브란스 치과대학병원과 2차 종합병원에서 임상 경험을
+            쌓은 대표원장이 직접 진료합니다.
+          </p>
 
-                <p
-                  className="
-                    mt-4
-                    text-xl
-                    font-medium
-                    leading-[1.8]
-                    text-[#071b33]
+          <p className="mt-5 text-[14px] leading-[1.9] text-gray-500 md:text-[15px]">
+            약 100평 규모의 진료공간과 체어 10대 이상 보유로 인한 쾌적한 공간,
+            그리고 신촌세브란스 치과병원과 동일한 최첨단 정밀 장비를 갖추어, 멀리 대학병원까지 가시지 않고도
+            집 가까이서 가장 안전하고 정확한 진료를 받으실 수 있도록 노력하겠습니다. 
+          </p>
 
-                    md:text-2xl
-                  "
-                >
-                  세브란스 치과대학병원에서
-                  <br />
-                  진단과 치료계획의
-                  <br />
-                  기본을 배웠습니다.
-                </p>
-              </div>
-            </Reveal>
-
-            <Reveal delay={250}>
-              <div>
-                <p
-                  className="
-                    text-[10px]
-                    font-semibold
-                    tracking-[0.26em]
-                    text-gray-400
-                  "
-                >
-                  02 / EXPERIENCE
-                </p>
-
-                <p
-                  className="
-                    mt-4
-                    text-xl
-                    font-medium
-                    leading-[1.8]
-                    text-[#071b33]
-
-                    md:text-2xl
-                  "
-                >
-                  종합병원 치과 과장으로
-                  <br />
-                  다양한 환자와
-                  <br />
-                  복잡한 치료를 경험했습니다.
-                </p>
-              </div>
-            </Reveal>
-          </div>
-
-          {/* Right */}
-          <div className="md:pt-24">
-            <Reveal delay={150}>
-              <p
-                className="
-                  text-[10px]
-                  font-semibold
-                  tracking-[0.26em]
-                  text-gray-400
-                "
-              >
-                03 / JUDGEMENT
-              </p>
-            </Reveal>
-
-            <Reveal delay={280}>
-              <p
-                className="
-                  mt-5
-                  text-2xl
-                  font-medium
-                  leading-[1.7]
-                  tracking-[-0.025em]
-                  text-[#071b33]
-
-                  md:text-4xl
-                "
-              >
-                수많은 케이스가
-                <br />
-                남긴 것은
-              </p>
-            </Reveal>
-
-            <Reveal
-              delay={430}
-              distance={40}
-            >
-              <p
-                className="
-                  mt-2
-                  text-4xl
-                  font-semibold
-                  leading-[1.5]
-                  tracking-[-0.04em]
-                  text-[#2f89fc]
-
-                  md:text-6xl
-                "
-              >
-                판단의 기준.
-              </p>
-            </Reveal>
-
-            <Reveal delay={600}>
-              <div className="mt-12 h-px w-14 bg-[#2f89fc]" />
-
-              <p
-                className="
-                  mt-9
-                  max-w-lg
-                  text-[15px]
-                  leading-[2]
-                  text-gray-500
-
-                  md:text-[17px]
-                "
-              >
-                치료해야 할 때와
-                조금 더 지켜봐도 될 때.
-                <br />
-                살릴 수 있는 치아와
-                다른 치료가 필요한 치아를
-                신중하게 구분하는 것.
-              </p>
-            </Reveal>
-
-            <Reveal delay={750}>
-              <p
-                className="
-                  mt-7
-                  text-[17px]
-                  font-semibold
-                  text-[#071b33]
-
-                  md:text-xl
-                "
-              >
-                그것이 경험의 차이라고 생각합니다.
-              </p>
-            </Reveal>
-          </div>
+          
         </div>
       </div>
     </section>
