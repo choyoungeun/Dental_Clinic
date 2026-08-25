@@ -1,83 +1,195 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
-export const InteriorSection = () => {
-  // 클릭된 이미지를 관리하는 상태 (null이면 모달이 닫힌 상태)
-  const [selectedImg, setSelectedImg] = useState<{src: string, alt: string} | null>(null);
+const photos = [
+  {
+    src: '/images/loby.jpg',
+    alt: '수원세브란스치과 로비',
+    label: 'RECEPTION & LOBBY',
+    title: '로비 · 대기공간',
+    featured: true,
+  },
+  {
+    src: '/images/clinic_room.jpg',
+    alt: '수원세브란스치과 진료실',
+    label: 'TREATMENT ROOM',
+    title: '진료실',
+  },
+  {
+    src: '/images/counceling.jpg',
+    alt: '수원세브란스치과 상담실',
+    label: 'CONSULTATION',
+    title: '상담실',
+  },
+  {
+    src: '/images/test.jpg',
+    alt: '수원세브란스치과 검사실',
+    label: 'DIAGNOSTIC ROOM',
+    title: '검사 · 진단공간',
+  },
+];
 
-  const interiorPhotos = [
-    { src: '/images/loby.jpg', alt: '메인 로비' },
-    { src: '/images/clinic_room.jpg', alt: '진료실' },
-    { src: '/images/test.jpg', alt: '검사실' },
-    { src: '/images/counceling.jpg', alt: '상담실' },
-    { src: '/images/loby.jpg', alt: '메인 로비' },
-    { src: '/images/clinic_room.jpg', alt: '진료실' },
-  ];
+export const InteriorSection = () => {
+  const [selected, setSelected] = useState<(typeof photos)[number] | null>(null);
+
+  useEffect(() => {
+    if (!selected) return;
+
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setSelected(null);
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [selected]);
 
   return (
-    <section className="py-20 overflow-hidden dark:bg-white">
-      <div className="mx-auto max-w-7xl px-6 mb-12">
-        <h2 className="text-[14px] font-black tracking-[0.3em] text-[#2f89fc] uppercase mb-4">Interior View</h2>
-        <p className="text-2xl font-bold text-[#001d4a]">편안함이 머무는 공간</p>
-      </div>
+    <section
+      id="interior"
+      className="scroll-mt-24 bg-white py-14 md:py-18"
+    >
+      <div className="mx-auto max-w-7xl px-4 md:px-6">
+        {/* HEADER */}
+        <div className="mb-7 flex flex-col gap-3 md:mb-9 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-[10px] font-bold tracking-[0.28em] text-[#2f89fc]">
+              CLINIC TOUR
+            </p>
 
-      <div className="relative flex">
-        <div className="flex gap-6 animate-scroll hover:[animation-play-state:paused] w-max">
-          {interiorPhotos.map((photo, index) => (
-            <div 
-              key={index} 
-              onClick={() => setSelectedImg(photo)} // 클릭 시 이미지 정보 저장
-              className="relative w-[300px] md:w-[500px] aspect-[16/10] overflow-hidden rounded-2xl shrink-0 shadow-xl cursor-pointer transition-transform hover:scale-[1.02]"
-            >
-              <Image src={photo.src} alt={photo.alt} fill className="object-cover" />
-              <div className="absolute bottom-4 left-4 bg-black/40 backdrop-blur-sm px-3 py-1 rounded text-[11px] text-white/80">
-                {photo.alt}
-              </div>
-            </div>
-          ))}
+            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#071b33] md:text-4xl">
+              치과 둘러보기
+            </h2>
+          </div>
+
+          <p className="max-w-md text-[12px] leading-[1.75] text-gray-500 md:text-right md:text-[13px]">
+            환자분이 머무는 공간부터 진료 공간까지
+            <br className="hidden md:block" />
+            편안하고 쾌적한 진료 환경을 준비합니다.
+          </p>
+        </div>
+
+        {/* GALLERY */}
+        <div className="grid grid-cols-2 gap-2.5 md:gap-3 lg:grid-cols-4 lg:grid-rows-2">
+          {photos.map((photo, index) => {
+            const featured = index === 0;
+            const wide = index === 1;
+
+            return (
+              <button
+                type="button"
+                key={photo.src}
+                onClick={() => setSelected(photo)}
+                className={[
+                  'group relative overflow-hidden rounded-[16px] bg-[#eef2f6] text-left',
+                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2f89fc] focus-visible:ring-offset-2',
+                  featured
+                    ? 'col-span-2 aspect-[16/10] lg:row-span-2 lg:aspect-auto lg:min-h-[470px]'
+                    : '',
+                  wide
+                    ? 'col-span-2 aspect-[16/8] lg:col-span-2 lg:aspect-auto'
+                    : '',
+                  !featured && !wide
+                    ? 'aspect-[4/3] lg:aspect-auto'
+                    : '',
+                ].join(' ')}
+                aria-label={`${photo.title} 크게 보기`}
+              >
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  sizes={
+                    featured
+                      ? '(max-width: 1024px) 100vw, 50vw'
+                      : '(max-width: 1024px) 50vw, 25vw'
+                  }
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-[#06182e]/70 via-[#06182e]/5 to-transparent" />
+
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
+                  <p className="text-[8px] font-bold tracking-[0.18em] text-[#8ec5ff] md:text-[9px]">
+                    {photo.label}
+                  </p>
+
+                  <div className="mt-1 flex items-end justify-between gap-3">
+                    <h3 className="text-[15px] font-semibold tracking-[-0.025em] text-white md:text-[19px]">
+                      {photo.title}
+                    </h3>
+
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/10 text-sm text-white backdrop-blur-sm transition group-hover:bg-white group-hover:text-[#071b33]">
+                      +
+                    </span>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
+          <p className="text-[10px] leading-[1.6] text-gray-400 md:text-[11px]">
+            사진을 선택하면 크게 확인하실 수 있습니다.
+          </p>
+
+          <span className="text-[9px] font-bold tracking-[0.18em] text-[#071b33]/35">
+            SUWON SEVERANCE DENTAL
+          </span>
         </div>
       </div>
 
-      {/* --- 모달(팝업) 영역 --- */}
-      {selectedImg && (
-        <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 md:p-10 backdrop-blur-md"
-          onClick={() => setSelectedImg(null)} // 배경 클릭 시 닫기
+      {/* LIGHTBOX */}
+      {selected && (
+        <div
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-[#020812]/90 p-4 backdrop-blur-md md:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${selected.title} 이미지`}
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setSelected(null);
+          }}
         >
-          {/* 닫기 버튼 (X표) */}
-          <button 
-            className="absolute top-6 right-6 text-white text-4xl font-light hover:text-gray-300 z-[110]"
-            onClick={() => setSelectedImg(null)}
+          <button
+            type="button"
+            onClick={() => setSelected(null)}
+            className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/20 text-2xl font-light text-white transition hover:bg-white hover:text-[#071b33]"
+            aria-label="닫기"
           >
-            &times;
+            ×
           </button>
 
-          {/* 큰 이미지 */}
-          <div className="relative w-full max-w-5xl aspect-[16/10] overflow-hidden rounded-lg">
-            <Image 
-              src={selectedImg.src} 
-              alt={selectedImg.alt} 
-              fill 
-              className="object-contain" // 이미지가 잘리지 않게 조정
-            />
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 text-sm">
-              {selectedImg.alt}
+          <div className="w-full max-w-6xl">
+            <div className="relative aspect-[16/10] max-h-[78vh] w-full overflow-hidden rounded-[16px] bg-black">
+              <Image
+                src={selected.src}
+                alt={selected.alt}
+                fill
+                sizes="95vw"
+                className="object-contain"
+              />
+            </div>
+
+            <div className="mt-3 text-center">
+              <p className="text-[9px] font-bold tracking-[0.18em] text-[#8ec5ff]">
+                {selected.label}
+              </p>
+              <p className="mt-1 text-sm font-semibold text-white">
+                {selected.title}
+              </p>
             </div>
           </div>
         </div>
       )}
-
-      <style jsx global>{`
-        @keyframes scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(calc(-50% - 12px)); }
-        }
-        .animate-scroll {
-          animation: scroll 30s linear infinite;
-        }
-      `}</style>
     </section>
   );
 };

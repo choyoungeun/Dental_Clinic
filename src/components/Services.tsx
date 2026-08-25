@@ -153,25 +153,7 @@ const Services = () => {
           ))}
         </div>
 
-        <div className="mt-5 flex flex-col gap-3 rounded-[14px] bg-[#001d4a] px-5 py-4 text-white md:flex-row md:items-center md:justify-between md:px-6">
-          <div>
-            <p className="text-[15px] font-semibold md:text-[17px]">
-              어떤 진료가 필요한지 잘 모르시겠다면
-            </p>
-            <p className="mt-0.5 text-[11px] text-white/55 md:text-[12px]">
-              현재 상태를 확인한 뒤 필요한 치료부터 설명드립니다.
-            </p>
-          </div>
-
-          <a
-            href="https://booking.naver.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-10 shrink-0 items-center justify-center rounded-lg bg-white px-5 text-[11px] font-bold text-[#071b33] transition hover:bg-[#edf5ff]"
-          >
-            진료 상담 예약 →
-          </a>
-        </div>
+        
       </div>
     </section>
   );

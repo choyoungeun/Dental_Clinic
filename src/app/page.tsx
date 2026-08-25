@@ -1,3 +1,5 @@
+import { InteriorSection } from '@/components/InteriorSection';
+import QuickConsultation from '@/components/QuickConsultation';
 import Hero from '@/components/Hero';
 import FloatingBar from '@/components/FloatingBar';
 import AffiliationsCarousel from '@/components/AffiliationsCarousel';
@@ -6,6 +8,7 @@ import BrandPrinciples from '@/components/BrandPrinciples';
 import Services from '@/components/Services';
 import Doctors from '@/components/Doctors';
 import Contact from '@/components/Contact';
+
 
 import { ClinicalCasesSection } from '@/components/ClinicalCasesSection';
 import { MainPopup } from '@/components/MainPopup';
@@ -27,6 +30,9 @@ export default function Home() {
       {/* 03. 진료 영역 */}
       <Services />
 
+      {/* 간편 상담 신청 */}
+      <QuickConsultation />
+
       {/* 04. 진료 기준 */}
       <BrandStorySection />
 
@@ -38,6 +44,9 @@ export default function Home() {
 
       {/* 07. 진료 장비 */}
       <EquipmentSection />
+
+      {/* 치과 둘러보기 */}
+      <InteriorSection />
 
       {/* 08. 의료진 */}
       <Doctors />
