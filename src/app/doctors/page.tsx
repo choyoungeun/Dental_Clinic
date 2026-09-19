@@ -25,7 +25,7 @@ export default function DoctorsPage() {
 
       {/* 원장님 단독 레이아웃이 적용된 Doctors 컴포넌트 호출 */}
       <div className="py-12">
-        <Doctors />
+        <Doctors variant="full" />
       </div>
 
       {/* 상세 페이지용 추가 문구 (선택 사항) */}

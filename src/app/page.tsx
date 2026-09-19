@@ -2,9 +2,7 @@ import { InteriorSection } from '@/components/InteriorSection';
 import QuickConsultation from '@/components/QuickConsultation';
 import Hero from '@/components/Hero';
 import FloatingBar from '@/components/FloatingBar';
-import AffiliationsCarousel from '@/components/AffiliationsCarousel';
-import SpecialCareEnvironment from '@/components/SpecialCareEnvironment';
-import BrandStorySection from '@/components/BrandStorySection';
+import ClinicalPhilosophy from '@/components/ClinicalPhilosophy';
 import Services from '@/components/Services';
 import Doctors from '@/components/Doctors';
 import Contact from '@/components/Contact';
@@ -13,6 +11,10 @@ import { ClinicalCasesSection } from '@/components/ClinicalCasesSection';
 import { MainPopup } from '@/components/MainPopup';
 import { EquipmentSection } from '@/components/EquipmentSection';
 
+/* 홈페이지 정보 구조
+   1순위  세브란스 임상 경험 + 종합병원 치과과장 경험  → Hero · Doctors
+   2순위  자연치아 보존과 고난도 수술을 함께 경험한 판단 → Philosophy · Signature Care · Cases
+   3순위  진단 장비 · 공간 · 협력 네트워크            → Equipment · Interior */
 export default function Home() {
   return (
     <main className="min-h-screen bg-white">
@@ -20,36 +22,29 @@ export default function Home() {
 
       <FloatingBar />
 
-
-      {/* 01. BRAND PROMISE */}
+      {/* 01. 브랜드 메시지 : 세브란스 · 종합병원 진료 경험 */}
       <Hero />
 
-      {/* 02. 교육 · 임상경험 · 학술활동 자동 슬라이드 */}
-      <AffiliationsCarousel />
+      {/* 02. 짧은 진료 철학 */}
+      <ClinicalPhilosophy />
 
-      {/* 03. 진료 영역 : 대형 이미지 카드 */}
+      {/* 03. 진료과목 (자연치아 보존 · 임플란트 · 구강외과를 앞에) */}
       <Services />
 
-      {/* 04. 의료진 · 공간 · 진단 환경 */}
-      <SpecialCareEnvironment />
+      {/* 04. 대표원장 · 임상 경험 */}
+      <Doctors />
 
-      {/* 05. 병원 소개 · 진료 원칙 (큰 이미지 + 짧은 메시지) */}
-      <BrandStorySection />
-
-      {/* 간편 상담 신청 */}
-      <QuickConsultation />
-
-      {/* 06. 임상증례 */}
+      {/* 05. 임상증례 */}
       <ClinicalCasesSection />
 
-      {/* 07. 진료 장비 */}
+      {/* 06. DIAGNOSIS & TREATMENT SYSTEM */}
       <EquipmentSection />
 
-      {/* 치과 둘러보기 */}
+      {/* 07. 치과 둘러보기 */}
       <InteriorSection />
 
-      {/* 08. 의료진 */}
-      <Doctors />
+      {/* 08. 간편 상담 신청 */}
+      <QuickConsultation />
 
       {/* 09. 오시는 길 */}
       <Contact />

@@ -123,6 +123,38 @@ export default async function ServiceDetailPage({
         </div>
       </section>
 
+      {/* ===== 1-2. WHY OUR EXPERIENCE MATTERS ===== */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="mx-auto grid max-w-6xl gap-8 px-5 md:px-8 lg:grid-cols-[280px_1fr] lg:gap-16">
+          <Reveal variant="fade">
+            <p className="text-[12px] font-bold tracking-[0.28em] text-[#2f89fc]">
+              WHY OUR EXPERIENCE MATTERS
+            </p>
+          </Reveal>
+
+          <div>
+            <Reveal>
+              <h2 className="break-keep text-[28px] font-semibold leading-[1.45] tracking-[-0.035em] text-[#071b33] md:text-[40px]">
+                {service.experience.heading}
+              </h2>
+            </Reveal>
+
+            <Reveal variant="soft" delay={150}>
+              <p className="mt-6 max-w-3xl break-keep text-[16px] leading-[1.9] text-gray-600 md:text-[18px]">
+                {service.experience.body}
+              </p>
+
+              <p className="mt-8 border-t border-[#dfe5ec] pt-5 text-[14px] leading-[1.7] text-gray-500">
+                <Link href="/#doctors" className="font-semibold text-[#071b33] hover:text-[#176fc2]">
+                  이현민 대표원장
+                </Link>
+                {' · '}연세대 치과대학 우등졸업 · 신촌세브란스 치과대학병원 임상 경험 · 前 종합병원 치과 진료과장
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* ===== 2. 세부 진료 바로가기 ===== */}
       <section className="border-b border-[#e3e9f0] bg-white">
         <div className="mx-auto max-w-6xl px-5 py-8 md:px-8">

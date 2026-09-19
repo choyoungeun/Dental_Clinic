@@ -23,6 +23,18 @@ export type ServiceInfo = {
   /** "이런 분께 추천합니다" */
   recommend: string[];
   topics: ServiceTopic[];
+  /** 메인 SIGNATURE CARE 로 크게 보여줄 진료. 없으면 GENERAL CARE 로 분류됩니다. */
+  signature?: {
+    order: number;
+    eng: string;
+    title: string;
+    line: string;
+  };
+  /** 상세 페이지 WHY OUR EXPERIENCE MATTERS : 대표원장의 임상경험과 해당 진료의 연결 */
+  experience: {
+    heading: string;
+    body: string;
+  };
 };
 
 export const services: ServiceInfo[] = [
@@ -43,6 +55,16 @@ export const services: ServiceInfo[] = [
       '수술 전에 위치와 방법을 미리 확인하고 싶으신 분',
     ],
     topics: implantTopics,
+    signature: {
+      order: 2,
+      eng: 'IMPLANT & SURGERY',
+      title: '임플란트',
+      line: '수술보다 먼저, 필요한 이유부터 판단합니다.',
+    },
+    experience: {
+      heading: '수술 자체보다 먼저, 남아 있는 치아와 잇몸뼈, 신경과 교합을 함께 판단합니다.',
+      body: '임플란트는 어떻게 심느냐보다 어디에, 어떤 순서로 계획하느냐가 중요합니다. 종합병원 치과 진료과장으로 다양한 환자를 진료한 경험을 바탕으로, 3D CT에서 확인한 뼈와 신경 위치를 근거로 치료 계획과 뼈이식 필요 여부를 설명드립니다.',
+    },
   },
   {
     slug: 'preservation',
@@ -60,6 +82,16 @@ export const services: ServiceInfo[] = [
       '내 치아를 최대한 오래 쓰고 싶으신 분',
     ],
     topics: preservationTopics,
+    signature: {
+      order: 1,
+      eng: 'NATURAL TOOTH PRESERVATION',
+      title: '자연치아 보존',
+      line: '끝까지 살릴 수 있는지를 먼저 봅니다.',
+    },
+    experience: {
+      heading: '왜 발치 이야기를 들었는지부터 다시 봅니다.',
+      body: '치아를 뽑아야 한다는 말을 들으셨더라도, 신경치료나 재신경치료로 유지할 수 있는지를 먼저 확인합니다. 살릴 수 있는 치아는 보존 가능성을 살펴보고, 어려운 경우에는 그 이유를 설명드립니다.',
+    },
   },
   {
     slug: 'wisdom-tooth',
@@ -78,6 +110,16 @@ export const services: ServiceInfo[] = [
       '턱뼈에 낭이 있다는 말을 들으신 분',
     ],
     topics: wisdomTopics,
+    signature: {
+      order: 3,
+      eng: 'ORAL SURGERY',
+      title: '매복 사랑니 · 구강외과',
+      line: '복잡한 사랑니와 구강외과 진료까지.',
+    },
+    experience: {
+      heading: '매복 사랑니는 단순히 뽑는 것보다, 신경과 치아의 위치관계를 먼저 판단하는 진료입니다.',
+      body: 'CT로 사랑니의 방향과 신경관 위치를 확인한 뒤 발치 난이도와 진행 과정을 설명드립니다. 종합병원 치과에서 다양한 구강외과 환자를 진료한 경험을 바탕으로 판단합니다.',
+    },
   },
   {
     slug: 'cavity',
@@ -95,6 +137,10 @@ export const services: ServiceInfo[] = [
       '레진과 인레이 중 무엇이 맞는지 알고 싶으신 분',
     ],
     topics: restorativeTopics,
+    experience: {
+      heading: '충치는 얼마나 파였는지와 함께, 얼마나 남았는지를 봅니다.',
+      body: '치료 범위가 넓어질수록 치아를 오래 사용하기 어려워질 수 있습니다. 충치의 크기와 남은 치아 상태를 함께 확인해 필요한 범위의 치료를 선택하고, 그 이유를 설명드립니다.',
+    },
   },
   {
     slug: 'prosthetics',
@@ -112,6 +158,10 @@ export const services: ServiceInfo[] = [
       '오래 사용한 보철물이 헐거워지거나 잇몸선이 검게 보이는 분',
     ],
     topics: prosthodonticTopics,
+    experience: {
+      heading: '보철은 씌우는 것으로 끝나지 않고, 남은 치아와 씹는 기능을 함께 판단합니다.',
+      body: '신경치료 이력과 잇몸·뼈 상태, 교합을 함께 확인한 뒤 치료 계획을 세웁니다. 구강스캐너로 기록한 디지털 데이터를 계획과 경과 비교에 활용합니다.',
+    },
   },
   {
     slug: 'tmj-trauma',
@@ -129,6 +179,10 @@ export const services: ServiceInfo[] = [
       '입안이나 입술을 다쳐 응급 처치가 필요한 분',
     ],
     topics: tmjTopics,
+    experience: {
+      heading: '턱관절 불편은 증상보다 원인을 먼저 확인합니다.',
+      body: '소리와 통증, 입이 벌어지는 정도의 원인을 확인한 뒤 상태에 맞는 치료를 안내합니다. 구강 외상은 구강외과 진료 경험을 바탕으로 상태를 살핍니다.',
+    },
   },
 ];
 

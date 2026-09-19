@@ -1,58 +1,20 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Reveal from './Reveal';
+import RevealImage from './RevealImage';
 import { stagger } from './stagger';
 import TextReveal from './TextReveal';
 
-const slides = [
-  {
-    image: '/images/loby.jpg',
-    label: 'SPACE',
-    caption: '약 100평 규모의 여유로운 진료 환경',
-  },
-  {
-    image: '/images/clinic_room.jpg',
-    label: 'CARE',
-    caption: '체어 10대 이상의 진료 공간',
-  },
-  {
-    image: '/images/digital_implant.jpg',
-    label: 'DIAGNOSTIC',
-    caption: '정밀 진단을 위한 디지털 시스템',
-  },
-];
-
-const usp = [
-  {
-    eyebrow: 'MEDICAL STAFF',
-    title: '연세대 치대 · 세브란스',
-    detail: '연세대 치대 우등졸업 · 신촌세브란스 임상경험 · 前 2차 종합병원 치과과장',
-  },
-  {
-    eyebrow: 'SPACE',
-    title: '약 100평 · 체어 10대+',
-    detail: '여유로운 진료공간과 상담공간을 갖춘 쾌적한 진료 환경',
-  },
-  {
-    eyebrow: 'DIAGNOSTIC',
-    title: '정밀 진단 시스템',
-    detail: '세브란스 치과병원 동일 모델 장비를 포함한 디지털 진단 환경',
-  },
+/* 1순위 메시지 : 세브란스 임상 경험 + 종합병원 치과과장 경험
+   공간 · 장비 같은 3순위 정보는 Hero 에서 다루지 않습니다. */
+const credentials = [
+  { label: 'EDUCATION', text: '연세대학교 치과대학 우등졸업' },
+  { label: 'SEVERANCE', text: '신촌세브란스 치과대학병원 임상 경험' },
+  { label: 'GENERAL HOSPITAL', text: '前 종합병원 치과 진료과장' },
 ];
 
 const Hero = () => {
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
-    }, 4800);
-
-    return () => window.clearInterval(timer);
-  }, []);
-
   const goConsultation = () => {
     document
       .getElementById('consultation')
@@ -66,168 +28,90 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#06182e] text-white">
-      <div className="grid min-h-[760px] lg:min-h-[690px] lg:grid-cols-[1.02fr_0.98fr]">
-        {/* LEFT */}
-        <div className="relative z-20 flex items-center overflow-hidden px-5 pb-12 pt-28 md:px-10 lg:px-12 xl:px-20">
-          {/* 세브란스병원 배경 - 왼쪽 텍스트 영역에만 적용 */}
-          <div className="absolute inset-0 z-0">
-            <Image
-              src="/images/Sev2018.jpg"
-              alt=""
-              fill
-              priority
-              aria-hidden="true"
-              sizes="(max-width: 1024px) 100vw, 52vw"
-              className="object-cover object-center opacity-55"
-            />
+    <section className="relative isolate overflow-hidden bg-[#06182e] text-white">
+      {/* 배경 : 세브란스병원 사진을 어둡게 깔고 아주 약한 parallax */}
+      <RevealImage noZoom parallax={28} delay={0} className="absolute inset-0 z-0">
+        <Image
+          src="/images/Sev2018.jpg"
+          alt=""
+          fill
+          priority
+          aria-hidden="true"
+          sizes="100vw"
+          className="object-cover object-[60%_center]"
+        />
+      </RevealImage>
 
-            {/* 텍스트 가독성을 위한 딥 네이비 오버레이 */}
-            <div className="absolute inset-0 bg-[#06182e]/38" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-[#06182e]/55" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[#06182e] via-[#06182e]/70 to-[#06182e]/10" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-[#06182e] via-transparent to-[#06182e]/40" />
 
-            {/* 오른쪽 슬라이더 방향으로 자연스럽게 이어지는 그라데이션 */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#06182e]/18 via-[#06182e]/24 to-[#06182e]/62" />
+      <div className="relative z-10 mx-auto flex min-h-[780px] max-w-7xl flex-col justify-end px-5 pb-10 pt-36 md:min-h-[820px] md:px-8 md:pb-14 lg:pt-32">
+        <Reveal variant="fade" delay={100}>
+          <p className="text-[11px] font-bold tracking-[0.28em] text-[#8ec5ff] md:text-[12px]">
+            YONSEI · SEVERANCE · GENERAL HOSPITAL
+          </p>
+        </Reveal>
 
-            {/* 하단 가독성 보강 */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#06182e]/22 via-transparent to-transparent" />
-          </div>
+        <TextReveal
+          as="h1"
+          delay={250}
+          stagger={140}
+          duration={1000}
+          className="mt-6 max-w-4xl break-keep text-[40px] font-semibold leading-[1.22] tracking-[-0.05em] md:text-[60px] lg:text-[72px]"
+          lines={[
+            '세브란스에서 배운',
+            <span key="a" className="text-[#8ec5ff]">진단의 기준,</span>,
+            '종합병원 치과과장으로 쌓은',
+            <span key="b" className="text-[#8ec5ff]">판단의 경험.</span>,
+          ]}
+        />
 
-          <div className="relative z-10 mx-auto w-full max-w-[720px] lg:mx-0">
-            <Reveal variant="fade" delay={100}>
-              <p className="text-[11px] font-bold tracking-[0.28em] text-[#7db9ff] md:text-[12px]">
-                YONSEI · SEVERANCE · GENERAL HOSPITAL EXPERIENCE
-              </p>
-            </Reveal>
+        <Reveal variant="soft" delay={800} className="mt-8 max-w-xl">
+          <p className="break-keep text-[16px] leading-[1.85] text-white/75 md:text-[19px]">
+            자연치아 보존부터 임플란트·구강외과까지
+            <br className="hidden md:block" />{' '}
+            치료가 복잡할수록 진단과 치료계획을 중요하게 생각합니다.
+          </p>
+        </Reveal>
 
-            <TextReveal
-              as="h1"
-              delay={250}
-              stagger={140}
-              duration={1000}
-              className="mt-5 text-[38px] font-semibold leading-[1.18] tracking-[-0.055em] md:text-[54px] lg:text-[58px]"
-              lines={[
-                '세브란스에서의',
-                '진료 기준,',
-                <span key="exp" className="text-[#8ec5ff]">
-                  종합병원에서 쌓은 경험.
-                </span>,
-              ]}
-            />
-
-            <Reveal variant="soft" delay={750} className="mt-6 max-w-xl">
-              <p className="text-[17px] leading-[1.85] text-white/68 md:text-[19px]">
-                연세대학교 치과대학을 졸업하고 신촌세브란스 치과대학병원과
-                2차 종합병원에서 임상 경험을 쌓은 대표원장이
-                직접 진료합니다.
-              </p>
-            </Reveal>
-
-            <Reveal variant="soft" delay={900} className="mt-7">
-            <div className="flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={goConsultation}
-                className="flex h-12 min-w-[150px] items-center justify-center rounded-xl bg-white px-5 text-[14px] font-bold text-[#071b33] transition hover:bg-[#eaf3ff]"
-              >
-                진료 상담하기
-              </button>
-
-              <button
-                type="button"
-                onClick={goDoctors}
-                className="flex h-12 min-w-[150px] items-center justify-center rounded-xl border border-white/20 bg-white/[0.06] px-5 text-[14px] font-bold text-white transition hover:bg-white/10"
-              >
-                의료진 자세히 보기
-              </button>
-            </div>
-            </Reveal>
-
-            {/* USP */}
-            <div className="mt-9 grid gap-2.5 md:grid-cols-3">
-              {usp.map((item, index) => (
-                <Reveal
-                  key={item.eyebrow}
-                  variant="soft"
-                  delay={1000 + stagger(index, 110)}
-                  className="h-full"
-                >
-                  <div className="h-full rounded-[14px] border border-white/10 bg-white/[0.055] p-4 backdrop-blur-md">
-                    <p className="text-[10px] font-bold tracking-[0.16em] text-[#7db9ff]">
-                      {item.eyebrow}
-                    </p>
-
-                    <p className="mt-1.5 text-[15px] font-bold text-white">
-                      {item.title}
-                    </p>
-
-                    <p className="mt-1.5 text-[12px] leading-[1.6] text-white/48">
-                      {item.detail}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* RIGHT VISUAL */}
-        <Reveal
-          variant="fade"
-          duration={1400}
-          delay={300}
-          className="relative min-h-[360px] lg:min-h-0"
-        >
-          {slides.map((slide, index) => (
-            <div
-              key={slide.image}
-              className={[
-                'absolute inset-0 transition-opacity duration-1000',
-                current === index ? 'opacity-100' : 'opacity-0',
-              ].join(' ')}
+        <Reveal variant="soft" delay={950} className="mt-8">
+          <div className="flex flex-wrap gap-2.5">
+            <button
+              type="button"
+              onClick={goConsultation}
+              className="flex h-12 min-w-[150px] items-center justify-center rounded-md bg-white px-6 text-[14px] font-bold text-[#071b33] transition hover:bg-[#eaf3ff]"
             >
-              <Image
-                src={slide.image}
-                alt={slide.caption}
-                fill
-                priority={index === 0}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
+              진료 상담하기
+            </button>
 
-              <div className="absolute inset-0 bg-gradient-to-r from-[#06182e] via-[#06182e]/25 to-transparent lg:from-[#06182e]/65 lg:via-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#06182e]/65 via-transparent to-transparent" />
-            </div>
-          ))}
-
-          {/* visual caption */}
-          <div className="absolute bottom-6 left-5 right-5 z-10 flex items-end justify-between gap-4 md:bottom-8 md:left-8 md:right-8">
-            <div className="rounded-xl border border-white/15 bg-[#06182e]/55 px-4 py-3 backdrop-blur-md">
-              <p className="text-[10px] font-bold tracking-[0.2em] text-[#8ec5ff]">
-                {slides[current].label}
-              </p>
-              <p className="mt-1 text-[14px] font-semibold text-white md:text-[15px]">
-                {slides[current].caption}
-              </p>
-            </div>
-
-            <div className="flex gap-1.5">
-              {slides.map((_, index) => (
-                <button
-                  type="button"
-                  key={index}
-                  onClick={() => setCurrent(index)}
-                  aria-label={`${index + 1}번째 슬라이드`}
-                  className={[
-                    'h-[3px] rounded-full transition-all',
-                    current === index
-                      ? 'w-8 bg-white'
-                      : 'w-3 bg-white/30',
-                  ].join(' ')}
-                />
-              ))}
-            </div>
+            <button
+              type="button"
+              onClick={goDoctors}
+              className="flex h-12 min-w-[150px] items-center justify-center rounded-md border border-white/30 px-6 text-[14px] font-bold text-white transition hover:bg-white/10"
+            >
+              대표원장 소개
+            </button>
           </div>
         </Reveal>
+
+        {/* 경력 3줄 : 카드가 아니라 얇은 선으로만 구분 */}
+        <dl className="mt-12 grid gap-x-8 gap-y-4 border-t border-white/20 pt-6 md:mt-16 md:grid-cols-3">
+          {credentials.map((item, index) => (
+            <Reveal
+              key={item.label}
+              variant="soft"
+              delay={1100 + stagger(index, 120)}
+            >
+              <dt className="text-[10px] font-bold tracking-[0.22em] text-[#8ec5ff]">
+                {item.label}
+              </dt>
+              <dd className="mt-1.5 break-keep text-[15px] font-medium text-white md:text-[16px]">
+                {item.text}
+              </dd>
+            </Reveal>
+          ))}
+        </dl>
       </div>
     </section>
   );

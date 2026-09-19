@@ -59,26 +59,26 @@ export const InteriorSection = () => {
   return (
     <section
       id="interior"
-      className="scroll-mt-24 bg-[#06182e] py-16 md:py-24"
+      className="scroll-mt-24 bg-[#f5f7fa] py-16 md:py-24"
     >
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         {/* HEADER */}
         <div className="mb-10 md:mb-14">
           <Reveal variant="fade">
-            <p className="text-[12px] font-bold tracking-[0.28em] text-[#79b6ff]">
+            <p className="text-[12px] font-bold tracking-[0.28em] text-[#2f89fc]">
               CLINIC TOUR
             </p>
           </Reveal>
 
           <TextReveal
             delay={120}
-            className="mt-4 break-keep text-4xl font-semibold leading-[1.3] tracking-[-0.04em] text-white md:text-5xl lg:text-6xl"
+            className="mt-4 break-keep text-4xl font-semibold leading-[1.3] tracking-[-0.04em] text-[#071b33] md:text-5xl lg:text-6xl"
             lines={['치과 둘러보기']}
           />
 
           <Reveal variant="soft" delay={300}>
-            <p className="mt-5 break-keep text-[16px] leading-[1.75] text-white/60 md:text-[18px]">
-              편안하고 쾌적한 진료 환경을 준비합니다.
+            <p className="mt-5 break-keep text-[16px] leading-[1.75] text-gray-500 md:text-[18px]">
+              약 100평 규모, 체어 10대 이상의 진료 공간입니다.
             </p>
           </Reveal>
         </div>
@@ -156,7 +156,7 @@ export const InteriorSection = () => {
           })}
         </div>
 
-        <p className="mt-5 text-[12px] leading-[1.6] text-white/40 md:text-[13px]">
+        <p className="mt-5 text-[12px] leading-[1.6] text-gray-400 md:text-[13px]">
           사진을 선택하면 크게 확인하실 수 있습니다.
         </p>
       </div>
