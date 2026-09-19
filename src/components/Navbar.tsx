@@ -318,8 +318,8 @@ const Navbar = () => {
               2. 중앙 메뉴
               치과 둘러보기 추가
           ================================================== */}
-          <div className="hidden flex-1 items-center justify-center lg:flex">
-            <div className="flex space-x-6 xl:space-x-9 2xl:space-x-11">
+          <div className="hidden flex-1 items-center justify-center xl:flex">
+            <div className="flex space-x-4 xl:space-x-8 2xl:space-x-11">
 
               {menuItems.map((item) => (
                 <Link
@@ -340,7 +340,7 @@ const Navbar = () => {
               3. 우측 기능
               전화 + 언어 + 기존 예약 버튼
           ================================================== */}
-          <div className="ml-4 hidden shrink-0 items-center gap-2.5 lg:flex">
+          <div className="ml-4 hidden shrink-0 items-center gap-2.5 xl:flex">
 
             {/* PHONE */}
             <a
@@ -364,12 +364,12 @@ const Navbar = () => {
                 </svg>
               </div>
 
-              <div className="hidden 2xl:block">
-                <p className="text-[8px] font-bold tracking-[0.14em] text-white/40">
+              <div>
+                <p className="text-[10px] font-bold tracking-[0.14em] text-white/50">
                   TEL
                 </p>
 
-                <p className="mt-[1px] whitespace-nowrap text-[12px] font-black tracking-[0.01em] text-white">
+                <p className="mt-[1px] whitespace-nowrap text-[19px] font-black leading-none tracking-[0.01em] text-white">
                   {CLINIC_PHONE}
                 </p>
               </div>
@@ -489,26 +489,29 @@ const Navbar = () => {
           {/* =================================================
               MOBILE
           ================================================== */}
-          <div className="ml-auto flex items-center gap-2 lg:hidden">
+          <div className="ml-auto flex items-center gap-2 xl:hidden">
 
             <a
               translate="no"
-              href={`tel:${CLINIC_PHONE.replaceAll(
-                '-',
-                '',
-              )}`}
+              href={`tel:${CLINIC_PHONE.replaceAll('-', '')}`}
               aria-label="전화 연결"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white"
+              className="flex h-10 items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 text-white sm:px-4"
             >
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.8"
-                className="h-4 w-4"
+                className="h-4 w-4 shrink-0 text-[#4da3ff]"
+                aria-hidden="true"
               >
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z" />
               </svg>
+
+              {/* 아주 좁은 화면은 아래 전화 띠에서 크게 보여주므로 여기서는 아이콘만 */}
+              <span className="hidden whitespace-nowrap text-[18px] font-black leading-none sm:inline">
+                {CLINIC_PHONE}
+              </span>
             </a>
 
             <button
@@ -547,11 +550,21 @@ const Navbar = () => {
           </div>
         </div>
 
+        {/* 아주 좁은 화면: 전화번호를 크게 */}
+        <a
+          translate="no"
+          href={`tel:${CLINIC_PHONE.replaceAll('-', '')}`}
+          className="mt-3 flex h-11 items-center justify-center gap-2 rounded-full bg-white/10 text-[20px] font-black text-white sm:hidden"
+        >
+          <span className="text-[13px] font-bold tracking-[0.12em] text-[#4da3ff]">TEL</span>
+          {CLINIC_PHONE}
+        </a>
+
         {/* =================================================
             MOBILE MENU
         ================================================== */}
         {isOpen && (
-          <div className="animate-in fade-in slide-in-from-top-2 absolute left-0 top-full flex w-full flex-col border-t border-white/10 bg-[#001d4a] pb-7 text-center shadow-2xl duration-200 lg:hidden">
+          <div className="animate-in fade-in slide-in-from-top-2 absolute left-0 top-full flex w-full flex-col border-t border-white/10 bg-[#001d4a] pb-7 text-center shadow-2xl duration-200 xl:hidden">
 
             {menuItems.map((item) => (
               <Link
@@ -618,7 +631,7 @@ const Navbar = () => {
                   '-',
                   '',
                 )}`}
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 text-[14px] font-black text-white"
+                className="flex h-14 w-full items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 text-[19px] font-black text-white"
               >
                 <span className="text-[#4da3ff]">
                   TEL

@@ -1,12 +1,14 @@
 'use client';
 
 import { FormEvent, useEffect, useState } from 'react';
+import Reveal from './Reveal';
 
 const treatments = [
   '임플란트',
   '자연치아 보존',
   '사랑니 · 구강외과',
   '충치 · 보철',
+  '턱관절 · 외상치료',
   '잇몸치료',
   '기타 상담',
 ];
@@ -33,6 +35,13 @@ const QuickConsultation = () => {
       }
     };
 
+    // 다른 페이지에서 상담하기를 눌러 이동해 온 경우
+    const pending = window.sessionStorage.getItem('consultation-treatment');
+    if (pending) {
+      window.sessionStorage.removeItem('consultation-treatment');
+      if (treatments.includes(pending)) setTreatment(pending);
+    }
+
     window.addEventListener(
       'select-consultation-treatment',
       handleTreatmentSelection,
@@ -51,7 +60,7 @@ const QuickConsultation = () => {
 
     if (!name.trim() || !phone.trim() || !treatment || !privacy) {
       setSubmitState('error');
-      setMessage('이름, 연락처, 진료과목과 개인정보 동의를 확인해주세요.');
+      setMessage('이름, 연락처, 진료과목과 개인정보 동의를 확인해 주세요.');
       return;
     }
 
@@ -90,7 +99,7 @@ const QuickConsultation = () => {
       setMessage(
         error instanceof Error
           ? error.message
-          : '잠시 후 다시 시도해주세요.',
+          : '잠시 후 다시 시도해 주세요.',
       );
     }
   };
@@ -103,12 +112,15 @@ const QuickConsultation = () => {
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <div className="overflow-hidden rounded-[20px] border border-white/10 bg-white lg:grid lg:grid-cols-[0.72fr_1.28fr]">
           {/* LEFT */}
-          <div className="relative overflow-hidden bg-[#0b2b50] px-6 py-7 text-white md:px-8 md:py-9">
+          <Reveal
+            variant="left"
+            className="relative overflow-hidden bg-[#0b2b50] px-6 py-7 text-white md:px-8 md:py-9"
+          >
             <div className="absolute -right-16 -top-16 h-52 w-52 rounded-full border border-white/[0.06]" />
             <div className="absolute -right-7 -top-7 h-36 w-36 rounded-full border border-white/[0.08]" />
 
             <div className="relative z-10">
-              <p className="text-[9px] font-bold tracking-[0.28em] text-[#8ec5ff]">
+              <p className="text-[11px] font-bold tracking-[0.28em] text-[#8ec5ff]">
                 QUICK CONSULTATION
               </p>
 
@@ -116,10 +128,10 @@ const QuickConsultation = () => {
                 간편 상담신청
               </h2>
 
-              <p className="mt-3 max-w-sm text-[18px] leading-[1.75] text-white/60 md:text-[13px]">
-                궁금하신 진료를 선택해 남겨주시면
+              <p className="mt-3 max-w-sm text-[18px] leading-[1.75] text-white/60 md:text-[15px]">
+                궁금하신 진료를 선택해 남겨 주세요.
                 <br className="hidden md:block" />
-                확인 후 상담을 도와드립니다.
+                내용을 확인한 뒤 안내드립니다.
               </p>
 
               <div className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
@@ -136,18 +148,19 @@ const QuickConsultation = () => {
                 </div>
 
                 <div>
-                  <p className="text-[15px] text-white/45">
+                  <p className="text-[17px] text-white/45">
                     상담 내용을 확인한 후
                   </p>
-                  <p className="mt-0.5 text-[15px] font-semibold">
+                  <p className="mt-0.5 text-[17px] font-semibold">
                     순차적으로 연락드립니다.
                   </p>
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* FORM */}
+          <Reveal variant="right" delay={150}>
           <form
             onSubmit={submit}
             className="bg-white px-5 py-6 md:px-8 md:py-8"
@@ -161,9 +174,9 @@ const QuickConsultation = () => {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="성함을 입력해주세요"
+                  placeholder="성함을 입력해 주세요"
                   autoComplete="name"
-                  className="h-12 w-full rounded-xl border border-[#dfe5ec] bg-[#fafbfd] px-4 text-[13px] text-[#071b33] outline-none transition placeholder:text-gray-300 focus:border-[#2f89fc] focus:bg-white"
+                  className="h-12 w-full rounded-xl border border-[#dfe5ec] bg-[#fafbfd] px-4 text-[15px] text-[#071b33] outline-none transition placeholder:text-gray-300 focus:border-[#2f89fc] focus:bg-white"
                 />
               </label>
 
@@ -178,7 +191,7 @@ const QuickConsultation = () => {
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="010-0000-0000"
                   autoComplete="tel"
-                  className="h-12 w-full rounded-xl border border-[#dfe5ec] bg-[#fafbfd] px-4 text-[13px] text-[#071b33] outline-none transition placeholder:text-gray-300 focus:border-[#2f89fc] focus:bg-white"
+                  className="h-12 w-full rounded-xl border border-[#dfe5ec] bg-[#fafbfd] px-4 text-[15px] text-[#071b33] outline-none transition placeholder:text-gray-300 focus:border-[#2f89fc] focus:bg-white"
                 />
               </label>
             </div>
@@ -198,7 +211,7 @@ const QuickConsultation = () => {
                       key={item}
                       onClick={() => setTreatment(item)}
                       className={[
-                        'h-10 rounded-lg border px-2 text-[10px] font-semibold transition md:text-[11px]',
+                        'h-10 rounded-lg border px-2 text-[12px] font-semibold transition md:text-[13px]',
                         active
                           ? 'border-[#176fc2] bg-[#071b33] text-white'
                           : 'border-[#dfe5ec] bg-white text-gray-500 hover:border-[#7ebaff] hover:text-[#176fc2]',
@@ -221,7 +234,7 @@ const QuickConsultation = () => {
                   className="mt-[2px] h-4 w-4 accent-[#176fc2]"
                 />
 
-                <span className="text-[12px] leading-[1.55] text-gray-400 md:text-[10px]">
+                <span className="text-[14px] leading-[1.55] text-gray-400 md:text-[12px]">
                   상담을 위한 개인정보 수집·이용에 동의합니다.
                   <br />
                   <span className="text-gray-300">
@@ -233,7 +246,7 @@ const QuickConsultation = () => {
               <button
                 type="submit"
                 disabled={submitState === 'loading'}
-                className="flex h-12 min-w-[160px] shrink-0 items-center justify-center rounded-xl bg-[#071b33] px-7 text-[12px] font-bold text-white transition hover:bg-[#12365d] disabled:cursor-not-allowed disabled:opacity-60"
+                className="flex h-12 min-w-[160px] shrink-0 items-center justify-center rounded-xl bg-[#071b33] px-7 text-[14px] font-bold text-white transition hover:bg-[#12365d] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {submitState === 'loading'
                   ? '접수 중...'
@@ -244,7 +257,7 @@ const QuickConsultation = () => {
             {message && (
               <p
                 className={[
-                  'mt-3 rounded-lg px-3 py-2 text-[10px] font-medium',
+                  'mt-3 rounded-lg px-3 py-2 text-[12px] font-medium',
                   submitState === 'success'
                     ? 'bg-emerald-50 text-emerald-700'
                     : 'bg-red-50 text-red-600',
@@ -255,6 +268,7 @@ const QuickConsultation = () => {
               </p>
             )}
           </form>
+          </Reveal>
         </div>
       </div>
     </section>

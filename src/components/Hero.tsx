@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Reveal from './Reveal';
+import { stagger } from './stagger';
+import TextReveal from './TextReveal';
 
 const slides = [
   {
@@ -90,31 +93,41 @@ const Hero = () => {
           </div>
 
           <div className="relative z-10 mx-auto w-full max-w-[720px] lg:mx-0">
-            <p className="text-[9px] font-bold tracking-[0.28em] text-[#7db9ff] md:text-[10px]">
-              YONSEI · SEVERANCE · GENERAL HOSPITAL EXPERIENCE
-            </p>
+            <Reveal variant="fade" delay={100}>
+              <p className="text-[11px] font-bold tracking-[0.28em] text-[#7db9ff] md:text-[12px]">
+                YONSEI · SEVERANCE · GENERAL HOSPITAL EXPERIENCE
+              </p>
+            </Reveal>
 
-            <h1 className="mt-5 text-[38px] font-semibold leading-[1.18] tracking-[-0.055em] md:text-[54px] lg:text-[58px]">
-              세브란스에서의
-              <br />
-              진료 기준,
-              <br />
-              <span className="text-[#8ec5ff]">
-                종합병원에서 쌓은 경험.
-              </span>
-            </h1>
+            <TextReveal
+              as="h1"
+              delay={250}
+              stagger={140}
+              duration={1000}
+              className="mt-5 text-[38px] font-semibold leading-[1.18] tracking-[-0.055em] md:text-[54px] lg:text-[58px]"
+              lines={[
+                '세브란스에서의',
+                '진료 기준,',
+                <span key="exp" className="text-[#8ec5ff]">
+                  종합병원에서 쌓은 경험.
+                </span>,
+              ]}
+            />
 
-            <p className="mt-6 max-w-xl text-[15px] leading-[1.85] text-white/68 md:text-[17px]">
-              연세대학교 치과대학을 졸업하고 신촌세브란스 치과대학병원과
-              2차 종합병원에서 임상 경험을 쌓은 대표원장이
-              직접 진료합니다.
-            </p>
+            <Reveal variant="soft" delay={750} className="mt-6 max-w-xl">
+              <p className="text-[17px] leading-[1.85] text-white/68 md:text-[19px]">
+                연세대학교 치과대학을 졸업하고 신촌세브란스 치과대학병원과
+                2차 종합병원에서 임상 경험을 쌓은 대표원장이
+                직접 진료합니다.
+              </p>
+            </Reveal>
 
-            <div className="mt-7 flex flex-wrap gap-2">
+            <Reveal variant="soft" delay={900} className="mt-7">
+            <div className="flex flex-wrap gap-2">
               <button
                 type="button"
                 onClick={goConsultation}
-                className="flex h-12 min-w-[150px] items-center justify-center rounded-xl bg-white px-5 text-[12px] font-bold text-[#071b33] transition hover:bg-[#eaf3ff]"
+                className="flex h-12 min-w-[150px] items-center justify-center rounded-xl bg-white px-5 text-[14px] font-bold text-[#071b33] transition hover:bg-[#eaf3ff]"
               >
                 진료 상담하기
               </button>
@@ -122,38 +135,48 @@ const Hero = () => {
               <button
                 type="button"
                 onClick={goDoctors}
-                className="flex h-12 min-w-[150px] items-center justify-center rounded-xl border border-white/20 bg-white/[0.06] px-5 text-[12px] font-bold text-white transition hover:bg-white/10"
+                className="flex h-12 min-w-[150px] items-center justify-center rounded-xl border border-white/20 bg-white/[0.06] px-5 text-[14px] font-bold text-white transition hover:bg-white/10"
               >
                 의료진 자세히 보기
               </button>
             </div>
+            </Reveal>
 
             {/* USP */}
             <div className="mt-9 grid gap-2.5 md:grid-cols-3">
-              {usp.map((item) => (
-                <div
+              {usp.map((item, index) => (
+                <Reveal
                   key={item.eyebrow}
-                  className="rounded-[14px] border border-white/10 bg-white/[0.055] p-4 backdrop-blur-md"
+                  variant="soft"
+                  delay={1000 + stagger(index, 110)}
+                  className="h-full"
                 >
-                  <p className="text-[8px] font-bold tracking-[0.16em] text-[#7db9ff]">
-                    {item.eyebrow}
-                  </p>
+                  <div className="h-full rounded-[14px] border border-white/10 bg-white/[0.055] p-4 backdrop-blur-md">
+                    <p className="text-[10px] font-bold tracking-[0.16em] text-[#7db9ff]">
+                      {item.eyebrow}
+                    </p>
 
-                  <p className="mt-1.5 text-[13px] font-bold text-white">
-                    {item.title}
-                  </p>
+                    <p className="mt-1.5 text-[15px] font-bold text-white">
+                      {item.title}
+                    </p>
 
-                  <p className="mt-1.5 text-[10px] leading-[1.6] text-white/48">
-                    {item.detail}
-                  </p>
-                </div>
+                    <p className="mt-1.5 text-[12px] leading-[1.6] text-white/48">
+                      {item.detail}
+                    </p>
+                  </div>
+                </Reveal>
               ))}
             </div>
           </div>
         </div>
 
         {/* RIGHT VISUAL */}
-        <div className="relative min-h-[360px] lg:min-h-0">
+        <Reveal
+          variant="fade"
+          duration={1400}
+          delay={300}
+          className="relative min-h-[360px] lg:min-h-0"
+        >
           {slides.map((slide, index) => (
             <div
               key={slide.image}
@@ -179,10 +202,10 @@ const Hero = () => {
           {/* visual caption */}
           <div className="absolute bottom-6 left-5 right-5 z-10 flex items-end justify-between gap-4 md:bottom-8 md:left-8 md:right-8">
             <div className="rounded-xl border border-white/15 bg-[#06182e]/55 px-4 py-3 backdrop-blur-md">
-              <p className="text-[8px] font-bold tracking-[0.2em] text-[#8ec5ff]">
+              <p className="text-[10px] font-bold tracking-[0.2em] text-[#8ec5ff]">
                 {slides[current].label}
               </p>
-              <p className="mt-1 text-[12px] font-semibold text-white md:text-[13px]">
+              <p className="mt-1 text-[14px] font-semibold text-white md:text-[15px]">
                 {slides[current].caption}
               </p>
             </div>
@@ -204,7 +227,7 @@ const Hero = () => {
               ))}
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

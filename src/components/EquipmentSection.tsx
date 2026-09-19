@@ -1,13 +1,16 @@
 'use client';
 
 import Image from 'next/image';
+import Reveal from '@/components/Reveal';
+import RevealImage from '@/components/RevealImage';
+import TextReveal from '@/components/TextReveal';
 
 const equipmentList = [
   {
     id: 1,
     tag: '3D DIAGNOSIS',
     name: '3D 구강 CT',
-    desc: '치아와 잇몸뼈, 신경관 등 육안으로 확인하기 어려운 구조를 입체적으로 확인하여 치료 계획을 세우는 데 활용합니다.',
+    desc: '치아와 잇몸뼈, 신경관처럼 육안으로 확인하기 어려운 구조를 3차원 영상으로 살펴, 치료 계획을 세우는 데 활용합니다.',
     img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=1200&auto=format&fit=crop',
     reason:
       '정확한 진단이 치료의 시작이라고 생각하기 때문입니다.',
@@ -38,21 +41,28 @@ export const EquipmentSection = () => {
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}
         <div className="max-w-4xl">
-          <p className="text-[10px] font-bold tracking-[0.32em] text-[#2f89fc] md:text-[11px]">
-            SEVERANCE STANDARD
-          </p>
+          <Reveal variant="fade">
+            <p className="text-[12px] font-bold tracking-[0.32em] text-[#2f89fc] md:text-[13px]">
+              SEVERANCE STANDARD
+            </p>
+          </Reveal>
 
-          <h2 className="mt-5 text-4xl font-semibold leading-[1.35] tracking-[-0.035em] text-[#071b33] md:text-5xl">
-          수원세브란스치과는 세브란스치과대학병원과 동일한
-            <br />
-            모델의 장비를 사용하여 진단합니다.
-          </h2>
+          <TextReveal
+            delay={120}
+            className="mt-5 text-4xl font-semibold leading-[1.35] tracking-[-0.035em] text-[#071b33] md:text-5xl"
+            lines={[
+              '수원세브란스치과는 세브란스치과대학병원과',
+              '동일한 모델의 장비를 포함해 진단합니다.',
+            ]}
+          />
 
-          <p className="mt-7 max-w-2xl text-[15px] leading-[1.95] text-gray-500 md:text-[17px]">
-            좋은 장비 자체가 좋은 치료를 만드는 것은 아닙니다.
-            정확한 판단을 돕는 도구이기에,
-            진료 목적과 기준에 맞춰 장비를 선택합니다.
-          </p>
+          <Reveal variant="soft" delay={400}>
+            <p className="mt-7 max-w-2xl text-[17px] leading-[1.95] text-gray-500 md:text-[19px]">
+              좋은 장비 자체가 좋은 치료를 만드는 것은 아닙니다.
+              정확한 판단을 돕는 도구이기에,
+              진료 목적과 기준에 맞춰 장비를 선택합니다.
+            </p>
+          </Reveal>
         </div>
 
         {/* Equipment */}
@@ -62,8 +72,9 @@ export const EquipmentSection = () => {
               key={item.id}
               className="grid overflow-hidden border border-gray-100 bg-[#fafafa] md:grid-cols-2"
             >
-              <div
-                className={`relative min-h-[320px] md:min-h-[440px] ${
+              <RevealImage
+                parallax={24}
+                className={`min-h-[320px] md:min-h-[440px] ${
                   index % 2 === 1 ? 'md:order-2' : ''
                 }`}
               >
@@ -75,14 +86,16 @@ export const EquipmentSection = () => {
                 />
 
                 <div className="absolute inset-0 bg-[#071b33]/10" />
-              </div>
+              </RevealImage>
 
-              <div
+              <Reveal
+                variant={index % 2 === 1 ? 'left' : 'right'}
+                delay={150}
                 className={`flex flex-col justify-center p-8 md:p-14 ${
                   index % 2 === 1 ? 'md:order-1' : ''
                 }`}
               >
-                <p className="text-[10px] font-semibold tracking-[0.25em] text-[#2f89fc]">
+                <p className="text-[12px] font-semibold tracking-[0.25em] text-[#2f89fc]">
                   0{index + 1} · {item.tag}
                 </p>
 
@@ -90,16 +103,16 @@ export const EquipmentSection = () => {
                   {item.name}
                 </h3>
 
-                <p className="mt-6 text-[14px] leading-[1.9] text-gray-500 md:text-[15px]">
+                <p className="mt-6 text-[16px] leading-[1.9] text-gray-500 md:text-[17px]">
                   {item.desc}
                 </p>
 
                 <div className="mt-6 border-t border-gray-200 pt-5">
-                  <p className="text-[10px] font-semibold tracking-[0.2em] text-gray-400">
+                  <p className="text-[12px] font-semibold tracking-[0.2em] text-gray-400">
                     WHY WE CHOSE IT
                   </p>
 
-                  <p className="mt-3 text-[15px] font-medium leading-[1.8] text-[#071b33] md:text-[16px]">
+                  <p className="mt-3 text-[17px] font-medium leading-[1.8] text-[#071b33] md:text-[18px]">
                     {item.reason}
                   </p>
                 </div>
@@ -109,17 +122,17 @@ export const EquipmentSection = () => {
                   객관적으로 확인되는 장비에만 아래 Badge 활성화
 
                   <div className="mt-6">
-                    <span className="border border-[#2f89fc]/30 bg-[#2f89fc]/5 px-3 py-2 text-[11px] font-semibold text-[#2f89fc]">
+                    <span className="border border-[#2f89fc]/30 bg-[#2f89fc]/5 px-3 py-2 text-[13px] font-semibold text-[#2f89fc]">
                       세브란스 치과대학병원 동일 모델
                     </span>
                   </div>
                 */}
-              </div>
+              </Reveal>
             </div>
           ))}
         </div>
 
-        <p className="mt-8 text-[11px] leading-relaxed text-gray-400">
+        <p className="mt-8 text-[13px] leading-relaxed text-gray-400">
           * 실제 도입 장비 및 모델에 따라 내용은 변경될 수 있습니다.
         </p>
       </div>

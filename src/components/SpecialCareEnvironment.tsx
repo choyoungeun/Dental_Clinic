@@ -1,4 +1,8 @@
 import Image from 'next/image';
+import Reveal from './Reveal';
+import { stagger } from './stagger';
+import RevealImage from './RevealImage';
+import TextReveal from './TextReveal';
 
 const cards = [
   {
@@ -50,44 +54,50 @@ const SpecialCareEnvironment = () => {
     >
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <div className="mb-7 md:mb-9">
-          <p className="text-[10px] font-bold tracking-[0.28em] text-[#2f89fc]">
-            SPECIAL CARE ENVIRONMENT
-          </p>
+          <Reveal variant="fade">
+            <p className="text-[12px] font-bold tracking-[0.28em] text-[#2f89fc]">
+              SPECIAL CARE ENVIRONMENT
+            </p>
+          </Reveal>
 
           <div className="mt-2 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <h2 className="text-3xl font-semibold leading-[1.35] tracking-[-0.045em] text-[#071b33] md:text-4xl">
-              치료를 위한 환경도
-              <br />
-              기준 있게 준비했습니다.
-            </h2>
+            <TextReveal
+              delay={120}
+              className="text-3xl font-semibold leading-[1.35] tracking-[-0.045em] text-[#071b33] md:text-4xl"
+              lines={['치료를 위한 환경도', '기준 있게 준비했습니다.']}
+            />
 
-            <p className="max-w-md text-[13px] leading-[1.75] text-gray-500 md:text-right md:text-[14px]">
-              의료진의 경험, 충분한 공간, 대학병원 급의 정밀 진단 장비까지
-              <br className="hidden md:block" />
-              진료의 기본이 되는 환경부터 꼼꼼하게 준비합니다.
-            </p>
+            <Reveal variant="soft" delay={320}>
+              <p className="max-w-md text-[15px] leading-[1.75] text-gray-500 md:text-right md:text-[16px]">
+                의료진의 경험, 충분한 공간, 정밀 진단 장비까지
+                <br className="hidden md:block" />
+                진료의 바탕이 되는 환경을 하나씩 갖추었습니다.
+              </p>
+            </Reveal>
           </div>
         </div>
 
         <div className="grid gap-3 lg:grid-cols-3">
-          {cards.map((card) => (
+          {cards.map((card, index) => (
+            <Reveal key={card.number} delay={stagger(index, 120)} className="h-full">
             <article
-              key={card.number}
-              className="overflow-hidden rounded-[18px] border border-[#dfe5ec] bg-white shadow-[0_8px_28px_rgba(7,27,51,0.05)]"
+              className="group h-full overflow-hidden rounded-[18px] border border-[#dfe5ec] bg-white shadow-[0_8px_28px_rgba(7,27,51,0.05)]"
             >
               <div className="relative h-[190px] overflow-hidden md:h-[220px]">
-                <Image
-                  src={card.image}
-                  alt={card.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 33vw"
-                  className="object-cover"
-                />
+                <RevealImage className="absolute inset-0" delay={stagger(index, 120) + 150}>
+                  <Image
+                    src={card.image}
+                    alt={card.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                    className="object-cover"
+                  />
+                </RevealImage>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#071b33]/70 via-[#071b33]/10 to-transparent" />
 
                 <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
                   <div>
-                    <p className="text-[8px] font-bold tracking-[0.18em] text-[#8ec5ff]">
+                    <p className="text-[10px] font-bold tracking-[0.18em] text-[#8ec5ff]">
                       {card.label}
                     </p>
                     <p className="mt-1 text-[18px] font-bold tracking-[-0.03em] text-white">
@@ -102,7 +112,7 @@ const SpecialCareEnvironment = () => {
               </div>
 
               <div className="p-5 md:p-6">
-                <h3 className="text-[17px] font-bold leading-[1.5] tracking-[-0.025em] text-[#071b33] md:text-[19px]">
+                <h3 className="text-[19px] font-bold leading-[1.5] tracking-[-0.025em] text-[#071b33] md:text-[19px]">
                   {card.title}
                 </h3>
 
@@ -110,7 +120,7 @@ const SpecialCareEnvironment = () => {
                   {card.lines.map((line) => (
                     <div key={line} className="flex items-start gap-2.5">
                       <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#2f89fc]" />
-                      <p className="text-[13px] leading-[1.65] text-gray-500 md:text-[14px]">
+                      <p className="text-[15px] leading-[1.65] text-gray-500 md:text-[16px]">
                         {line}
                       </p>
                     </div>
@@ -118,12 +128,13 @@ const SpecialCareEnvironment = () => {
                 </div>
 
                 <div className="mt-5 border-t border-gray-100 pt-4">
-                  <span className="inline-flex rounded-full bg-[#eef5fd] px-3 py-1.5 text-[9px] font-bold tracking-[0.1em] text-[#176fc2]">
+                  <span className="inline-flex rounded-full bg-[#eef5fd] px-3 py-1.5 text-[11px] font-bold tracking-[0.1em] text-[#176fc2]">
                     {card.badge}
                   </span>
                 </div>
               </div>
             </article>
+            </Reveal>
           ))}
         </div>
 

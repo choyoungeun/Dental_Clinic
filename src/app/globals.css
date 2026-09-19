@@ -89,3 +89,117 @@ body {
     animation: none;
   }
 }
+
+/* =========================================================
+   SCROLL REVEAL  (Reveal / TextReveal / RevealImage)
+   - transform / opacity 만 사용해 layout shift 없음
+   - 모바일은 이동거리를 줄이고, reduced-motion 은 즉시 표시
+========================================================= */
+
+:root {
+  --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-k: 1; /* 움직임 강도 (모바일에서 줄임) */
+}
+
+@media (max-width: 767px) {
+  :root {
+    --reveal-k: 0.55;
+  }
+}
+
+/* 섹션/카드/문단 */
+.reveal {
+  --reveal-x: 0px;
+  --reveal-y: 48px;
+  opacity: 0;
+  transform: translate3d(
+    calc(var(--reveal-x) * var(--reveal-k)),
+    calc(var(--reveal-y) * var(--reveal-k)),
+    0
+  );
+  transition:
+    opacity var(--reveal-duration, 900ms) var(--reveal-ease) var(--reveal-delay, 0ms),
+    transform var(--reveal-duration, 900ms) var(--reveal-ease) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal[data-reveal='soft'] { --reveal-y: 24px; }
+.reveal[data-reveal='fade'] { --reveal-y: 0px; }
+.reveal[data-reveal='left'] { --reveal-x: -40px; --reveal-y: 0px; }
+.reveal[data-reveal='right'] { --reveal-x: 40px; --reveal-y: 0px; }
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* 제목 줄 단위 마스크 */
+.text-reveal__mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.text-reveal__line {
+  display: block;
+  opacity: 0;
+  transform: translate3d(0, 105%, 0);
+  transition:
+    transform var(--reveal-duration, 900ms) var(--reveal-ease) var(--reveal-delay, 0ms),
+    opacity calc(var(--reveal-duration, 900ms) * 0.7) ease-out var(--reveal-delay, 0ms);
+  will-change: transform, opacity;
+}
+
+.text-reveal.is-visible .text-reveal__line {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* 이미지 : opacity + scale(1.04 → 1), hover 느린 zoom */
+.reveal-image__inner {
+  opacity: 0;
+  transform: scale(1.04);
+  transition:
+    opacity 1000ms ease-out var(--reveal-delay, 0ms),
+    transform 1400ms var(--reveal-ease) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal-image.is-visible .reveal-image__inner {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* parallax(translate)와 hover zoom(scale)은 개별 속성이라 서로 간섭하지 않음 */
+.reveal-image__layer {
+  translate: 0 var(--parallax-y, 0px);
+  transition: scale 1600ms var(--reveal-ease);
+}
+
+.reveal-image--zoom:hover .reveal-image__layer,
+.group:hover .reveal-image--zoom .reveal-image__layer {
+  scale: 1.03;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .text-reveal__line,
+  .reveal-image__inner {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .reveal-image__layer {
+    transition: none;
+  }
+
+  .reveal-image--zoom:hover .reveal-image__layer,
+  .group:hover .reveal-image--zoom .reveal-image__layer {
+    scale: 1;
+  }
+}

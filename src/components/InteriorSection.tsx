@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Reveal from './Reveal';
+import { stagger } from './stagger';
+import RevealImage from './RevealImage';
+import TextReveal from './TextReveal';
 
 const photos = [
   {
@@ -61,20 +65,26 @@ export const InteriorSection = () => {
         {/* HEADER */}
         <div className="mb-7 flex flex-col gap-3 md:mb-9 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-[10px] font-bold tracking-[0.28em] text-[#2f89fc]">
-              CLINIC TOUR
-            </p>
+            <Reveal variant="fade">
+              <p className="text-[12px] font-bold tracking-[0.28em] text-[#2f89fc]">
+                CLINIC TOUR
+              </p>
+            </Reveal>
 
-            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#071b33] md:text-4xl">
-              치과 둘러보기
-            </h2>
+            <TextReveal
+              delay={120}
+              className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#071b33] md:text-4xl"
+              lines={['치과 둘러보기']}
+            />
           </div>
 
-          <p className="max-w-md text-[12px] leading-[1.75] text-gray-500 md:text-right md:text-[13px]">
-            환자분이 머무는 공간부터 진료 공간까지
-            <br className="hidden md:block" />
-            편안하고 쾌적한 진료 환경을 준비합니다.
-          </p>
+          <Reveal variant="soft" delay={300}>
+            <p className="max-w-md text-[14px] leading-[1.75] text-gray-500 md:text-right md:text-[15px]">
+              환자분이 머무는 공간부터 진료 공간까지
+              <br className="hidden md:block" />
+              편안하고 쾌적한 진료 환경을 준비합니다.
+            </p>
+          </Reveal>
         </div>
 
         {/* GALLERY */}
@@ -84,13 +94,11 @@ export const InteriorSection = () => {
             const wide = index === 1;
 
             return (
-              <button
-                type="button"
+              <Reveal
                 key={photo.src}
-                onClick={() => setSelected(photo)}
+                delay={stagger(index, 110)}
                 className={[
-                  'group relative overflow-hidden rounded-[16px] bg-[#eef2f6] text-left',
-                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2f89fc] focus-visible:ring-offset-2',
+                  'relative',
                   featured
                     ? 'col-span-2 aspect-[16/10] lg:row-span-2 lg:aspect-auto lg:min-h-[470px]'
                     : '',
@@ -101,48 +109,63 @@ export const InteriorSection = () => {
                     ? 'aspect-[4/3] lg:aspect-auto'
                     : '',
                 ].join(' ')}
+              >
+              <button
+                type="button"
+                onClick={() => setSelected(photo)}
+                className={[
+                  'group absolute inset-0 overflow-hidden rounded-[16px] bg-[#eef2f6] text-left',
+                  'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2f89fc] focus-visible:ring-offset-2',
+                ].join(' ')}
                 aria-label={`${photo.title} 크게 보기`}
               >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  sizes={
-                    featured
-                      ? '(max-width: 1024px) 100vw, 50vw'
-                      : '(max-width: 1024px) 50vw, 25vw'
-                  }
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.035]"
-                />
+                <RevealImage
+                  className="absolute inset-0"
+                  parallax={featured ? 16 : 0}
+                  delay={stagger(index, 110) + 150}
+                >
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    fill
+                    sizes={
+                      featured
+                        ? '(max-width: 1024px) 100vw, 50vw'
+                        : '(max-width: 1024px) 50vw, 25vw'
+                    }
+                    className="object-cover"
+                  />
+                </RevealImage>
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[#06182e]/70 via-[#06182e]/5 to-transparent" />
 
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
-                  <p className="text-[8px] font-bold tracking-[0.18em] text-[#8ec5ff] md:text-[9px]">
+                  <p className="text-[10px] font-bold tracking-[0.18em] text-[#8ec5ff] md:text-[11px]">
                     {photo.label}
                   </p>
 
                   <div className="mt-1 flex items-end justify-between gap-3">
-                    <h3 className="text-[15px] font-semibold tracking-[-0.025em] text-white md:text-[19px]">
+                    <h3 className="text-[17px] font-semibold tracking-[-0.025em] text-white md:text-[19px]">
                       {photo.title}
                     </h3>
 
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/10 text-sm text-white backdrop-blur-sm transition group-hover:bg-white group-hover:text-[#071b33]">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/10 text-base text-white backdrop-blur-sm transition group-hover:bg-white group-hover:text-[#071b33]">
                       +
                     </span>
                   </div>
                 </div>
               </button>
+              </Reveal>
             );
           })}
         </div>
 
         <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
-          <p className="text-[10px] leading-[1.6] text-gray-400 md:text-[11px]">
+          <p className="text-[12px] leading-[1.6] text-gray-400 md:text-[13px]">
             사진을 선택하면 크게 확인하실 수 있습니다.
           </p>
 
-          <span className="text-[9px] font-bold tracking-[0.18em] text-[#071b33]/35">
+          <span className="text-[11px] font-bold tracking-[0.18em] text-[#071b33]/35">
             SUWON SEVERANCE DENTAL
           </span>
         </div>
@@ -180,10 +203,10 @@ export const InteriorSection = () => {
             </div>
 
             <div className="mt-3 text-center">
-              <p className="text-[9px] font-bold tracking-[0.18em] text-[#8ec5ff]">
+              <p className="text-[11px] font-bold tracking-[0.18em] text-[#8ec5ff]">
                 {selected.label}
               </p>
-              <p className="mt-1 text-sm font-semibold text-white">
+              <p className="mt-1 text-base font-semibold text-white">
                 {selected.title}
               </p>
             </div>

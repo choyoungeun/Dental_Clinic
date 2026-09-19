@@ -1,3 +1,7 @@
+import Reveal from './Reveal';
+import { stagger } from './stagger';
+import TextReveal from './TextReveal';
+
 const principles = [
   {
     number: '01',
@@ -26,29 +30,34 @@ const BrandPrinciples = () => {
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <div>
-          <p className="text-[10px] font-semibold tracking-[0.32em] text-[#79b6ff] md:text-[11px]">
-            OUR STANDARD
-          </p>
+          <Reveal variant="fade">
+            <p className="text-[12px] font-semibold tracking-[0.32em] text-[#79b6ff] md:text-[13px]">
+              OUR STANDARD
+            </p>
+          </Reveal>
 
-          <h2 className="mt-5 text-3xl font-semibold leading-[1.45] tracking-[-0.03em] md:text-5xl">
-            진료의 기준을
-            <br />
-            먼저 세웁니다.
-          </h2>
+          <TextReveal
+            delay={120}
+            className="mt-5 text-3xl font-semibold leading-[1.45] tracking-[-0.03em] md:text-5xl"
+            lines={['진료의 기준을', '먼저 세웁니다.']}
+          />
 
-          <p className="mt-4 max-w-xl text-[15px] leading-[1.9] text-white/50 md:text-[17px]">
-            의료진이 달라져도,
-            수원세브란스치과가 지키는 진료의 기준은 같아야 한다고 생각합니다.
-          </p>
+          <Reveal variant="soft" delay={380}>
+            <p className="mt-4 max-w-xl text-[17px] leading-[1.9] text-white/50 md:text-[19px]">
+              의료진이 달라져도,
+              수원세브란스치과가 지키는 진료의 기준은 같아야 한다고 생각합니다.
+            </p>
+          </Reveal>
         </div>
 
         <div className="mt-12 grid gap-0 md:grid-cols-3">
-          {principles.map((item) => (
-            <div
+          {principles.map((item, index) => (
+            <Reveal
               key={item.number}
+              delay={stagger(index, 150)}
               className="group border-t border-white/15 py-7 md:border-l md:border-t-0 md:px-10 md:py-4 md:first:border-l-0"
             >
-              <span className="text-[10px] tracking-[0.28em] text-white/30">
+              <span className="text-[12px] tracking-[0.28em] text-white/30">
                 {item.number} / {item.eng}
               </span>
 
@@ -56,12 +65,12 @@ const BrandPrinciples = () => {
                 {item.title}
               </h3>
 
-              <p className="mt-5 max-w-sm text-[14px] leading-[1.9] text-white/50 md:text-[15px]">
+              <p className="mt-5 max-w-sm text-[16px] leading-[1.9] text-white/50 md:text-[17px]">
                 {item.desc}
               </p>
 
               <div className="mt-5 h-px w-8 bg-[#79b6ff]/60 transition-all duration-500 group-hover:w-16" />
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>

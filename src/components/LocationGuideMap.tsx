@@ -541,7 +541,7 @@ const LocationGuideMap = () => {
             경수대로 969 · 한국메디컬빌딩 2층
           </p>
           <p className="mt-1 text-[10px] leading-[1.6] text-gray-400">
-            내비게이션에는 도로명 주소를 입력해주세요.
+            내비게이션에는 도로명 주소를 입력해 주세요.
           </p>
         </div>
       </div>

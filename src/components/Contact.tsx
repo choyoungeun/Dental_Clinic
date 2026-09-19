@@ -2,6 +2,8 @@
 
 import dynamic from 'next/dynamic';
 import LocationGuideMap from './LocationGuideMap';
+import Reveal from './Reveal';
+import TextReveal from './TextReveal';
 
 /* =========================================================
    NAVER MAP
@@ -10,7 +12,7 @@ import LocationGuideMap from './LocationGuideMap';
 const NaverMap = dynamic(() => import('./NaverMap'), {
   ssr: false,
   loading: () => (
-    <div className="flex h-full w-full items-center justify-center bg-gray-100 text-sm text-gray-400">
+    <div className="flex h-full w-full items-center justify-center bg-gray-100 text-base text-gray-400">
       지도를 불러오는 중입니다...
     </div>
   ),
@@ -98,33 +100,37 @@ const Contact = () => {
         ================================================= */}
         <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-[10px] font-bold tracking-[0.28em] text-[#2f89fc]">
-              LOCATION
-            </p>
+            <Reveal variant="fade">
+              <p className="text-[12px] font-bold tracking-[0.28em] text-[#2f89fc]">
+                LOCATION
+              </p>
+            </Reveal>
 
-            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#071b33] md:text-4xl">
-              오시는 길
-            </h2>
+            <TextReveal
+              delay={120}
+              className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#071b33] md:text-4xl"
+              lines={['오시는 길']}
+            />
           </div>
 
-          <div className="md:text-right">
-            <p className="text-[13px] font-semibold text-[#071b33] md:text-[14px]">
+          <Reveal variant="soft" delay={300} className="md:text-right">
+            <p className="text-[15px] font-semibold text-[#071b33] md:text-[16px]">
               경기 수원시 장안구 경수대로 969
             </p>
 
-            <p className="mt-0.5 text-[11px] text-gray-400 md:text-[12px]">
+            <p className="mt-0.5 text-[13px] text-gray-400 md:text-[14px]">
               한국메디컬빌딩 2층
             </p>
-          </div>
+          </Reveal>
         </div>
 
 
         {/* =================================================
             EASY GUIDE MAP
         ================================================= */}
-        <div className="mb-4 md:mb-5">
+        <Reveal variant="soft" className="mb-4 md:mb-5">
           <LocationGuideMap />
-        </div>
+        </Reveal>
 
 
         {/* =================================================
@@ -146,7 +152,7 @@ const Contact = () => {
           {/* =========================
               REAL MAP
           ========================= */}
-          <div className="relative h-[300px] bg-gray-100 md:h-[390px] lg:h-[470px]">
+          <Reveal variant="fade" duration={1100} className="relative h-[300px] bg-gray-100 md:h-[390px] lg:h-[470px]">
             <NaverMap />
 
             {/* NAVER BUTTON */}
@@ -166,7 +172,7 @@ const Contact = () => {
                 bg-[#03C75A]
                 px-4
                 py-3
-                text-[11px]
+                text-[13px]
                 font-bold
                 text-white
                 shadow-lg
@@ -174,19 +180,19 @@ const Contact = () => {
                 hover:brightness-95
                 md:bottom-4
                 md:left-4
-                md:text-[12px]
+                md:text-[14px]
               "
             >
               네이버 길찾기
               <span>→</span>
             </a>
-          </div>
+          </Reveal>
 
 
           {/* =========================
               INFORMATION
           ========================= */}
-          <div className="bg-[#071b33] p-5 text-white md:p-7">
+          <Reveal variant="right" delay={150} className="bg-[#071b33] p-5 text-white md:p-7">
 
             {/* ADDRESS */}
             <div className="flex items-start gap-3">
@@ -207,7 +213,7 @@ const Contact = () => {
               </div>
 
               <div>
-                <p className="text-[9px] font-bold tracking-[0.2em] text-[#79b6ff]">
+                <p className="text-[11px] font-bold tracking-[0.2em] text-[#79b6ff]">
                   SUWON SEVERANCE DENTAL
                 </p>
 
@@ -215,13 +221,13 @@ const Contact = () => {
                   수원세브란스치과
                 </h3>
 
-                <p className="mt-2 text-[12px] leading-[1.7] text-white/60">
+                <p className="mt-2 text-[14px] leading-[1.7] text-white/60">
                   경기도 수원시 장안구
                   <br />
                   경수대로 969
                 </p>
 
-                <p className="mt-0.5 text-[13px] font-semibold text-white">
+                <p className="mt-0.5 text-[15px] font-semibold text-white">
                   한국메디컬빌딩 2층
                 </p>
               </div>
@@ -236,30 +242,29 @@ const Contact = () => {
               <div className="flex items-center gap-2 text-[#79b6ff]">
                 <ClockIcon />
 
-                <p className="text-[10px] font-bold tracking-[0.18em]">
+                <p className="text-[12px] font-bold tracking-[0.18em]">
                   진료시간
                 </p>
               </div>
 
-              <div className="mt-3 space-y-2 text-[11px] md:text-[12px]">
+              <div className="mt-3 space-y-2 text-[13px] md:text-[14px]">
 
                 <div className="flex justify-between gap-4">
-                  <span className="text-white/55">
-                    월 · 수 · 금
+                  <span className="font-semibold text-[#79b6ff]">
+                    월 · 수
                   </span>
 
-                  <strong className="font-semibold">
+                  <strong className="font-semibold text-[#79b6ff]">
                     09:30 - 18:30
                   </strong>
                 </div>
 
                 <div className="flex justify-between gap-4">
-                  <span className="font-semibold text-[#79b6ff]">
-                    화 · 목
+                  <span className="text-white/55">
+                    화 · 목 · 금
                   </span>
-
-                  <strong className="font-semibold text-[#79b6ff]">
-                    09:30 - 20:30
+                  <strong className="font-semibold">
+                    09:30 - 18:30
                   </strong>
                 </div>
 
@@ -298,12 +303,12 @@ const Contact = () => {
                 <div className="flex items-center gap-2 text-[#79b6ff]">
                   <CarIcon />
 
-                  <span className="text-[10px] font-bold">
+                  <span className="text-[12px] font-bold">
                     주차 안내
                   </span>
                 </div>
 
-                <p className="mt-2 text-[10px] leading-[1.6] text-white/60 md:text-[11px]">
+                <p className="mt-2 text-[12px] leading-[1.6] text-white/60 md:text-[13px]">
                   건물 내 주차장
                   <br />
                   이용 가능합니다.
@@ -316,12 +321,12 @@ const Contact = () => {
                 <div className="flex items-center gap-2 text-[#79b6ff]">
                   <BusIcon />
 
-                  <span className="text-[10px] font-bold">
+                  <span className="text-[12px] font-bold">
                     대중교통
                   </span>
                 </div>
 
-                <p className="mt-2 text-[10px] leading-[1.6] text-white/60 md:text-[11px]">
+                <p className="mt-2 text-[12px] leading-[1.6] text-white/60 md:text-[13px]">
                   한일타운 인근
                   <br />
                   경수대로 버스 이용
@@ -346,7 +351,7 @@ const Contact = () => {
                   rounded-lg
                   border
                   border-white/20
-                  text-[11px]
+                  text-[13px]
                   font-bold
                   text-white
                   transition
@@ -367,7 +372,7 @@ const Contact = () => {
                   justify-center
                   rounded-lg
                   bg-white
-                  text-[11px]
+                  text-[13px]
                   font-bold
                   text-[#071b33]
                   transition
@@ -379,7 +384,7 @@ const Contact = () => {
 
             </div>
 
-          </div>
+          </Reveal>
         </div>
 
 
@@ -389,57 +394,57 @@ const Contact = () => {
         <div className="mt-3 grid gap-2 md:grid-cols-3">
 
           {/* CAR */}
-          <div className="flex items-center gap-3 rounded-xl bg-white px-4 py-3">
+          <Reveal variant="soft" delay={0} className="flex items-center gap-3 rounded-xl bg-white px-4 py-3">
             <div className="text-[#176fc2]">
               <CarIcon />
             </div>
 
             <div>
-              <p className="text-[10px] font-bold text-[#071b33]">
+              <p className="text-[12px] font-bold text-[#071b33]">
                 자가용 이용 시
               </p>
 
-              <p className="mt-0.5 text-[10px] text-gray-400">
+              <p className="mt-0.5 text-[12px] text-gray-400">
                 내비게이션에 ‘경수대로 969’ 검색
               </p>
             </div>
-          </div>
+          </Reveal>
 
 
           {/* LANDMARK */}
-          <div className="flex items-center gap-3 rounded-xl bg-white px-4 py-3">
+          <Reveal variant="soft" delay={100} className="flex items-center gap-3 rounded-xl bg-white px-4 py-3">
             <div className="text-[#176fc2]">
               <PinIcon />
             </div>
 
             <div>
-              <p className="text-[10px] font-bold text-[#071b33]">
+              <p className="text-[12px] font-bold text-[#071b33]">
                 주변 랜드마크
               </p>
 
-              <p className="mt-0.5 text-[10px] text-gray-400">
+              <p className="mt-0.5 text-[12px] text-gray-400">
                 한일타운 · 홈플러스 북수원점 인근
               </p>
             </div>
-          </div>
+          </Reveal>
 
 
           {/* BUS */}
-          <div className="flex items-center gap-3 rounded-xl bg-white px-4 py-3">
+          <Reveal variant="soft" delay={200} className="flex items-center gap-3 rounded-xl bg-white px-4 py-3">
             <div className="text-[#176fc2]">
               <BusIcon />
             </div>
 
             <div>
-              <p className="text-[10px] font-bold text-[#071b33]">
+              <p className="text-[12px] font-bold text-[#071b33]">
                 대중교통
               </p>
 
-              <p className="mt-0.5 text-[10px] text-gray-400">
+              <p className="mt-0.5 text-[12px] text-gray-400">
                 경수대로 한일타운 일대 정류장 이용
               </p>
             </div>
-          </div>
+          </Reveal>
 
         </div>
 

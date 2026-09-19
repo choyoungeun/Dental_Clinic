@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 회원 정보 (개인정보)
+/.data
+
+# 환자 사진 (개인정보) - 저장소에 올리지 않음
+/private
+/public/images/임상증례

@@ -1,25 +1,25 @@
 import type { Metadata } from "next";
 import "./globals.css"; // 디자인을 위해 반드시 필요합니다
-import Script from "next/script"; // Next.js 전용 스크립트 컴포넌트
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingBar from '@/components/FloatingBar';
+import ScrollProgress from '@/components/ScrollProgress';
 
 export const metadata: Metadata = {
   title: {
     default: "수원세브란스치과의원 | 북수원 송죽동 치과",
     template: "%s | 수원세브란스치과의원 | Suwon Severance Dental Clinic",
   },
-  description: "북수원 치과, 연세대 출신 치과의사 진료. 임플란트, 틀니, 사랑니 발치, 무통마취, 자연치아 살리기, 치아미백. 따뜻한 공감과 정직한 진료를 약속합니다.",
-  keywords: ["송죽동치과", "수원치과", "북수원치과","송죽치과", "성대치과", "수원세브란스치과", "임플란트", "전문의치과", "자연치아", "안아픈 치과", "충치치료", "친절한 치과", "English Speaking Dentist Bundang", "Sunae Dental Clinic", "Bundang Dentist", "Foreigner Clinic"] as string[],
+  description: "북수원 송죽동 치과. 연세대 출신 대표원장이 직접 진료합니다. 임플란트, 자연치아 보존, 매복 사랑니 발치, 충치·보철, 턱관절 진료를 정밀 진단과 충분한 설명을 바탕으로 안내합니다.",
+  keywords: ["송죽동치과", "수원치과", "북수원치과","송죽치과", "성대치과", "수원세브란스치과", "임플란트", "자연치아", "충치치료","English Speaking Dentist Bundang", "Sunae Dental Clinic", "Bundang Dentist", "Foreigner Clinic"] as string[],
   icons: {
     icon: '/favicon.ico', // public 폴더에 넣었을 경우
   },
   openGraph: {
     title: "수원세브란스치과의원",
-    description: "수원세브란스치과, 과잉진료 없는 양심 치과",
+    description: "정밀 진단과 충분한 설명을 바탕으로 필요한 치료를 안내하는 수원세브란스치과의원",
     // url: "https://도메인주소.com", // 실제 구매하신 도메인
-    siteName: "수원브란스치과의원",
+    siteName: "수원세브란스치과의원",
     locale: "ko_KR",
     type: "website",
   },
@@ -33,6 +33,14 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="antialiased min-h-screen flex flex-col justify-between">
+        {/* JS가 꺼진 환경에서도 내용이 보이도록 */}
+        <noscript>
+          <style>{`.reveal,.text-reveal__line,.reveal-image__inner{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+
+        {/* 상단 스크롤 진행 표시 */}
+        <ScrollProgress />
+
         {/* 🧭 전역 네비게이션 바 (모든 페이지 공통 적용) */}
         <Navbar />
 
@@ -48,12 +56,7 @@ export default function RootLayout({
         {/* Next.js Layout 레벨에 배치되어 어떤 페이지로 이동해도 고정 상태 유지 */}
         <FloatingBar />
 
-        {/* 네이버 지도 스크립트 */}
-        {/* 💡 strategy를 afterInteractive로 수정 */}
-        <Script
-          strategy="afterInteractive"
-          src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=7le58fbcf6"
-        />
+        {/* 네이버 지도 스크립트는 NaverMap 컴포넌트가 직접 불러옵니다. */}
       </body>
     </html>
   );

@@ -33,8 +33,8 @@ export default function DoctorsPage() {
         <div className="mx-auto max-w-3xl px-6">
           <div className="rounded-2xl bg-blue-50 p-10">
             <p className="text-gray-700 leading-relaxed italic">
-              "치료 결과로 증명하는 치과, 환자의 작은 불편함도 놓치지 않는 세밀함으로 <br/>
-              수원세브란스치과에서  환자의 치아를 책임지겠습니다."
+              환자의 작은 불편도 놓치지 않고 살피겠습니다. <br/>
+              수원세브란스치과는 정확한 진단을 바탕으로 필요한 치료를 차분히 설명드립니다.
             </p>
           </div>
         </div>

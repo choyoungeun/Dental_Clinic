@@ -5,6 +5,7 @@ const allowedTreatments = new Set([
   '자연치아 보존',
   '사랑니 · 구강외과',
   '충치 · 보철',
+  '턱관절 · 외상치료',
   '잇몸치료',
   '기타 상담',
 ]);
@@ -22,7 +23,7 @@ export async function POST(request: Request) {
 
     if (!name || !phone || !allowedTreatments.has(treatment)) {
       return NextResponse.json(
-        { message: '입력 내용을 다시 확인해주세요.' },
+        { message: '입력 내용을 다시 확인해 주세요.' },
         { status: 400 },
       );
     }
@@ -39,7 +40,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           message:
-            '온라인 상담 접수 설정이 아직 완료되지 않았습니다. 병원으로 전화 문의해주세요.',
+            '온라인 상담 접수 설정이 아직 완료되지 않았습니다. 병원으로 전화 문의해 주세요.',
         },
         { status: 503 },
       );
@@ -100,7 +101,7 @@ export async function POST(request: Request) {
       console.error('Resend error:', responseText);
 
       return NextResponse.json(
-        { message: '상담 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' },
+        { message: '상담 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.' },
         { status: 502 },
       );
     }
