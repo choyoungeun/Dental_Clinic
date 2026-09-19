@@ -103,7 +103,8 @@ const RevealImage = ({
   }, [parallax]);
 
   // absolute/fixed 로 배치할 때는 relative 를 붙이지 않습니다.
-  const position = /\b(absolute|fixed|sticky)\b/.test(className) ? '' : 'relative';
+  // `lg:sticky` 처럼 breakpoint 접두사가 붙은 클래스는 모바일에서 적용되지 않으므로 제외합니다.
+  const position = /(^|\s)(absolute|fixed|sticky)(\s|$)/.test(className) ? '' : 'relative';
 
   return (
     <div

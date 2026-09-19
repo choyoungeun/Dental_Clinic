@@ -5,7 +5,6 @@ import FloatingBar from '@/components/FloatingBar';
 import AffiliationsCarousel from '@/components/AffiliationsCarousel';
 import SpecialCareEnvironment from '@/components/SpecialCareEnvironment';
 import BrandStorySection from '@/components/BrandStorySection';
-import BrandPrinciples from '@/components/BrandPrinciples';
 import Services from '@/components/Services';
 import Doctors from '@/components/Doctors';
 import Contact from '@/components/Contact';
@@ -28,34 +27,31 @@ export default function Home() {
       {/* 02. 교육 · 임상경험 · 학술활동 자동 슬라이드 */}
       <AffiliationsCarousel />
 
-      {/* 03. 병원 소개 · 진료 기준 */}
-      <BrandStorySection />
+      {/* 03. 진료 영역 : 대형 이미지 카드 */}
+      <Services />
 
-      {/* 04. 병원이 지키는 세 가지 원칙 */}
-      <BrandPrinciples />
-
-      {/* 05. 의료진 · 공간 · 장비 3대 강점 */}
+      {/* 04. 의료진 · 공간 · 진단 환경 */}
       <SpecialCareEnvironment />
 
-      {/* 06. 진료 영역 */}
-      <Services />
+      {/* 05. 병원 소개 · 진료 원칙 (큰 이미지 + 짧은 메시지) */}
+      <BrandStorySection />
 
       {/* 간편 상담 신청 */}
       <QuickConsultation />
 
-      {/* 07. 임상증례 */}
+      {/* 06. 임상증례 */}
       <ClinicalCasesSection />
 
-      {/* 08. 진료 장비 */}
+      {/* 07. 진료 장비 */}
       <EquipmentSection />
 
       {/* 치과 둘러보기 */}
       <InteriorSection />
 
-      {/* 09. 의료진 */}
+      {/* 08. 의료진 */}
       <Doctors />
 
-      {/* 10. 오시는 길 */}
+      {/* 09. 오시는 길 */}
       <Contact />
     </main>
   );
