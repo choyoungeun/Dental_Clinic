@@ -29,6 +29,9 @@ export type ServiceInfo = {
     eng: string;
     title: string;
     line: string;
+    /** 메인 SIGNATURE CARE 에서 line 아래에 붙는 설명 */
+    description: string;
+    keywords: string[];
   };
   /** 상세 페이지 WHY OUR EXPERIENCE MATTERS : 대표원장의 임상경험과 해당 진료의 연결 */
   experience: {
@@ -39,11 +42,41 @@ export type ServiceInfo = {
 
 export const services: ServiceInfo[] = [
   {
+    slug: 'preservation',
+    title: '자연치아 보존',
+    eng: 'TOOTH PRESERVATION',
+    hook: '발치 전, 치아를 유지할 방법이 있는지 먼저 확인합니다.',
+    desc: '신경치료와 재신경치료를 포함해 현재 치아의 보존 가능성을 확인하고, 검사 결과에 따라 치료 방향을 설명합니다.',
+    image: '/images/services/preservation.jpg',
+    tags: ['신경치료', '재신경치료', '보존 가능성 확인'],
+    consultationValue: '자연치아 보존',
+    recommend: [
+      '치아를 뽑아야 한다는 말을 들으신 분',
+      '신경치료를 받았는데 다시 아프거나 잇몸이 붓는 분',
+      '충치가 깊어 신경치료가 필요하다고 들으신 분',
+      '내 치아를 최대한 오래 쓰고 싶으신 분',
+    ],
+    topics: preservationTopics,
+    signature: {
+      order: 1,
+      eng: 'TOOTH PRESERVATION',
+      title: '자연치아 보존 · 재신경치료',
+      line: '발치 전, 보존 가능성을 먼저 확인합니다.',
+      description:
+        '신경치료를 받은 치아가 다시 아프거나 발치를 권유받은 경우에도 남아 있는 치질, 치근 상태, 염증 위치와 보철 가능성을 확인해 치아를 유지할 방법이 있는지 살펴봅니다.',
+      keywords: ['신경치료', '재신경치료', '치아 보존'],
+    },
+    experience: {
+      heading: '신경치료를 받은 치아도 유지 가능성을 다시 확인합니다.',
+      body: '신경치료를 받은 치아라도 남아 있는 치질과 치근 상태를 다시 확인해 유지 가능성을 평가합니다. 발치를 권유받은 이유를 함께 살펴보고, 유지가 어려운 경우에는 그 이유와 다음 치료 방법을 설명드립니다.',
+    },
+  },
+  {
     slug: 'implant',
     title: '임플란트',
     eng: 'IMPLANT',
-    hook: '뼈가 부족하거나 재수술이 필요한 경우도 먼저 정밀하게 확인합니다.',
-    desc: '3D CT로 잇몸뼈와 신경 위치를 확인하고, 뼈이식 필요 여부와 치료 순서를 이해하기 쉽게 설명드립니다.',
+    hook: '잇몸뼈와 신경 위치, 주변 치아 상태를 확인한 뒤 치료계획을 세웁니다.',
+    desc: '3D CT를 바탕으로 뼈이식 필요 여부와 식립 위치, 치료 순서를 확인하고 설명합니다.',
     image: '/images/services/implant.jpg',
     tags: ['3D CT 진단', '뼈이식 상담', '재수술 상담'],
     consultationValue: '임플란트',
@@ -57,47 +90,23 @@ export const services: ServiceInfo[] = [
     topics: implantTopics,
     signature: {
       order: 2,
-      eng: 'IMPLANT & SURGERY',
+      eng: 'IMPLANT',
       title: '임플란트',
-      line: '수술보다 먼저, 필요한 이유부터 판단합니다.',
+      line: '치아를 유지하기 어려운 경우, 다음 치료를 계획합니다.',
+      description:
+        'CT를 통해 잇몸뼈의 양과 신경관, 상악동, 주변 치아 상태를 확인하고 보철 위치와 교합을 고려해 치료계획을 세웁니다.',
+      keywords: ['임플란트', '뼈이식', '재수술'],
     },
     experience: {
-      heading: '수술 자체보다 먼저, 남아 있는 치아와 잇몸뼈, 신경과 교합을 함께 판단합니다.',
-      body: '임플란트는 어떻게 심느냐보다 어디에, 어떤 순서로 계획하느냐가 중요합니다. 종합병원 치과 진료과장으로 다양한 환자를 진료한 경험을 바탕으로, 3D CT에서 확인한 뼈와 신경 위치를 근거로 치료 계획과 뼈이식 필요 여부를 설명드립니다.',
-    },
-  },
-  {
-    slug: 'preservation',
-    title: '자연치아 보존',
-    eng: 'TOOTH PRESERVATION',
-    hook: '뽑기 전에, 살릴 수 있는 가능성부터 확인합니다.',
-    desc: '신경치료와 재신경치료 등 자연치아를 유지할 방법이 있는지 먼저 살펴본 뒤 치료 방향을 함께 결정합니다.',
-    image: '/images/services/preservation.jpg',
-    tags: ['신경치료', '재신경치료', '보존 가능성 확인'],
-    consultationValue: '자연치아 보존',
-    recommend: [
-      '치아를 뽑아야 한다는 말을 들으신 분',
-      '신경치료를 받았는데 다시 아프거나 잇몸이 붓는 분',
-      '충치가 깊어 신경치료가 필요하다고 들으신 분',
-      '내 치아를 최대한 오래 쓰고 싶으신 분',
-    ],
-    topics: preservationTopics,
-    signature: {
-      order: 1,
-      eng: 'NATURAL TOOTH PRESERVATION',
-      title: '자연치아 보존',
-      line: '끝까지 살릴 수 있는지를 먼저 봅니다.',
-    },
-    experience: {
-      heading: '왜 발치 이야기를 들었는지부터 다시 봅니다.',
-      body: '치아를 뽑아야 한다는 말을 들으셨더라도, 신경치료나 재신경치료로 유지할 수 있는지를 먼저 확인합니다. 살릴 수 있는 치아는 보존 가능성을 살펴보고, 어려운 경우에는 그 이유를 설명드립니다.',
+      heading: '뼈와 신경 위치, 주변 치아와 교합을 함께 확인합니다.',
+      body: '종합병원 치과에서 다양한 수술 환자를 진료한 경험을 바탕으로, CT에서 확인한 뼈와 신경 위치, 주변 치아와 교합 상태를 함께 확인해 치료계획을 세웁니다. 뼈이식이 필요한지와 치료 순서도 검사 결과에 따라 설명드립니다.',
     },
   },
   {
     slug: 'wisdom-tooth',
     title: '매복 사랑니',
     eng: 'ORAL SURGERY',
-    hook: '매복 사랑니는 신경과의 위치 관계부터 확인해야 합니다.',
+    hook: '매복 방향과 신경관 위치를 확인한 뒤 발치 계획을 세웁니다.',
     desc: 'CT를 통해 사랑니의 방향과 신경관 위치를 확인하고, 발치 난이도와 치료 과정을 설명드립니다.',
     image: '/images/services/wisdom.jpg',
     tags: ['매복 사랑니', 'CT 신경 위치 확인', '구강외과 진료'],
@@ -114,21 +123,24 @@ export const services: ServiceInfo[] = [
       order: 3,
       eng: 'ORAL SURGERY',
       title: '매복 사랑니 · 구강외과',
-      line: '복잡한 사랑니와 구강외과 진료까지.',
+      line: '매복 방향과 신경관 위치를 확인한 뒤 발치 계획을 세웁니다.',
+      description:
+        '매복 깊이와 방향, 주변 치아 상태, 하치조신경관과의 관계 등을 영상으로 확인하고 발치 난이도와 치료 과정을 설명합니다.',
+      keywords: ['매복 사랑니', 'CT 분석', '구강외과'],
     },
     experience: {
-      heading: '매복 사랑니는 단순히 뽑는 것보다, 신경과 치아의 위치관계를 먼저 판단하는 진료입니다.',
-      body: 'CT로 사랑니의 방향과 신경관 위치를 확인한 뒤 발치 난이도와 진행 과정을 설명드립니다. 종합병원 치과에서 다양한 구강외과 환자를 진료한 경험을 바탕으로 판단합니다.',
+      heading: '사랑니와 하치조신경관의 위치 관계를 먼저 확인합니다.',
+      body: 'CT로 사랑니의 위치와 하치조신경관과의 관계를 확인해 발치 계획을 세웁니다. 종합병원 치과에서 구강외과 환자를 진료한 경험을 바탕으로, 발치 난이도와 진행 과정을 설명드립니다.',
     },
   },
   {
     slug: 'cavity',
     title: '충치치료',
     eng: 'RESTORATIVE CARE',
-    hook: '충치의 크기와 남은 치아 상태를 보고 필요한 치료를 선택합니다.',
+    hook: '충치 범위와 남아 있는 치아 상태에 맞춰 치료 범위를 정합니다.',
     desc: '레진이나 인레이 같은 치료가 왜 필요한지, 어느 범위까지 치료하는지 이해하실 수 있게 설명드립니다.',
     image: '/images/services/cavity.jpg',
-    tags: ['레진', '인레이', '충치 범위 확인'],
+    tags: ['레진', '인레이', '충치치료'],
     consultationValue: '충치 · 보철',
     recommend: [
       '치아에 검은 부분이 보이거나 찬 것에 시린 분',
@@ -146,10 +158,10 @@ export const services: ServiceInfo[] = [
     slug: 'prosthetics',
     title: '보철치료',
     eng: 'PROSTHODONTIC CARE',
-    hook: '단순히 씌우는 치료가 아니라 오래 씹을 수 있는 기능을 함께 봅니다.',
+    hook: '남아 있는 치아와 교합을 확인해 필요한 보철치료를 계획합니다.',
     desc: '크라운과 브릿지 등 보철치료 시 남은 치아의 상태와 씹는 기능을 함께 고려해 치료 계획을 세웁니다.',
     image: '/images/services/prosthetics.jpg',
-    tags: ['크라운', '브릿지', '씹는 기능 고려'],
+    tags: ['크라운', '브릿지', '보철'],
     consultationValue: '충치 · 보철',
     recommend: [
       '치아가 부러지거나 크게 깨진 분',
@@ -167,10 +179,10 @@ export const services: ServiceInfo[] = [
     slug: 'tmj-trauma',
     title: '턱관절 · 외상치료',
     eng: 'TMJ & TRAUMA CARE',
-    hook: '정밀한 진단을 바탕으로 턱관절 불편의 원인을 확인합니다.',
+    hook: '증상과 턱의 기능을 함께 확인해 원인에 맞는 치료를 진행합니다.',
     desc: '턱에서 소리가 나거나 뻐근한 통증, 갑작스러운 구강 외상까지 원인을 확인한 뒤 상태에 맞는 치료를 안내합니다.',
     image: '/images/services/tmj.jpg',
-    tags: ['정밀진단', '비수술적 턱관절치료', '구강외과 외상치료'],
+    tags: ['턱관절', '교합', '외상'],
     consultationValue: '턱관절 · 외상치료',
     recommend: [
       '턱에서 소리가 나거나 입이 잘 벌어지지 않는 분',

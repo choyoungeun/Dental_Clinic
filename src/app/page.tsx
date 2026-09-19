@@ -11,39 +11,34 @@ import { ClinicalCasesSection } from '@/components/ClinicalCasesSection';
 import { MainPopup } from '@/components/MainPopup';
 import { EquipmentSection } from '@/components/EquipmentSection';
 
-/* 홈페이지 정보 구조
-   1순위  세브란스 임상 경험 + 종합병원 치과과장 경험  → Hero · Doctors
-   2순위  자연치아 보존과 고난도 수술을 함께 경험한 판단 → Philosophy · Signature Care · Cases
-   3순위  진단 장비 · 공간 · 협력 네트워크            → Equipment · Interior */
 export default function Home() {
   return (
     <main className="min-h-screen bg-white">
       <MainPopup />
-
       <FloatingBar />
 
-      {/* 01. 브랜드 메시지 : 세브란스 · 종합병원 진료 경험 */}
+      {/* 01. 첫 화면 */}
       <Hero />
 
-      {/* 02. 짧은 진료 철학 */}
-      <ClinicalPhilosophy />
-
-      {/* 03. 진료과목 (자연치아 보존 · 임플란트 · 구강외과를 앞에) */}
+      {/* 02. 주요 진료 */}
       <Services />
 
-      {/* 04. 대표원장 · 임상 경험 */}
+      {/* 03. 대표원장 */}
       <Doctors />
+
+      {/* 04. 진료 원칙 */}
+      <ClinicalPhilosophy />
 
       {/* 05. 임상증례 */}
       <ClinicalCasesSection />
 
-      {/* 06. DIAGNOSIS & TREATMENT SYSTEM */}
+      {/* 06. 진료 장비 */}
       <EquipmentSection />
 
-      {/* 07. 치과 둘러보기 */}
+      {/* 07. 치과 공간 */}
       <InteriorSection />
 
-      {/* 08. 간편 상담 신청 */}
+      {/* 08. 상담 */}
       <QuickConsultation />
 
       {/* 09. 오시는 길 */}
