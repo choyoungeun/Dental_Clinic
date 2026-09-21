@@ -1,225 +1,156 @@
 import Image from 'next/image';
 
-import Reveal from '@/components/Reveal';
-import RevealImage from '@/components/RevealImage';
-import TextReveal from '@/components/TextReveal';
+const equipmentItems = [
+  {
+    name: 'Primescan',
+    sub: '디지털 구강스캐너',
+    title: '불편한 인상재 대신, 구강을 디지털로 스캔합니다.',
+    desc: '치아와 잇몸을 3D 데이터로 정밀하게 기록하는 디지털 구강스캐너입니다. 인상재를 이용한 기존 본뜨기의 불편함을 줄이고, 보철 및 임플란트 진료에 활용합니다.',
+    image: '/images/equipment/primescan.PNG',
+    alt: 'Primescan 디지털 구강스캐너',
+  },
+  {
+    name: 'HDX WILL eco-x',
+    sub: '3D Dental CT',
+    title: '필요한 부위를 3차원 영상으로 확인합니다.',
+    desc: '치아와 치조골의 구조를 3차원으로 확인하는 치과용 CT입니다. Low Dose 모드와 AEC 기능을 활용하여 필요한 영상 정보를 얻는 데 도움을 줍니다.',
+    image: '/images/equipment/hdxCTecoX.png',
+    alt: 'HDX WILL eco-x 3D Dental CT',
+  },
+  {
+    name: 'Comfort-in',
+    sub: '바늘 없는 분사식 주입 시스템',
+    title: '주삿바늘 대신 미세한 약액을 빠르게 분사하는 방식입니다.',
+    desc: '주사에 대한 부담이 큰 환자에게 진료 상황에 따라 선택적으로 활용합니다.',
+    image: '/images/equipment/comportin.png',
+    alt: 'Comfort-in 무침 주입 시스템',
+  },
+  {
+    name: 'Qraypen C',
+    sub: '광학식 치아우식 진단장치',
+    title: '눈으로만 확인하기 어려운 부분까지, 빛을 이용해 한 번 더 살펴봅니다.',
+    desc: '특정 파장의 빛과 형광 반응을 이용하여 치아 상태를 영상으로 확인하는 광학식 진단장비입니다. 육안검사와 함께 우식이 의심되는 부위를 확인하고 설명하는 데 활용합니다.',
+    image: '/images/equipment/qraypen.png',
+    alt: 'Qraypen C 광학식 치아우식 진단장치',
+  },
+  {
+    name: 'LUVIS S300',
+    sub: 'LED 수술등',
+    title: '정밀한 진료를 위한 밝고 안정적인 시야를 확보합니다.',
+    desc: '여러 LED 광원을 이용해 진료 중 생기는 그림자를 줄이고, 수술 부위를 선명하게 확인할 수 있도록 돕는 치과용 수술등입니다. 임플란트 및 외과 진료 등 세밀한 시야가 필요한 진료에 활용합니다.',
+    image: '/images/equipment/luvisS300.jpg',
+    alt: 'LUVIS S300 LED 수술등',
+  },
+];
 
-import { equipment } from './equipmentData';
+function EquipmentCard({
+  item,
+  reverse = false,
+}: {
+  item: (typeof equipmentItems)[number];
+  reverse?: boolean;
+}) {
+  return (
+    <div className="overflow-hidden rounded-[28px] border border-[#dbe4ee] bg-white shadow-sm">
+      <div
+        className={`grid items-center gap-0 lg:grid-cols-2 ${
+          reverse ? 'lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1' : ''
+        }`}
+      >
+        {/* image */}
+        <div className="relative aspect-[4/3] w-full bg-[#eef4f9]">
+          <Image
+            src={item.image}
+            alt={item.alt}
+            fill
+            className="object-cover"
+          />
+        </div>
 
-const installedEquipment = equipment.filter(
-  (item) => item.installed,
-);
+        {/* text */}
+        <div className="p-7 md:p-9">
+          <p className="text-[11px] font-bold tracking-[0.22em] text-[#2f89fc] uppercase">
+            {item.sub}
+          </p>
 
-export const EquipmentSection = () => {
+          <h3 className="mt-3 text-[28px] font-semibold leading-[1.2] tracking-[-0.03em] text-[#071b33] md:text-[32px]">
+            {item.name}
+          </h3>
+
+          <p className="mt-5 break-keep text-[18px] font-semibold leading-[1.6] text-[#17365D]">
+            {item.title}
+          </p>
+
+          <p className="mt-4 break-keep text-[15px] leading-[1.85] text-[#5f6f80] md:text-[16px]">
+            {item.desc}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function EquipmentSection() {
   return (
     <section
       id="equipment"
-      className="scroll-mt-24 overflow-hidden bg-white py-20 text-[#071b33] md:py-28"
+      className="scroll-mt-24 bg-[#f8fbfe] py-20 md:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 md:px-6">
-        {/* =====================================================
-            HEADER
-        ===================================================== */}
-
+        {/* header */}
         <div className="grid gap-8 lg:grid-cols-[1fr_420px] lg:items-end">
           <div>
-            <Reveal variant="fade">
-              <p className="text-[12px] font-bold tracking-[0.28em] text-[#2f89fc]">
-                DIAGNOSIS & DIGITAL SYSTEM
-              </p>
-            </Reveal>
+            <p className="text-[12px] font-bold tracking-[0.28em] text-[#2f89fc]">
+              EQUIPMENT SYSTEM
+            </p>
 
-            <TextReveal
-              delay={120}
-              className="mt-4 break-keep text-4xl font-semibold leading-[1.3] tracking-[-0.04em] text-[#071b33] md:text-5xl lg:text-6xl"
-              lines={[
-                '눈으로 보이지 않는 부분까지',
-                '검사하고 기록합니다.',
-              ]}
+            <h2 className="mt-4 break-keep text-4xl font-semibold leading-[1.3] tracking-[-0.04em] text-[#071b33] md:text-5xl lg:text-6xl">
+              필요한 장비를,
+              <br />
+              필요한 순간에 정확하게 활용합니다.
+            </h2>
+          </div>
+
+          <p className="break-keep text-[16px] leading-[1.85] text-[#536577] md:text-[17px] lg:pb-2">
+           장비가 많다고 좋은 진료가 완성되지는 않습니다.
+            <span className="font-semibold text-[#071b33]">
+              {' '}중요한 것은 환자에게 필요한 정보를 정확하게 확인하고,
+              그 결과를 이해하기 쉽게 설명하며,
+              편안하게 치료받을 수 있도록 돕는 것
+            </span>
+            입니다.
+            수원세브란스치과는 진료의 기본을 지키는 시스템을 바탕으로
+            신뢰할 수 있는 진료를 제공하고자 합니다.
+          </p>
+        </div>
+
+        {/* intro trust box */}
+        <div className="mt-12 rounded-[28px] border border-[#dbe4ee] bg-white px-6 py-7 shadow-sm md:px-8 md:py-8">
+          <p className="text-[11px] font-bold tracking-[0.24em] text-[#2f89fc]">
+            WHY IT MATTERS
+          </p>
+
+          <p className="mt-3 max-w-4xl break-keep text-[22px] font-semibold leading-[1.65] tracking-[-0.03em] text-[#071b33] md:text-[26px]">
+            장비 자체를 강조하기보다,
+            <span className="text-[#17365D]"> 환자분의 상태를 더 정확히 확인하고</span>{' '}
+            <span className="text-[#17365D]">진료 과정을 더 편안하게 만들기 위해</span>{' '}
+            장비를 선택합니다.
+          </p>
+        </div>
+
+        {/* cards */}
+        <div className="mt-10 space-y-6 md:mt-12 md:space-y-8">
+          {equipmentItems.map((item, index) => (
+            <EquipmentCard
+              key={item.name}
+              item={item}
+              reverse={index % 2 === 1}
             />
-          </div>
-
-          <Reveal
-            variant="soft"
-            delay={220}
-            className="lg:pb-2"
-          >
-            <p className="break-keep text-[16px] leading-[1.85] text-[#5c6d7f] md:text-[17px]">
-              장비 자체보다 중요한 것은
-              검사에서 무엇을 확인하고
-              그 정보를 치료계획에 어떻게 반영하는가입니다.
-            </p>
-          </Reveal>
+          ))}
         </div>
 
-        {/* =====================================================
-            EQUIPMENT
-        ===================================================== */}
-
-        <div className="mt-14 space-y-16 md:mt-20 md:space-y-24">
-          {installedEquipment.map((item, index) => {
-            const flipped = index % 2 === 1;
-
-            return (
-              <article
-                key={item.id}
-                className="grid items-stretch gap-7 lg:grid-cols-12 lg:gap-12"
-              >
-                {/* Image */}
-                <RevealImage
-                  noZoom
-                  parallax={16}
-                  className={[
-                    'relative h-[300px] overflow-hidden bg-[#eef2f6] md:h-[470px] lg:col-span-7',
-                    flipped ? 'lg:order-2' : '',
-                  ].join(' ')}
-                >
-                  {item.image ? (
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 58vw"
-                      className="object-cover"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 bg-[#eef2f6]" />
-                  )}
-
-                  <div className="absolute inset-0 bg-[#071b33]/5" />
-
-                  {/* Number */}
-                  <div className="absolute left-5 top-5 bg-[#071b33]/90 px-3 py-2 text-white md:left-6 md:top-6">
-                    <p className="text-[10px] font-bold tracking-[0.18em] text-[#8ec5ff]">
-                      SYSTEM
-                    </p>
-
-                    <p className="mt-0.5 text-[15px] font-semibold">
-                      {String(index + 1).padStart(2, '0')}
-                    </p>
-                  </div>
-                </RevealImage>
-
-                {/* Content */}
-                <Reveal
-                  variant={flipped ? 'left' : 'right'}
-                  delay={140}
-                  className={[
-                    'flex flex-col justify-center lg:col-span-5',
-                    flipped ? 'lg:order-1' : '',
-                  ].join(' ')}
-                >
-                  <p className="text-[11px] font-bold tracking-[0.22em] text-[#2f89fc]">
-                    {item.tag}
-                  </p>
-
-                  <h3 className="mt-4 break-keep text-[31px] font-semibold leading-[1.3] tracking-[-0.035em] text-[#071b33] md:text-[40px]">
-                    {item.name}
-                  </h3>
-
-                  <p className="mt-5 break-keep text-[15px] leading-[1.9] text-[#5e6f80] md:text-[17px]">
-                    {item.role}
-                  </p>
-
-                  {/* Checks */}
-                  {item.checks && item.checks.length > 0 && (
-                    <div className="mt-8">
-                      <p className="text-[10px] font-bold tracking-[0.2em] text-gray-400">
-                        WHAT WE CHECK
-                      </p>
-
-                      <ul className="mt-3 border-t border-[#071b33]/15">
-                        {item.checks.map((check, checkIndex) => (
-                          <li
-                            key={check}
-                            className="grid grid-cols-[30px_1fr] gap-3 border-b border-[#071b33]/10 py-3.5"
-                          >
-                            <span className="text-[10px] font-bold text-[#2f89fc]">
-                              {String(checkIndex + 1).padStart(2, '0')}
-                            </span>
-
-                            <span className="break-keep text-[14px] font-medium text-[#344a61] md:text-[15px]">
-                              {check}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {/* Used for */}
-                  <div className="mt-7 border-t border-[#071b33]/15 pt-5">
-                    <p className="text-[10px] font-bold tracking-[0.2em] text-gray-400">
-                      USED FOR
-                    </p>
-
-                    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
-                      {item.supports.map((support) => (
-                        <span
-                          key={support}
-                          className="text-[13px] font-semibold text-[#536577]"
-                        >
-                          {support}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Verified model */}
-                  {item.model && (
-                    <div className="mt-6 flex items-start justify-between gap-6 border-t border-[#071b33]/10 pt-4">
-                      <span className="text-[10px] font-bold tracking-[0.2em] text-gray-400">
-                        MODEL
-                      </span>
-
-                      <span className="text-right text-[13px] font-medium text-[#071b33]">
-                        {item.model}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Severance same model */}
-                  {item.sameModelAsSeverance && (
-                    <div className="mt-3 flex items-start justify-between gap-6 border-t border-[#071b33]/10 pt-4">
-                      <span className="text-[10px] font-bold tracking-[0.2em] text-gray-400">
-                        SEVERANCE
-                      </span>
-
-                      <span className="text-right text-[13px] font-semibold text-[#176fc2]">
-                        세브란스 치과대학병원 동일 모델
-                      </span>
-                    </div>
-                  )}
-                </Reveal>
-              </article>
-            );
-          })}
-        </div>
-
-        {/* =====================================================
-            BOTTOM MESSAGE
-        ===================================================== */}
-
-        <Reveal
-          variant="soft"
-          className="mt-16 md:mt-24"
-        >
-          <div className="grid gap-6 border-y border-[#071b33]/15 py-8 md:grid-cols-[230px_1fr] md:items-center md:py-10">
-            <p className="text-[11px] font-bold tracking-[0.2em] text-[#2f89fc]">
-              EXAMINATION FIRST
-            </p>
-
-            <p className="max-w-3xl break-keep text-[18px] font-medium leading-[1.8] tracking-[-0.02em] text-[#263b50] md:text-[21px]">
-              필요한 검사를 통해 현재 상태를 확인하고,
-              그 결과를 치료계획과 설명에 활용합니다.
-            </p>
-          </div>
-        </Reveal>
-
-        <p className="mt-6 text-[11px] leading-[1.75] text-gray-400 md:text-[12px]">
-          * 장비의 적용 여부와 촬영 범위는 환자의 구강 상태와 진료 내용에 따라 달라질 수 있습니다.
-        </p>
+        
       </div>
     </section>
   );
-};
+}

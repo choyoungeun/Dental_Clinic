@@ -6,11 +6,12 @@ import ClinicalPhilosophy from '@/components/ClinicalPhilosophy';
 import Services from '@/components/Services';
 import Doctors from '@/components/Doctors';
 import Contact from '@/components/Contact';
+import CleanSafetySystem from "@/components/CleanSafetySystem";
 
 // 임상증례 준비 전까지 임시 비활성화 — 다시 켜려면 아래 import와 본문의 주석을 해제하세요.
 // import { ClinicalCasesSection } from '@/components/ClinicalCasesSection';
 import { MainPopup } from '@/components/MainPopup';
-import { EquipmentSection } from '@/components/EquipmentSection';
+import EquipmentSection from '@/components/EquipmentSection';
 
 export default function Home() {
   return (
@@ -27,23 +28,27 @@ export default function Home() {
       {/* 03. 대표원장 */}
       <Doctors />
 
-      {/* 04. 진료 원칙 */}
+      {/* 04. 감염관리 / 통증완화 시스템 */}
+      <CleanSafetySystem />
+
+      
+      {/* 05. 진료 원칙 */}
       <ClinicalPhilosophy />
 
-      {/* 05. 임상증례 (임시 비활성화)
+      {/* 06. 임상증례 (임시 비활성화)
       <ClinicalCasesSection />
       */}
 
-      {/* 06. 진료 장비 */}
+      {/* 07. 진료 장비 */}
       <EquipmentSection />
 
-      {/* 07. 치과 공간 */}
+      {/* 08. 치과 공간 */}
       <InteriorSection />
 
-      {/* 08. 상담 */}
+      {/* 09. 상담 */}
       <QuickConsultation />
 
-      {/* 09. 오시는 길 */}
+      {/* 10. 오시는 길 */}
       <Contact />
     </main>
   );

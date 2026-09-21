@@ -18,7 +18,7 @@ import TextReveal from './TextReveal';
 const credentials = [
   {
     label: 'YONSEI',
-    text: '연세대학교 치과대학 우등졸업',
+    text: '연세대학교 치과대학 출신 의료진',
   },
   {
     label: 'SEVERANCE',
@@ -26,7 +26,7 @@ const credentials = [
   },
   {
     label: 'CLINICAL EXPERIENCE',
-    text: '前 수원덕산병원 치과 진료과장',
+    text: '前 수원덕산 종합병원 치과과장 출신',
   },
 ];
 
@@ -97,14 +97,11 @@ const Hero = () => {
           duration={1000}
           className="mt-6 max-w-[980px] break-keep text-[39px] font-semibold leading-[1.25] tracking-[-0.05em] md:text-[58px] lg:text-[70px]"
           lines={[
-            '치아를 살릴 수 있는지',
-            <span key="line-2" className="text-[#8ec5ff]">
-              먼저 봅니다.
+            <span key="line-4" className="text-white">대학병원과 종합병원에서 이어온, </span>,
+            
+            <span key="line-2" className="text-[#8ec5ff]">진료의 기준을 수원에서
             </span>,
-            '필요한 치료는,',
-            <span key="line-4" className="text-white">
-              근거를 확인하고 계획합니다.
-            </span>,
+
           ]}
         />
 
@@ -115,9 +112,10 @@ const Hero = () => {
           className="mt-7 max-w-[720px]"
         >
           <p className="break-keep text-[16px] leading-[1.9] text-white/78 md:text-[18px] md:leading-[1.9]">
-            자연치아 보존과 재신경치료부터
+            대학병원과 종합병원에서의 임상 경험을 바탕으로
+
             <br className="hidden md:block" />
-            임플란트 · 매복 사랑니 · 구강외과 진료까지.
+            자연치아의 가능성을 먼저 살피고, 필요한 치료를 신중하게 계획합니다.
           </p>
 
           <p className="mt-2 break-keep text-[15px] leading-[1.85] text-white/60 md:text-[16px]">

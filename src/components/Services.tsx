@@ -14,9 +14,9 @@ import { stagger } from './stagger';
   GENERAL CARE
   충치 → 보철 → 턱관절 · 외상
 
-  모든 진료를 같은 비중으로 나열하지 않고,
-  수원세브란스치과가 가장 먼저 보여주고 싶은 진료와
-  일반 진료를 시각적으로 구분합니다.
+  SIGNATURE CARE는
+  메인 화면에서는 핵심 메시지만 간결하게 보여주고,
+  상세 내용은 클릭 후 상세 페이지에서 안내합니다.
 */
 
 const signatureItems = services
@@ -38,6 +38,7 @@ const Services = () => {
       className="scroll-mt-24 overflow-hidden bg-[#f5f7fa] py-20 md:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 md:px-6">
+
         {/* =====================================================
             HEADER
         ===================================================== */}
@@ -107,7 +108,14 @@ const Services = () => {
                   <Link
                     href={`/services/${item.slug}`}
                     aria-label={`${signature.title} 자세히 보기`}
-                    className="group relative block min-h-[520px] overflow-hidden rounded-md bg-[#071b33] md:min-h-[590px]"
+                    className="
+                      group relative block
+                      min-h-[410px]
+                      overflow-hidden
+                      rounded-md
+                      bg-[#071b33]
+                      md:min-h-[460px]
+                    "
                   >
                     {/* Image */}
                     <RevealImage
@@ -120,12 +128,30 @@ const Services = () => {
                         alt={signature.title}
                         fill
                         sizes="(max-width: 1024px) 100vw, 33vw"
-                        className="object-cover transition-transform duration-[1000ms] ease-out group-hover:scale-[1.035]"
+                        className="
+                          object-cover
+                          transition-transform
+                          duration-[1000ms]
+                          ease-out
+                          group-hover:scale-[1.035]
+                        "
                       />
                     </RevealImage>
 
                     {/* Overlay */}
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#031225] from-0% via-[#071b33]/72 via-45% to-[#071b33]/5 to-78%" />
+                    <div
+                      className="
+                        pointer-events-none
+                        absolute inset-0
+                        bg-gradient-to-t
+                        from-[#031225]
+                        from-0%
+                        via-[#071b33]/65
+                        via-38%
+                        to-transparent
+                        to-72%
+                      "
+                    />
 
                     {/* Number */}
                     <div className="absolute left-6 top-6 md:left-7 md:top-7">
@@ -134,44 +160,60 @@ const Services = () => {
                       </p>
                     </div>
 
-                    {/* Bottom content */}
+                    {/* Bottom Content */}
                     <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
+
+                      {/* English Category */}
                       <p className="text-[11px] font-bold tracking-[0.2em] text-[#8ec5ff]">
                         {signature.eng}
                       </p>
 
-                      <h3 className="mt-3 break-keep text-[30px] font-semibold leading-[1.2] tracking-[-0.04em] text-white md:text-[35px]">
+                      {/* Title */}
+                      <h3
+                        className="
+                          mt-3
+                          break-keep
+                          text-[30px]
+                          font-semibold
+                          leading-[1.2]
+                          tracking-[-0.04em]
+                          text-white
+                          md:text-[34px]
+                        "
+                      >
                         {signature.title}
                       </h3>
 
-                      <p className="mt-4 break-keep text-[17px] font-medium leading-[1.65] text-white/90">
+                      {/* Short Hook Only */}
+                      <p
+                        className="
+                          mt-3
+                          break-keep
+                          text-[16px]
+                          font-medium
+                          leading-[1.6]
+                          text-white/85
+                          md:text-[17px]
+                        "
+                      >
                         {signature.line}
                       </p>
 
-                      <p className="mt-3 line-clamp-3 break-keep text-[14px] leading-[1.75] text-white/65 md:text-[15px]">
-                        {item.desc}
-                      </p>
-
-                      {/* Tags */}
-                      <ul className="mt-5 flex flex-wrap gap-x-3 gap-y-1.5">
-                        {item.tags.slice(0, 3).map((tag) => (
-                          <li
-                            key={tag}
-                            className="text-[12px] font-medium text-white/65"
-                          >
-                            {tag}
-                          </li>
-                        ))}
-                      </ul>
-
-                      <div className="mt-6 flex items-center justify-between border-t border-white/20 pt-5">
+                      {/* Detail Link */}
+                      <div className="mt-6 flex items-center justify-between border-t border-white/20 pt-4">
                         <span className="text-[13px] font-semibold text-white">
                           자세히 보기
                         </span>
 
                         <span
                           aria-hidden="true"
-                          className="text-xl text-[#8ec5ff] transition-transform duration-300 group-hover:translate-x-1"
+                          className="
+                            text-xl
+                            text-[#8ec5ff]
+                            transition-transform
+                            duration-300
+                            group-hover:translate-x-1
+                          "
                         >
                           →
                         </span>
@@ -245,22 +287,41 @@ const Services = () => {
                 <Link
                   href={`/services/${item.slug}`}
                   aria-label={`${item.title} 자세히 보기`}
-                  className="group grid min-h-[180px] grid-cols-[120px_1fr] overflow-hidden rounded-md border border-[#dde4eb] bg-white transition-colors duration-300 hover:border-[#a9bfd7] sm:grid-cols-[150px_1fr] md:min-h-[250px] md:grid-cols-1"
+                  className="
+                    group grid
+                    min-h-[180px]
+                    grid-cols-[120px_1fr]
+                    overflow-hidden
+                    rounded-md
+                    border border-[#dde4eb]
+                    bg-white
+                    transition-colors
+                    duration-300
+                    hover:border-[#a9bfd7]
+                    sm:grid-cols-[150px_1fr]
+                    md:min-h-[250px]
+                    md:grid-cols-1
+                  "
                 >
-                  {/* image */}
+                  {/* Image */}
                   <div className="relative min-h-full overflow-hidden md:h-[145px]">
                     <Image
                       src={item.image}
                       alt={item.title}
                       fill
                       sizes="(max-width: 768px) 150px, 33vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.035]"
+                      className="
+                        object-cover
+                        transition-transform
+                        duration-700
+                        group-hover:scale-[1.035]
+                      "
                     />
 
                     <div className="absolute inset-0 bg-[#071b33]/5" />
                   </div>
 
-                  {/* text */}
+                  {/* Text */}
                   <div className="flex flex-col justify-between p-5 md:p-6">
                     <div>
                       <p className="text-[10px] font-bold tracking-[0.18em] text-[#2f89fc]">
@@ -283,7 +344,12 @@ const Services = () => {
 
                       <span
                         aria-hidden="true"
-                        className="text-[#176fc2] transition-transform duration-300 group-hover:translate-x-1"
+                        className="
+                          text-[#176fc2]
+                          transition-transform
+                          duration-300
+                          group-hover:translate-x-1
+                        "
                       >
                         →
                       </span>
@@ -294,6 +360,7 @@ const Services = () => {
             ))}
           </div>
         </div>
+
       </div>
     </section>
   );
