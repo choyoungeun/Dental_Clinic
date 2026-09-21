@@ -120,7 +120,7 @@ const Doctors = () => {
               <h3 className="mt-4 max-w-3xl break-keep text-[27px] font-semibold leading-[1.45] tracking-[-0.035em] text-[#071b33] md:text-[34px]">
                 살릴 수 있는 치아인지
                 <br className="hidden md:block" />
-                한 번 더 생각합니다.
+                 한 번 더 생각합니다.
               </h3>
             </Reveal>
 
@@ -207,47 +207,8 @@ const Doctors = () => {
           </div>
         </div>
 
-        {/* =====================================================
-            진료 방향 · 상담
-        ===================================================== */}
-
-        <Reveal
-          variant="soft"
-          className="mt-16 md:mt-24"
-        >
-          <div className="bg-[#f4f7fa] px-6 py-9 md:px-10 md:py-12">
-            <p className="text-[11px] font-bold tracking-[0.22em] text-[#2f89fc]">
-              FROM THE DIRECTOR
-            </p>
-
-            <p className="mt-5 max-w-4xl break-keep text-[21px] font-semibold leading-[1.75] tracking-[-0.025em] text-[#071b33] md:text-[27px]">
-              자신의 치아를 유지할 수 있다면
-              그 가능성을 먼저 확인하고,
-              다른 치료가 필요하다면
-              왜 필요한지 충분히 설명하겠습니다.
-            </p>
-
-            <p className="mt-6 max-w-3xl break-keep text-[15px] leading-[1.9] text-[#627284] md:text-[16px]">
-              검사를 통해 확인한 내용을 바탕으로
-              현재 상태와 치료 선택지를 설명하고,
-              여러 치료가 필요한 경우에는
-              우선순위와 순서를 정리해 진료하겠습니다.
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal
-          variant="soft"
-          className="mt-10"
-        >
-          <Link
-            href="/#consultation"
-            className="inline-flex items-center justify-center gap-5 rounded-md bg-[#071b33] px-8 py-4 text-[14px] font-semibold text-white transition-colors duration-300 hover:bg-[#10355c]"
-          >
-            진료 상담하기
-            <span aria-hidden="true">→</span>
-          </Link>
-        </Reveal>
+     
+       
       </div>
     </section>
   );
