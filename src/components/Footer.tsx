@@ -36,17 +36,16 @@ const Footer = () => {
               </li>
 
               <li>
-                <Link href="/#clinical-cases" className="hover:text-white transition-colors">
-                  임상증례
-                </Link>
-              </li>
-
-              <li>
                 <Link href="/#doctors" className="hover:text-white transition-colors">
                   의료진 소개
                 </Link>
               </li>
-                
+              <li>
+                <Link href="/#interior" className="hover:text-white transition-colors">
+                  치과둘러보기
+                </Link>
+              </li>
+
               <li>
                 <Link href="/#location" className="hover:text-white transition-colors">
                   오시는 길
@@ -59,13 +58,13 @@ const Footer = () => {
           <div className="lg:col-span-3">
             <h4 className="mb-4 text-base font-bold text-white border-b border-[#4da3ff]/50 inline-block pb-1">Service Hours</h4>
             <ul className="space-y-2.5 text-[16px]">
-              <li className="flex justify-between border-b border-white/5 pb-1.5">
-                <span>평 일</span>
-                <span className="text-white">09:30 - 18:30</span>
-              </li>
               <li className="flex justify-between border-b border-white/5 pb-1.5 text-[#4da3ff] font-semibold">
-                <span>화요일 · 목요일 (야간)</span>
+                <span>월 · 수 (야간)</span>
                 <span>09:30 - 20:30</span>
+              </li>
+              <li className="flex justify-between border-b border-white/5 pb-1.5">
+                <span>화 · 목 · 금</span>
+                <span className="text-white">09:30 - 18:30</span>
               </li>
               <li className="flex justify-between border-b border-white/5 pb-1.5">
                 <span className="opacity-80">토요일</span>
@@ -88,7 +87,6 @@ const Footer = () => {
               <p className="flex items-start gap-2">
                 장안구청 사거리·수원KT위즈파크 인근 
               </p>
-              한국메디컬빌딩
             </div>
 
             {/* 전화번호 크기를 적당한 강조 수준(text-xl)으로 하향 */}
@@ -111,7 +109,7 @@ const Footer = () => {
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="text-center md:text-left space-y-1">
               <p>© 2026 수원세브란스치과의원. All Rights Reserved.</p>
-              <p>상호명: 수원세브란스치과의원 | 대표: 이현민 | 사업자등록번호: 000-00-00000</p>
+              <p>상호명: 수원세브란스치과의원 | 대표: 이현민 | 사업자등록번호: 612-47-01321</p>
             </div>
             <div className="flex gap-5">
               <Link href="/policy" className="hover:text-white transition-colors">개인정보처리방침</Link>

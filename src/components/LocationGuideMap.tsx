@@ -511,41 +511,7 @@ const LocationGuideMap = () => {
         </svg>
       </div>
 
-      {/* QUICK GUIDE */}
-      <div className="grid border-t border-gray-100 bg-white md:grid-cols-3">
-        <div className="border-b border-gray-100 px-5 py-4 md:border-b-0 md:border-r md:px-6">
-          <p className="text-[9px] font-bold tracking-[0.18em] text-[#2f89fc]">
-            SAME SIDE
-          </p>
-          <p className="mt-1 text-[12px] font-semibold text-[#071b33]">
-            병원 · 수원종합운동장 · KT위즈파크
-          </p>
-          
-        </div>
-
-        <div className="border-b border-gray-100 px-5 py-4 md:border-b-0 md:border-r md:px-6">
-          <p className="text-[9px] font-bold tracking-[0.18em] text-[#2f89fc]">
-            OPPOSITE SIDE
-          </p>
-          <p className="mt-1 text-[12px] font-semibold text-[#071b33]">
-            홈플러스 북수원점 · 장안구청
-          </p>
-         
-        </div>
-
-        <div className="px-5 py-4 md:px-6">
-          <p className="text-[9px] font-bold tracking-[0.18em] text-[#2f89fc]">
-            DESTINATION
-          </p>
-          <p className="mt-1 text-[12px] font-semibold text-[#071b33]">
-            경수대로 969 · 한국메디컬빌딩 2층
-          </p>
-          <p className="mt-1 text-[10px] leading-[1.6] text-gray-400">
-            내비게이션에는 도로명 주소를 입력해 주세요.
-          </p>
-        </div>
       </div>
-    </div>
   );
 };
 

@@ -4,8 +4,8 @@ import { FormEvent, useEffect, useState } from 'react';
 import Reveal from './Reveal';
 
 const treatments = [
-  '임플란트',
   '자연치아 보존',
+  '임플란트',
   '사랑니 · 구강외과',
   '충치 · 보철',
   '턱관절 · 외상치료',
@@ -23,6 +23,10 @@ const QuickConsultation = () => {
   const [submitState, setSubmitState] = useState<SubmitState>('idle');
   const [message, setMessage] = useState('');
 
+  /* =========================================================
+     외부 진료페이지에서 선택한 진료과목 받기
+  ========================================================= */
+
   useEffect(() => {
     const handleTreatmentSelection = (event: Event) => {
       const customEvent = event as CustomEvent<string>;
@@ -35,11 +39,16 @@ const QuickConsultation = () => {
       }
     };
 
-    // 다른 페이지에서 상담하기를 눌러 이동해 온 경우
-    const pending = window.sessionStorage.getItem('consultation-treatment');
+    const pending = window.sessionStorage.getItem(
+      'consultation-treatment',
+    );
+
     if (pending) {
       window.sessionStorage.removeItem('consultation-treatment');
-      if (treatments.includes(pending)) setTreatment(pending);
+
+      if (treatments.includes(pending)) {
+        setTreatment(pending);
+      }
     }
 
     window.addEventListener(
@@ -55,12 +64,18 @@ const QuickConsultation = () => {
     };
   }, []);
 
+  /* =========================================================
+     제출
+  ========================================================= */
+
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!name.trim() || !phone.trim() || !treatment || !privacy) {
       setSubmitState('error');
-      setMessage('이름, 연락처, 진료과목과 개인정보 동의를 확인해 주세요.');
+      setMessage(
+        '이름, 연락처, 상담 분야와 개인정보 동의를 확인해 주세요.',
+      );
       return;
     }
 
@@ -89,13 +104,17 @@ const QuickConsultation = () => {
       }
 
       setSubmitState('success');
-      setMessage('상담 신청이 접수되었습니다. 확인 후 연락드리겠습니다.');
+      setMessage(
+        '상담 신청이 접수되었습니다. 내용을 확인한 후 연락드리겠습니다.',
+      );
+
       setName('');
       setPhone('');
       setTreatment('');
       setPrivacy(false);
     } catch (error) {
       setSubmitState('error');
+
       setMessage(
         error instanceof Error
           ? error.message
@@ -107,167 +126,195 @@ const QuickConsultation = () => {
   return (
     <section
       id="consultation"
-      className="scroll-mt-24 bg-[#ffffff] py-10 md:py-12"
+      className="scroll-mt-24 bg-white py-20 md:py-24"
     >
       <div className="mx-auto max-w-7xl px-4 md:px-6">
-        <div className="overflow-hidden rounded-[20px] border border-white/10 bg-white lg:grid lg:grid-cols-[0.72fr_1.28fr]">
-          {/* LEFT */}
+        <div className="overflow-hidden bg-[#071b33] lg:grid lg:grid-cols-[0.8fr_1.2fr]">
+          {/* =====================================================
+              LEFT
+          ===================================================== */}
+
           <Reveal
             variant="left"
-            className="relative overflow-hidden bg-[#0b2b50] px-6 py-7 text-white md:px-8 md:py-9"
+            className="relative overflow-hidden px-6 py-9 text-white md:px-9 md:py-12 lg:px-10 lg:py-14"
           >
-            <div className="absolute -right-16 -top-16 h-52 w-52 rounded-full border border-white/[0.06]" />
-            <div className="absolute -right-7 -top-7 h-36 w-36 rounded-full border border-white/[0.08]" />
+            <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full border border-white/[0.05]" />
+            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full border border-white/[0.07]" />
 
             <div className="relative z-10">
-              <p className="text-[11px] font-bold tracking-[0.28em] text-[#8ec5ff]">
-                QUICK CONSULTATION
+              <p className="text-[11px] font-bold tracking-[0.26em] text-[#8ec5ff]">
+                CONSULTATION
               </p>
 
-              <h2 className="mt-3 text-[30px] font-semibold leading-[1.3] tracking-[-0.04em] md:text-[34px]">
-                간편 상담신청
+              <h2 className="mt-4 break-keep text-[32px] font-semibold leading-[1.35] tracking-[-0.04em] md:text-[40px]">
+                어떤 진료가 필요한지
+                <br />
+                상담해 보세요.
               </h2>
 
-              <p className="mt-3 max-w-sm text-[18px] leading-[1.75] text-white/60 md:text-[15px]">
-                궁금하신 진료를 선택해 남겨 주세요.
-                <br className="hidden md:block" />
-                내용을 확인한 뒤 안내드립니다.
+              <p className="mt-5 max-w-sm break-keep text-[14px] leading-[1.85] text-white/60 md:text-[15px]">
+                현재 불편한 증상이나 상담받고 싶은 진료를 남겨주시면
+                내용을 확인한 뒤 연락드립니다.
               </p>
 
-              <div className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.7"
-                    className="h-4 w-4 text-[#8ec5ff]"
-                  >
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8 9.73a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z" />
-                  </svg>
-                </div>
+              <div className="mt-8 border-t border-white/15 pt-6">
+                <p className="text-[10px] font-bold tracking-[0.2em] text-[#8ec5ff]">
+                  BEFORE YOUR VISIT
+                </p>
 
-                <div>
-                  <p className="text-[17px] text-white/45">
-                    상담 내용을 확인한 후
-                  </p>
-                  <p className="mt-0.5 text-[17px] font-semibold">
-                    순차적으로 연락드립니다.
-                  </p>
-                </div>
+                <ul className="mt-4 space-y-3">
+                  <li className="flex gap-3 text-[13px] leading-[1.65] text-white/70">
+                    <span className="text-[#8ec5ff]">01</span>
+                    <span>현재 불편한 부위를 알려주세요.</span>
+                  </li>
+
+                  <li className="flex gap-3 text-[13px] leading-[1.65] text-white/70">
+                    <span className="text-[#8ec5ff]">02</span>
+                    <span>상담받고 싶은 진료를 선택해 주세요.</span>
+                  </li>
+
+                  <li className="flex gap-3 text-[13px] leading-[1.65] text-white/70">
+                    <span className="text-[#8ec5ff]">03</span>
+                    <span>확인 후 순차적으로 연락드립니다.</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </Reveal>
 
-          {/* FORM */}
-          <Reveal variant="right" delay={150}>
-          <form
-            onSubmit={submit}
-            className="bg-white px-5 py-6 md:px-8 md:py-8"
+          {/* =====================================================
+              FORM
+          ===================================================== */}
+
+          <Reveal
+            variant="right"
+            delay={150}
+            className="bg-[#f7f9fc]"
           >
-            <div className="grid gap-3 md:grid-cols-2">
-              <label>
-                <span className="mb-1.5 block text-[18px] font-bold text-[#071b33]">
-                  이름
-                </span>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="성함을 입력해 주세요"
-                  autoComplete="name"
-                  className="h-12 w-full rounded-xl border border-[#dfe5ec] bg-[#fafbfd] px-4 text-[15px] text-[#071b33] outline-none transition placeholder:text-gray-300 focus:border-[#2f89fc] focus:bg-white"
-                />
-              </label>
-
-              <label>
-                <span className="mb-1.5 block text-[18px] font-bold text-[#071b33]">
-                  연락처
-                </span>
-                <input
-                  type="tel"
-                  inputMode="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="010-0000-0000"
-                  autoComplete="tel"
-                  className="h-12 w-full rounded-xl border border-[#dfe5ec] bg-[#fafbfd] px-4 text-[15px] text-[#071b33] outline-none transition placeholder:text-gray-300 focus:border-[#2f89fc] focus:bg-white"
-                />
-              </label>
-            </div>
-
-            <fieldset className="mt-5">
-              <legend className="mb-2.5 text-[18px] font-bold text-[#071b33]">
-                상담받을 진료과목
-              </legend>
-
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                {treatments.map((item) => {
-                  const active = treatment === item;
-
-                  return (
-                    <button
-                      type="button"
-                      key={item}
-                      onClick={() => setTreatment(item)}
-                      className={[
-                        'h-10 rounded-lg border px-2 text-[12px] font-semibold transition md:text-[13px]',
-                        active
-                          ? 'border-[#176fc2] bg-[#071b33] text-white'
-                          : 'border-[#dfe5ec] bg-white text-gray-500 hover:border-[#7ebaff] hover:text-[#176fc2]',
-                      ].join(' ')}
-                      aria-pressed={active}
-                    >
-                      {item}
-                    </button>
-                  );
-                })}
-              </div>
-            </fieldset>
-
-            <div className="mt-5 flex flex-col gap-4 border-t border-gray-100 pt-4 md:flex-row md:items-center md:justify-between">
-              <label className="flex cursor-pointer items-start gap-2">
-                <input
-                  type="checkbox"
-                  checked={privacy}
-                  onChange={(e) => setPrivacy(e.target.checked)}
-                  className="mt-[2px] h-4 w-4 accent-[#176fc2]"
-                />
-
-                <span className="text-[14px] leading-[1.55] text-gray-400 md:text-[12px]">
-                  상담을 위한 개인정보 수집·이용에 동의합니다.
-                  <br />
-                  <span className="text-gray-300">
-                    수집항목: 이름, 연락처, 상담분야 · 목적 달성 후 파기
+            <form
+              onSubmit={submit}
+              className="px-5 py-8 md:px-9 md:py-10 lg:px-10 lg:py-12"
+            >
+              <div className="grid gap-4 md:grid-cols-2">
+                <label>
+                  <span className="mb-2 block text-[13px] font-semibold text-[#071b33]">
+                    이름
                   </span>
-                </span>
-              </label>
 
-              <button
-                type="submit"
-                disabled={submitState === 'loading'}
-                className="flex h-12 min-w-[160px] shrink-0 items-center justify-center rounded-xl bg-[#071b33] px-7 text-[14px] font-bold text-white transition hover:bg-[#12365d] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {submitState === 'loading'
-                  ? '접수 중...'
-                  : '간편 상담 신청 →'}
-              </button>
-            </div>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                    placeholder="성함을 입력해 주세요"
+                    autoComplete="name"
+                    className="h-12 w-full border border-[#d9e1e9] bg-white px-4 text-[14px] text-[#071b33] outline-none transition placeholder:text-gray-300 focus:border-[#2f89fc]"
+                  />
+                </label>
 
-            {message && (
-              <p
-                className={[
-                  'mt-3 rounded-lg px-3 py-2 text-[12px] font-medium',
-                  submitState === 'success'
-                    ? 'bg-emerald-50 text-emerald-700'
-                    : 'bg-red-50 text-red-600',
-                ].join(' ')}
-                role="status"
-              >
-                {message}
-              </p>
-            )}
-          </form>
+                <label>
+                  <span className="mb-2 block text-[13px] font-semibold text-[#071b33]">
+                    연락처
+                  </span>
+
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    value={phone}
+                    onChange={(event) => setPhone(event.target.value)}
+                    placeholder="010-0000-0000"
+                    autoComplete="tel"
+                    className="h-12 w-full border border-[#d9e1e9] bg-white px-4 text-[14px] text-[#071b33] outline-none transition placeholder:text-gray-300 focus:border-[#2f89fc]"
+                  />
+                </label>
+              </div>
+
+              {/* 진료 선택 */}
+
+              <fieldset className="mt-7">
+                <legend className="text-[13px] font-semibold text-[#071b33]">
+                  상담받을 진료
+                </legend>
+
+                <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                  {treatments.map((item) => {
+                    const active = treatment === item;
+
+                    return (
+                      <button
+                        key={item}
+                        type="button"
+                        onClick={() => setTreatment(item)}
+                        aria-pressed={active}
+                        className={[
+                          'min-h-11 border px-3 py-2 text-[12px] font-semibold transition md:text-[13px]',
+                          active
+                            ? 'border-[#071b33] bg-[#071b33] text-white'
+                            : 'border-[#d9e1e9] bg-white text-[#647383] hover:border-[#91afd0] hover:text-[#071b33]',
+                        ].join(' ')}
+                      >
+                        {item}
+                      </button>
+                    );
+                  })}
+                </div>
+              </fieldset>
+
+              {/* 개인정보 */}
+
+              <div className="mt-7 border-t border-[#dfe5ec] pt-5">
+                <label className="flex cursor-pointer items-start gap-3">
+                  <input
+                    type="checkbox"
+                    checked={privacy}
+                    onChange={(event) =>
+                      setPrivacy(event.target.checked)
+                    }
+                    className="mt-[3px] h-4 w-4 accent-[#176fc2]"
+                  />
+
+                  <span className="break-keep text-[11px] leading-[1.7] text-gray-400 md:text-[12px]">
+                    상담을 위한 개인정보 수집·이용에 동의합니다.
+                    <br />
+                    수집항목: 이름, 연락처, 상담분야 · 상담 목적 달성 후 파기
+                  </span>
+                </label>
+              </div>
+
+              {/* Submit */}
+
+              <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <p className="text-[11px] leading-[1.6] text-gray-400">
+                  온라인 상담은 진단을 대신하지 않으며,
+                  실제 치료 방법은 내원 후 검사와 진료를 통해 결정됩니다.
+                </p>
+
+                <button
+                  type="submit"
+                  disabled={submitState === 'loading'}
+                  className="flex h-12 min-w-[180px] shrink-0 items-center justify-center bg-[#071b33] px-7 text-[13px] font-bold text-white transition hover:bg-[#12365d] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {submitState === 'loading'
+                    ? '접수 중...'
+                    : '상담 신청하기 →'}
+                </button>
+              </div>
+
+              {/* Message */}
+
+              {message && (
+                <p
+                  role="status"
+                  className={[
+                    'mt-4 border px-4 py-3 text-[12px] font-medium',
+                    submitState === 'success'
+                      ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+                      : 'border-red-200 bg-red-50 text-red-600',
+                  ].join(' ')}
+                >
+                  {message}
+                </p>
+              )}
+            </form>
           </Reveal>
         </div>
       </div>

@@ -7,7 +7,8 @@ import Services from '@/components/Services';
 import Doctors from '@/components/Doctors';
 import Contact from '@/components/Contact';
 
-import { ClinicalCasesSection } from '@/components/ClinicalCasesSection';
+// 임상증례 준비 전까지 임시 비활성화 — 다시 켜려면 아래 import와 본문의 주석을 해제하세요.
+// import { ClinicalCasesSection } from '@/components/ClinicalCasesSection';
 import { MainPopup } from '@/components/MainPopup';
 import { EquipmentSection } from '@/components/EquipmentSection';
 
@@ -29,8 +30,9 @@ export default function Home() {
       {/* 04. 진료 원칙 */}
       <ClinicalPhilosophy />
 
-      {/* 05. 임상증례 */}
+      {/* 05. 임상증례 (임시 비활성화)
       <ClinicalCasesSection />
+      */}
 
       {/* 06. 진료 장비 */}
       <EquipmentSection />

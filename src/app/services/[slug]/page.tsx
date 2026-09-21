@@ -287,7 +287,7 @@ export default async function ServiceDetailPage({
       <section className="bg-gradient-to-br from-[#071b33] to-[#0f3d75] py-14 text-center text-white md:py-20">
         <div className="mx-auto max-w-3xl px-5">
           <p className="text-[32px] font-extrabold leading-[1.35] tracking-[-0.03em] md:text-[44px]">
-            {service.title}, 궁금한 점을 먼저 확인하세요
+            {service.title} 문의
           </p>
           <p className="mt-4 text-[18px] leading-[1.7] text-white/80 md:text-[20px]">
             상담을 남겨 주시면 확인 후 안내드립니다.
@@ -296,7 +296,7 @@ export default async function ServiceDetailPage({
             value={service.consultationValue}
             className="mt-8 inline-flex h-16 items-center justify-center gap-3 rounded-2xl bg-[#2f89fc] px-10 text-[20px] font-extrabold text-white shadow-[0_12px_28px_rgba(47,137,252,0.45)] transition hover:bg-[#176fc2]"
           >
-            {service.title} 상담 신청하기
+            {service.title} 상담 신청
             <span aria-hidden="true">→</span>
           </ConsultButton>
         </div>
