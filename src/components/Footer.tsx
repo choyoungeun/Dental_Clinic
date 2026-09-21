@@ -28,18 +28,19 @@ const Footer = () => {
                   병원 소개
                 </Link>
               </li>
-                
+              
+              <li>
+                <Link href="/#doctors" className="hover:text-white transition-colors">
+                  의료진 소개
+                </Link>
+              </li>
+
               <li>
                 <Link href="/#services" className="hover:text-white transition-colors">
                   진료 과목
                 </Link>
               </li>
 
-              <li>
-                <Link href="/#doctors" className="hover:text-white transition-colors">
-                  의료진 소개
-                </Link>
-              </li>
               <li>
                 <Link href="/#interior" className="hover:text-white transition-colors">
                   치과둘러보기

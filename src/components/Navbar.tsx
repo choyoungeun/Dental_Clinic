@@ -36,8 +36,8 @@ const languages: {
 
 const menuItems = [
   { name: '병원소개', href: '/#brand-story' },
-  { name: '진료과목', href: '/#services' },
   { name: '의료진소개', href: '/#doctors' },
+  { name: '진료과목', href: '/#services' },
   { name: '치과 둘러보기', href: '/#interior' },
   { name: '오시는 길', href: '/#location' },
 ];

@@ -1,217 +1,141 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+const history = [
+  "연세대학교 치과대학 졸업",
+  "연세대학교 치과대학 재학 중 총 5회 장학금 수혜",
+  "신촌세브란스병원 임상 수련",
+  "前 목포시 공중보건치과의사",
+  "前 바른공감치과 본원 원장",
+  "前 미금세브란스치과 수술 전담 원장",
+  "前 수원덕산병원 치과 과장",
+];
 
-import Reveal from '@/components/Reveal';
-import TextReveal from '@/components/TextReveal';
+const activities = [
+  "대한치주과학회 정회원",
+  "대한구강악안면임플란트학회 정회원",
+  "UCLA Advanced Dental Training Program 수료",
+  "The University of Sydney Implant Course 수료",
+  "오스템 임플란트 임상교육과정 수료",
+  "TMD 턱관절장애 교육과정 수료",
+];
 
-import {
-  advisory,
-  doctor,
-  experience,
-  training,
-} from './doctorData';
-
-const GroupTitle = ({ children }: { children: string }) => (
-  <h4 className="border-b border-[#071b33]/25 pb-3 text-[11px] font-bold tracking-[0.2em] text-[#071b33]">
-    {children}
-  </h4>
-);
-
-const Doctors = () => {
+function SectionCard({
+  title,
+  items,
+}: {
+  title: string;
+  items: string[];
+}) {
   return (
-    <section
-      id="doctors"
-      className="scroll-mt-24 overflow-hidden bg-white py-20 text-[#071b33] md:py-28"
-    >
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
-        {/* =====================================================
-            HEADER
-        ===================================================== */}
+    <div className="border-t border-slate-200 pt-5">
+      <div className="mb-4">
+        <h4 className="text-[17px] font-semibold tracking-tight text-slate-900">
+          {title}
+        </h4>
+      </div>
 
-        <div className="grid gap-7 lg:grid-cols-[1fr_430px] lg:items-end">
-          <div>
-            <Reveal variant="fade">
-              <p className="text-[12px] font-bold tracking-[0.28em] text-[#2f89fc]">
-                REPRESENTATIVE DIRECTOR
-              </p>
-            </Reveal>
-
-            <TextReveal
-              delay={120}
-              className="mt-4 break-keep text-4xl font-semibold leading-[1.3] tracking-[-0.04em] md:text-5xl lg:text-6xl"
-              lines={[
-                '의료진 소개',
-              ]}
-            />
-          </div>
-
-          <Reveal
-            variant="soft"
-            delay={220}
-            className="lg:pb-2"
+      <ul className="space-y-2">
+        {items.map((item) => (
+          <li
+            key={item}
+            className="flex items-start gap-2 text-[14px] leading-6 text-slate-600"
           >
-            <p className="break-keep text-[16px] leading-[1.85] text-[#5c6d7f] md:text-[17px]">
-              현재 치아를 유지할 수 있는지,
-              수술이 필요한 상태인지,
-              이후 치료는 어떻게 이어져야 하는지
-              한 사람의 진료과정 안에서 살펴봅니다.
-            </p>
-          </Reveal>
+            <span className="mt-[10px] h-1 w-1 shrink-0 rounded-full bg-[#17365D]" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default function Doctors() {
+  return (
+    <section 
+      id="doctors"
+      className="bg-[#f7f6f3] py-20 md:py-28">
+      <div className="mx-auto max-w-6xl px-5 md:px-8">
+
+        <div className="mb-12">
+          <p className="mb-3 text-sm font-medium tracking-[0.2em] text-[#17365D]">
+            DOCTOR
+          </p>
+
+          <h2 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
+            의료진 소개
+          </h2>
         </div>
 
-        {/* =====================================================
-            MAIN DOCTOR
-        ===================================================== */}
+        <div className="grid items-center gap-12 lg:grid-cols-[420px_1fr] lg:gap-16">
 
-        <div className="mt-12 grid gap-10 md:mt-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:gap-16 xl:grid-cols-[600px_1fr]">
-          {/* Portrait — 연세대 마크 워터마크 + 누끼 사진 */}
+          {/* 대표원장 사진 */}
+          <div className="relative mx-auto w-full max-w-[420px]">
 
-          <div className="lg:sticky lg:top-28">
-            <Reveal
-              variant="fade"
-              duration={1200}
-            >
-              <div className="relative aspect-[3/4] overflow-hidden rounded-md bg-gradient-to-b from-[#eef4fb] to-[#cddff2]">
-                <Image
-                  src="/images/yonsei.png"
-                  alt=""
-                  aria-hidden="true"
-                  width={512}
-                  height={512}
-                  className="pointer-events-none absolute left-1/2 top-[44%] w-[82%] -translate-x-1/2 -translate-y-1/2 select-none opacity-[0.13]"
-                />
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-[#eceae5]">
 
-                <Image
-                  src={doctor.image}
-                  alt={`수원세브란스치과 ${doctor.name} ${doctor.title}`}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 600px"
-                  className="object-cover object-bottom drop-shadow-[0_10px_24px_rgba(7,27,51,0.18)]"
-                />
-
-                <div className="absolute left-5 top-5 md:left-7 md:top-7">
-                  <p className="text-[10px] font-bold tracking-[0.2em] text-[#2f89fc]">
-                    SUWON SEVERANCE DENTAL CLINIC
-                  </p>
-
-                  <div className="mt-2 flex items-end gap-2">
-                    <p className="text-[28px] font-semibold tracking-[-0.035em] text-[#071b33] md:text-[32px]">
-                      {doctor.name}
-                    </p>
-
-                    <p className="pb-1 text-[13px] font-medium text-[#071b33]/65">
-                      {doctor.title}
-                    </p>
-                  </div>
+              {/* 연세대 마크 */}
+              <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <div className="relative h-[270px] w-[270px] opacity-[0.065]">
+                  <Image
+                    src="/images/yonsei-mark.svg"
+                    alt=""
+                    fill
+                    className="object-contain"
+                  />
                 </div>
               </div>
-            </Reveal>
+
+              {/* 대표원장 */}
+              <div className="absolute inset-x-4 bottom-0 top-5">
+                <Image
+                  src="/images/OwnerProfile.png"
+                  alt="수원세브란스치과 대표원장 이현민"
+                  fill
+                  priority
+                  className="object-contain object-bottom"
+                />
+              </div>
+
+            </div>
           </div>
 
-          {/* Content — 약력 · 경력 */}
-
-          <div className="flex flex-col">
-            <Reveal variant="soft">
-              <p className="text-[12px] font-bold tracking-[0.2em] text-[#2f89fc]">
-                CLINICAL BACKGROUND
+          {/* 오른쪽 */}
+          <div>
+            <div className="mb-8">
+              <p className="mb-2 text-sm font-medium text-[#17365D]">
+                대표원장
               </p>
 
-              <h3 className="mt-4 max-w-3xl break-keep text-[27px] font-semibold leading-[1.45] tracking-[-0.035em] text-[#071b33] md:text-[34px]">
-                살릴 수 있는 치아인지
-                <br className="hidden md:block" />
-                 한 번 더 생각합니다.
-              </h3>
-            </Reveal>
+              <div className="flex items-end gap-3">
+                <h3 className="text-3xl font-semibold tracking-tight text-slate-950">
+                  이현민
+                </h3>
 
-            {/* 학력 · 경력 */}
+                <span className="pb-1 text-sm text-slate-500">
+                  DDS
+                </span>
+              </div>
 
-            <Reveal
-              variant="soft"
-              delay={100}
-              className="mt-10"
-            >
-              <GroupTitle>
-                EDUCATION & CAREER
-              </GroupTitle>
+              <p className="mt-5 max-w-xl text-[15px] leading-7 text-slate-600">
+                대학병원과 종합병원에서 쌓은 임상 경험을 바탕으로
+                진단부터 치료 이후까지 책임 있게 진료하겠습니다.
+              </p>
+            </div>
 
-              <ul className="mt-1">
-                {experience.map((item, index) => (
-                  <li
-                    key={item.text}
-                    className="grid grid-cols-[34px_1fr] gap-3 border-b border-[#071b33]/10 py-3.5"
-                  >
-                    <span className="pt-0.5 text-[11px] font-bold tracking-[0.12em] text-[#2f89fc]">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
+            <div className="grid gap-8 md:grid-cols-2">
+              <SectionCard
+                  title="약력"
+                  items={history}
+               />
 
-                    <span
-                      className={
-                        item.primary
-                          ? 'break-keep text-[17px] font-semibold leading-[1.55] tracking-[-0.02em] text-[#071b33] md:text-[19px]'
-                          : 'break-keep text-[15px] leading-[1.6] text-[#536577] md:text-[16px]'
-                      }
-                    >
-                      {item.text}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-
-            {/* 학회 · 연수 */}
-
-            <Reveal
-              variant="soft"
-              delay={150}
-              className="mt-9"
-            >
-              <GroupTitle>
-                ACADEMIC & ADVANCED TRAINING
-              </GroupTitle>
-
-              <ul className="mt-1">
-                {training.map((item) => (
-                  <li
-                    key={item}
-                    className="break-keep border-b border-[#071b33]/10 py-3 text-[15px] leading-[1.6] text-[#536577] md:text-[16px]"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-
-            {/* 자문 */}
-
-            <Reveal
-              variant="soft"
-              delay={200}
-              className="mt-9"
-            >
-              <GroupTitle>
-                CLINICAL ADVISORY
-              </GroupTitle>
-
-              <ul className="mt-1">
-                {advisory.map((item) => (
-                  <li
-                    key={item.name}
-                    className="border-b border-[#071b33]/10 py-3 text-[15px] leading-[1.6] text-[#536577] md:text-[16px]"
-                  >
-                    {item.name} {item.role}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
+              <SectionCard
+                title="학술 및 활동"
+                items={activities}
+              />
+            </div>
           </div>
-        </div>
 
-     
-       
+        </div>
       </div>
     </section>
   );
-};
-
-export default Doctors;
+}
