@@ -1,6 +1,7 @@
 import { InteriorSection } from '@/components/InteriorSection';
 import QuickConsultation from '@/components/QuickConsultation';
 import Hero from '@/components/Hero';
+import AffiliationsCarousel from '@/components/AffiliationsCarousel';
 import FloatingBar from '@/components/FloatingBar';
 import ClinicalPhilosophy from '@/components/ClinicalPhilosophy';
 import Services from '@/components/Services';
@@ -21,6 +22,9 @@ export default function Home() {
 
       {/* 01. 첫 화면 */}
       <Hero />
+
+      {/* 교육 · 임상경험 · 협력병원 자동 슬라이드 */}
+      <AffiliationsCarousel />
 
       {/* 02. 주요 진료 */}
       <Services />
