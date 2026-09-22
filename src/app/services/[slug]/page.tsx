@@ -12,18 +12,108 @@ export function generateStaticParams() {
   return services.map((item) => ({ slug: item.slug }));
 }
 
+const seoBySlug: Record<
+  string,
+  {
+    title: string;
+    description: string;
+  }
+> = {
+  preservation: {
+    title: "수원 재신경치료·자연치아 보존",
+    description:
+      "수원 장안구 자연치아 보존 진료. 신경치료 후 다시 아픈 치아, 재신경치료가 필요한 치아의 상태를 확인하고 발치 전 보존 가능성을 살펴봅니다.",
+  },
+
+  implant: {
+    title: "수원 임플란트·뼈이식",
+    description:
+      "수원 장안구 임플란트 진료. 3D CT를 통해 잇몸뼈, 신경관, 상악동 위치를 확인하고 뼈이식·발치즉시 임플란트·재수술 여부를 계획합니다.",
+  },
+
+  "wisdom-tooth": {
+    title: "수원 매복 사랑니·구강외과",
+    description:
+      "수원 장안구 매복 사랑니 발치 및 구강외과 진료. 파노라마와 CT로 사랑니의 매복 방향과 신경관 위치 관계를 확인한 뒤 치료 방법을 안내합니다.",
+  },
+
+  cavity: {
+    title: "수원 충치치료",
+    description:
+      "수원 장안구 충치치료. 충치의 깊이와 남아 있는 치아의 상태를 확인하고 레진, 인레이, 신경치료 등 필요한 치료 범위를 안내합니다.",
+  },
+
+  prosthetics: {
+    title: "수원 보철치료·크라운",
+    description:
+      "수원 장안구 보철치료. 크라운과 브릿지 치료 전 남아 있는 치아, 잇몸 상태와 교합을 확인해 필요한 보철치료를 계획합니다.",
+  },
+
+  "tmj-trauma": {
+    title: "수원 턱관절·치아 외상 진료",
+    description:
+      "수원 장안구 턱관절 및 치아 외상 진료. 턱관절 통증, 입 벌림 불편, 치아 외상 등의 상태를 확인하고 필요한 검사와 치료 방향을 안내합니다.",
+  },
+};
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+
   const service = findService(slug);
-  if (!service) return {};
+
+  if (!service) {
+    return {};
+  }
+
+  const seo = seoBySlug[slug];
+
+  const canonical = `/services/${slug}`;
+
+  const title = seo?.title ?? service.title;
+
+  const description =
+    seo?.description ?? `${service.hook} ${service.desc}`;
 
   return {
-    title: service.title,
-    description: `${service.hook} ${service.desc}`,
+    title,
+
+    description,
+
+    alternates: {
+      canonical,
+    },
+
+    openGraph: {
+      title: `${title} | 수원세브란스치과`,
+      description,
+      url: canonical,
+      siteName: "수원세브란스치과",
+      locale: "ko_KR",
+      type: "website",
+
+      images: [
+        {
+          url: service.image,
+          alt: `${service.title} 진료 안내`,
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | 수원세브란스치과`,
+      description,
+      images: [service.image],
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+    },
   };
 }
 
