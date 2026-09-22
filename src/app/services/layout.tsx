@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/og-main.jpg",
+        url: "/images/yonsei.png",
         width: 1200,
         height: 630,
         alt: "수원세브란스치과",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     title: "수원세브란스치과",
     description:
       "수원 장안구 송죽동 치과 · 자연치아 보존 · 임플란트 · 구강외과",
-    images: ["/images/og-main.jpg"],
+    images: ["/images/yonsei.png"],
   },
 
   robots: {
