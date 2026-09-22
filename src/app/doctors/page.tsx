@@ -1,7 +1,26 @@
-// import Navbar from '@/components/Navbar';
-// import Footer from '@/components/Footer';
-import Doctors from '@/components/Doctors';
-import Image from 'next/image';
+import type { Metadata } from "next";
+import Doctors from "@/components/Doctors";
+import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "이현민 대표원장 | 의료진 소개",
+
+  description:
+    "연세대학교 치과대학 출신 수원세브란스치과 이현민 대표원장의 학력, 임상 경험과 진료 철학을 소개합니다.",
+
+  alternates: {
+    canonical: "/doctors",
+  },
+
+  openGraph: {
+    title: "이현민 대표원장 | 수원세브란스치과",
+    description:
+      "연세대학교 치과대학 출신 이현민 대표원장의 학력과 임상 경험, 진료 철학을 소개합니다.",
+    url: "/doctors",
+    type: "profile",
+  },
+};
+
 
 export default function DoctorsPage() {
   return (
