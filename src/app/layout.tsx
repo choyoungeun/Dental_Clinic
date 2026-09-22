@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingBar from '@/components/FloatingBar';
 import ScrollProgress from '@/components/ScrollProgress';
+import ClinicJsonLd from "@/components/ClinicJsonLd";
 
 export const metadata: Metadata = {
   title: {
@@ -69,6 +70,8 @@ export default function RootLayout({
         <noscript>
           <style>{`.reveal,.text-reveal__line,.reveal-image__inner{opacity:1!important;transform:none!important}`}</style>
         </noscript>
+        
+        <ClinicJsonLd />
 
         {/* 상단 스크롤 진행 표시 */}
         <ScrollProgress />
