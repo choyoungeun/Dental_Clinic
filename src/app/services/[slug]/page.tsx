@@ -5,18 +5,10 @@ import { notFound } from 'next/navigation';
 
 import ConsultButton from '@/components/ConsultButton';
 import Reveal from '@/components/Reveal';
-import { findService, services } from '@/components/serviceData';
-
-/* =========================================================
-   진료과목 상세 페이지
-   /services/[slug]
-========================================================= */
-
-export function generateStaticParams() {
-  return services.map((item) => ({
-    slug: item.slug,
-  }));
-}
+import {
+  findService,
+  services,
+} from '@/components/serviceData';
 
 /* =========================================================
    SEO
@@ -30,37 +22,49 @@ const seoBySlug: Record<
   }
 > = {
   preservation: {
-    title: '수원 재신경치료·자연치아 보존',
+    title:
+      '수원 재신경치료·자연치아 보존',
+
     description:
       '수원 장안구 자연치아 보존 진료. 신경치료 후 다시 아픈 치아, 재신경치료가 필요한 치아의 상태를 확인하고 발치 전 보존 가능성을 살펴봅니다.',
   },
 
   implant: {
-    title: '수원 임플란트·뼈이식',
+    title:
+      '수원 임플란트·뼈이식',
+
     description:
       '수원 장안구 임플란트 진료. 3D CT를 통해 잇몸뼈, 신경관, 상악동 위치를 확인하고 뼈이식·발치즉시 임플란트·재수술 여부를 계획합니다.',
   },
 
   'wisdom-tooth': {
-    title: '수원 매복 사랑니·구강외과',
+    title:
+      '수원 매복 사랑니·구강외과',
+
     description:
       '수원 장안구 매복 사랑니 발치 및 구강외과 진료. 파노라마와 CT로 사랑니의 매복 방향과 신경관 위치 관계를 확인한 뒤 치료 방법을 안내합니다.',
   },
 
   cavity: {
-    title: '수원 충치치료',
+    title:
+      '수원 충치치료',
+
     description:
       '수원 장안구 충치치료. 충치의 깊이와 남아 있는 치아의 상태를 확인하고 레진, 인레이, 신경치료 등 필요한 치료 범위를 안내합니다.',
   },
 
   prosthetics: {
-    title: '수원 보철치료·크라운',
+    title:
+      '수원 보철치료·크라운',
+
     description:
       '수원 장안구 보철치료. 크라운과 브릿지 치료 전 남아 있는 치아, 잇몸 상태와 교합을 확인해 필요한 보철치료를 계획합니다.',
   },
 
   'tmj-trauma': {
-    title: '수원 턱관절·치아 외상 진료',
+    title:
+      '수원 턱관절·치아 외상 진료',
+
     description:
       '수원 장안구 턱관절 및 치아 외상 진료. 턱관절 통증, 입 벌림 불편, 치아 외상 등의 상태를 확인하고 필요한 검사와 치료 방향을 안내합니다.',
   },
@@ -69,24 +73,32 @@ const seoBySlug: Record<
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{
+    slug: string;
+  }>;
 }): Promise<Metadata> {
   const { slug } = await params;
 
-  const service = findService(slug);
+  const service =
+    findService(slug);
 
   if (!service) {
     return {};
   }
 
-  const seo = seoBySlug[slug];
+  const seo =
+    seoBySlug[slug];
 
-  const canonical = `/services/${slug}`;
+  const canonical =
+    `/services/${slug}`;
 
-  const title = seo?.title ?? service.title;
+  const title =
+    seo?.title ??
+    service.title;
 
   const description =
-    seo?.description ?? `${service.hook} ${service.desc}`;
+    seo?.description ??
+    `${service.hook} ${service.desc}`;
 
   return {
     title,
@@ -98,26 +110,42 @@ export async function generateMetadata({
     },
 
     openGraph: {
-      title: `${title} | 수원세브란스치과`,
+      title:
+        `${title} | 수원세브란스치과`,
+
       description,
+
       url: canonical,
-      siteName: '수원세브란스치과',
+
+      siteName:
+        '수원세브란스치과',
+
       locale: 'ko_KR',
+
       type: 'website',
 
       images: [
         {
           url: service.image,
-          alt: `${service.title} 진료 안내`,
+
+          alt:
+            `${service.title} 진료 안내`,
         },
       ],
     },
 
     twitter: {
-      card: 'summary_large_image',
-      title: `${title} | 수원세브란스치과`,
+      card:
+        'summary_large_image',
+
+      title:
+        `${title} | 수원세브란스치과`,
+
       description,
-      images: [service.image],
+
+      images: [
+        service.image,
+      ],
     },
 
     robots: {
@@ -136,6 +164,7 @@ const CheckIcon = () => (
     viewBox="0 0 24 24"
     fill="none"
     className="mt-1 h-6 w-6 shrink-0"
+    aria-hidden="true"
   >
     <circle
       cx="12"
@@ -161,23 +190,31 @@ const CheckIcon = () => (
 export default async function ServiceDetailPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{
+    slug: string;
+  }>;
 }) {
-  const { slug } = await params;
+  const { slug } =
+    await params;
 
-  const service = findService(slug);
+  const service =
+    findService(slug);
 
   if (!service) {
     notFound();
   }
 
-  const index = services.findIndex(
-    (item) => item.slug === slug,
-  );
+  const index =
+    services.findIndex(
+      (item) =>
+        item.slug === slug,
+    );
 
   const prev =
     services[
-      (index - 1 + services.length) %
+      (index -
+        1 +
+        services.length) %
         services.length
     ];
 
@@ -192,12 +229,20 @@ export default async function ServiceDetailPage({
 
       {/* =====================================================
           1. HERO
-          기존 service.image를 전체 배경으로 사용
       ===================================================== */}
 
-      <section className="relative isolate overflow-hidden bg-[#071b33] text-white">
+      <section
+        className="
+          relative
+          isolate
+          overflow-hidden
+          bg-[#071b33]
+          text-white
+        "
+      >
 
-        {/* Background Image */}
+        {/* 기존 진료과목 이미지를 배경으로 사용 */}
+
         <Image
           src={service.image}
           alt=""
@@ -206,28 +251,33 @@ export default async function ServiceDetailPage({
           sizes="100vw"
           aria-hidden="true"
           className="
-            absolute inset-0
+            absolute
+            inset-0
             -z-30
             object-cover
             object-center
           "
         />
 
-        {/* 기본 네이비 오버레이 */}
+        {/* 기본 네이비 Overlay */}
+
         <div
           className="
             pointer-events-none
-            absolute inset-0
+            absolute
+            inset-0
             -z-20
             bg-[#06182e]/60
           "
         />
 
-        {/* 왼쪽 텍스트 영역을 더 진하게 */}
+        {/* 왼쪽 텍스트를 위한 Gradient */}
+
         <div
           className="
             pointer-events-none
-            absolute inset-0
+            absolute
+            inset-0
             -z-10
             bg-gradient-to-r
             from-[#041427]/95
@@ -236,11 +286,13 @@ export default async function ServiceDetailPage({
           "
         />
 
-        {/* 위/아래 톤 정리 */}
+        {/* 위아래 톤 */}
+
         <div
           className="
             pointer-events-none
-            absolute inset-0
+            absolute
+            inset-0
             -z-10
             bg-gradient-to-t
             from-[#041427]/65
@@ -249,24 +301,25 @@ export default async function ServiceDetailPage({
           "
         />
 
-        {/* Content */}
         <div
           className="
             mx-auto
             flex
-            min-h-[660px]
+            min-h-[640px]
             max-w-6xl
             items-center
             px-5
             py-16
-            md:min-h-[720px]
+            md:min-h-[710px]
             md:px-8
             md:py-24
           "
         >
+
           <div className="w-full max-w-[760px]">
 
             {/* Breadcrumb */}
+
             <nav
               aria-label="현재 위치"
               className="
@@ -304,7 +357,6 @@ export default async function ServiceDetailPage({
             </nav>
 
 
-            {/* Main Copy */}
             <Reveal variant="soft">
 
               <p
@@ -320,11 +372,12 @@ export default async function ServiceDetailPage({
                 {service.eng}
               </p>
 
+
               <h1
                 className="
                   mt-4
                   break-keep
-                  text-[46px]
+                  text-[44px]
                   font-extrabold
                   leading-[1.1]
                   tracking-[-0.05em]
@@ -335,6 +388,7 @@ export default async function ServiceDetailPage({
               >
                 {service.title}
               </h1>
+
 
               <p
                 className="
@@ -350,6 +404,7 @@ export default async function ServiceDetailPage({
               >
                 {service.hook}
               </p>
+
 
               <p
                 className="
@@ -368,44 +423,49 @@ export default async function ServiceDetailPage({
             </Reveal>
 
 
-            {/* Tags + CTA */}
             <Reveal
               variant="soft"
               delay={150}
             >
 
               {/* Tags */}
+
               <ul className="mt-7 flex flex-wrap gap-2.5">
 
-                {service.tags.map((tag) => (
-                  <li
-                    key={tag}
-                    className="
-                      rounded-full
-                      border
-                      border-white/25
-                      bg-white/[0.04]
-                      px-4
-                      py-2
-                      text-[14px]
-                      font-semibold
-                      text-white/90
-                      backdrop-blur-[2px]
-                      md:text-[15px]
-                    "
-                  >
-                    {tag}
-                  </li>
-                ))}
+                {service.tags.map(
+                  (tag) => (
+                    <li
+                      key={tag}
+                      className="
+                        rounded-full
+                        border
+                        border-white/25
+                        bg-white/[0.04]
+                        px-4
+                        py-2
+                        text-[14px]
+                        font-semibold
+                        text-white/90
+                        backdrop-blur-[2px]
+                        md:text-[15px]
+                      "
+                    >
+                      {tag}
+                    </li>
+                  ),
+                )}
 
               </ul>
 
 
-              {/* CTA */}
+              {/* Buttons */}
+
               <div className="mt-9 flex flex-wrap gap-3">
 
                 <ConsultButton
-                  value={service.consultationValue}
+                  value={
+                    service.consultationValue
+                  }
                   className="
                     flex
                     h-14
@@ -425,11 +485,14 @@ export default async function ServiceDetailPage({
                     md:text-[17px]
                   "
                 >
-                  {service.title} 상담 신청하기
+                  {service.title}
+                  {' '}
+                  상담 신청하기
 
                   <span aria-hidden="true">
                     →
                   </span>
+
                 </ConsultButton>
 
 
@@ -468,7 +531,7 @@ export default async function ServiceDetailPage({
 
 
       {/* =====================================================
-          1-2. WHY OUR EXPERIENCE MATTERS
+          2. EXPERIENCE
       ===================================================== */}
 
       <section className="bg-white py-16 md:py-24">
@@ -487,6 +550,7 @@ export default async function ServiceDetailPage({
         >
 
           <Reveal variant="fade">
+
             <p
               className="
                 text-[12px]
@@ -497,12 +561,14 @@ export default async function ServiceDetailPage({
             >
               WHY OUR EXPERIENCE MATTERS
             </p>
+
           </Reveal>
 
 
           <div>
 
             <Reveal>
+
               <h2
                 className="
                   break-keep
@@ -516,6 +582,7 @@ export default async function ServiceDetailPage({
               >
                 {service.experience.heading}
               </h2>
+
             </Reveal>
 
 
@@ -523,6 +590,7 @@ export default async function ServiceDetailPage({
               variant="soft"
               delay={150}
             >
+
               <p
                 className="
                   mt-6
@@ -562,24 +630,31 @@ export default async function ServiceDetailPage({
                 </Link>
 
                 {' · '}
-                연세대 치과대학 우등졸업 ·
-                신촌세브란스 치과대학병원 임상 경험 ·
-                前 종합병원 치과 진료과장
+                연세대학교 치과대학 졸업
+                {' · '}
+                대학병원 및 종합병원 임상 경험
 
               </p>
 
             </Reveal>
 
           </div>
+
         </div>
       </section>
 
 
       {/* =====================================================
-          2. 세부 진료 바로가기
+          3. TOPIC NAVIGATION
       ===================================================== */}
 
-      <section className="border-b border-[#e3e9f0] bg-white">
+      <section
+        className="
+          border-b
+          border-[#e3e9f0]
+          bg-white
+        "
+      >
 
         <div className="mx-auto max-w-6xl px-5 py-8 md:px-8">
 
@@ -600,7 +675,10 @@ export default async function ServiceDetailPage({
           >
 
             {service.topics.map(
-              (topic, topicIndex) => (
+              (
+                topic,
+                topicIndex,
+              ) => (
                 <a
                   key={topic.id}
                   href={`#${topic.id}`}
@@ -635,8 +713,12 @@ export default async function ServiceDetailPage({
                     "
                   >
                     {String(
-                      topicIndex + 1,
-                    ).padStart(2, '0')}
+                      topicIndex +
+                        1,
+                    ).padStart(
+                      2,
+                      '0',
+                    )}
                   </span>
 
                   {topic.title}
@@ -651,10 +733,16 @@ export default async function ServiceDetailPage({
 
 
       {/* =====================================================
-          3. 이런 분께 추천합니다
+          4. RECOMMEND
       ===================================================== */}
 
-      <section className="bg-[#f5f7fa] py-14 md:py-20">
+      <section
+        className="
+          bg-[#f5f7fa]
+          py-14
+          md:py-20
+        "
+      >
 
         <div className="mx-auto max-w-6xl px-5 md:px-8">
 
@@ -688,14 +776,27 @@ export default async function ServiceDetailPage({
           </Reveal>
 
 
-          <ul className="mt-8 grid gap-3 md:grid-cols-2">
+          <ul
+            className="
+              mt-8
+              grid
+              gap-3
+              md:grid-cols-2
+            "
+          >
 
             {service.recommend.map(
-              (item, itemIndex) => (
+              (
+                item,
+                itemIndex,
+              ) => (
                 <Reveal
                   as="li"
                   key={item}
-                  delay={itemIndex * 80}
+                  delay={
+                    itemIndex *
+                    80
+                  }
                   className="list-none"
                 >
 
@@ -735,17 +836,23 @@ export default async function ServiceDetailPage({
             )}
 
           </ul>
+
         </div>
       </section>
 
 
       {/* =====================================================
-          4. 세부 진료 안내
+          5. DETAIL
       ===================================================== */}
 
       <section
         id="details"
-        className="scroll-mt-28 bg-white py-14 md:py-20"
+        className="
+          scroll-mt-28
+          bg-white
+          py-14
+          md:py-20
+        "
       >
 
         <div className="mx-auto max-w-6xl px-5 md:px-8">
@@ -774,23 +881,32 @@ export default async function ServiceDetailPage({
                 md:text-[44px]
               "
             >
-              {service.title} 세부 진료 안내
+              {service.title}
+              {' '}
+              세부 진료 안내
             </h2>
 
           </Reveal>
 
 
-          <div className="mt-10 space-y-14 md:space-y-20">
+          <div
+            className="
+              mt-10
+              space-y-14
+              md:space-y-20
+            "
+          >
 
             {service.topics.map(
-              (topic, topicIndex) => (
+              (
+                topic,
+                topicIndex,
+              ) => (
                 <article
                   key={topic.id}
                   id={topic.id}
                   className="scroll-mt-28"
                 >
-
-                  {/* Topic Header */}
 
                   <Reveal>
 
@@ -817,8 +933,12 @@ export default async function ServiceDetailPage({
                         "
                       >
                         {String(
-                          topicIndex + 1,
-                        ).padStart(2, '0')}
+                          topicIndex +
+                            1,
+                        ).padStart(
+                          2,
+                          '0',
+                        )}
                       </span>
 
 
@@ -836,6 +956,7 @@ export default async function ServiceDetailPage({
                         >
                           {topic.title}
                         </h3>
+
 
                         <p
                           className="
@@ -856,7 +977,7 @@ export default async function ServiceDetailPage({
                   </Reveal>
 
 
-                  {/* 진행 과정 */}
+                  {/* Treatment Process */}
 
                   <h4
                     className="
@@ -870,9 +991,18 @@ export default async function ServiceDetailPage({
                       md:text-[26px]
                     "
                   >
-                    <span className="h-6 w-1.5 rounded-full bg-[#2f89fc]" />
+
+                    <span
+                      className="
+                        h-6
+                        w-1.5
+                        rounded-full
+                        bg-[#2f89fc]
+                      "
+                    />
 
                     이렇게 진행됩니다
+
                   </h4>
 
 
@@ -887,11 +1017,17 @@ export default async function ServiceDetailPage({
                   >
 
                     {topic.method.map(
-                      (step, stepIndex) => (
+                      (
+                        step,
+                        stepIndex,
+                      ) => (
                         <Reveal
                           as="li"
                           key={step}
-                          delay={stepIndex * 90}
+                          delay={
+                            stepIndex *
+                            90
+                          }
                           className="list-none"
                         >
 
@@ -927,7 +1063,10 @@ export default async function ServiceDetailPage({
                                 text-white
                               "
                             >
-                              STEP {stepIndex + 1}
+                              STEP
+                              {' '}
+                              {stepIndex +
+                                1}
                             </span>
 
 
@@ -952,7 +1091,7 @@ export default async function ServiceDetailPage({
                   </ol>
 
 
-                  {/* 도움 되는 점 */}
+                  {/* Benefit */}
 
                   <h4
                     className="
@@ -966,9 +1105,18 @@ export default async function ServiceDetailPage({
                       md:text-[26px]
                     "
                   >
-                    <span className="h-6 w-1.5 rounded-full bg-[#2f89fc]" />
+
+                    <span
+                      className="
+                        h-6
+                        w-1.5
+                        rounded-full
+                        bg-[#2f89fc]
+                      "
+                    />
 
                     이런 도움이 됩니다
+
                   </h4>
 
 
@@ -988,8 +1136,14 @@ export default async function ServiceDetailPage({
                       {topic.benefit.map(
                         (item) => (
                           <li
-                            key={item}
-                            className="flex items-start gap-4"
+                            key={
+                              item
+                            }
+                            className="
+                              flex
+                              items-start
+                              gap-4
+                            "
                           >
 
                             <CheckIcon />
@@ -1034,15 +1188,18 @@ export default async function ServiceDetailPage({
                   >
 
                     <strong className="text-[#071b33]">
-                      알아 두실 점{' '}
+                      알아 두실 점
+                      {' '}
                     </strong>
 
-                    {topic.notice}{' '}
+                    {topic.notice}
+                    {' '}
 
-                    치료 방법과 기간은 개인의
-                    구강 상태에 따라 달라지며,
-                    정확한 내용은 진단 후
-                    안내드립니다.
+                    치료 방법과 기간은
+                    개인의 구강 상태에
+                    따라 달라지며,
+                    정확한 내용은
+                    진단 후 안내드립니다.
 
                   </p>
 
@@ -1051,12 +1208,179 @@ export default async function ServiceDetailPage({
             )}
 
           </div>
+
         </div>
       </section>
 
 
       {/* =====================================================
-          5. 상담 안내
+          6. AEO FAQ
+      ===================================================== */}
+
+      {service.faq &&
+        service.faq.length >
+          0 && (
+
+          <section
+            className="
+              bg-[#f7f9fc]
+              py-16
+              md:py-24
+            "
+          >
+
+            <div className="mx-auto max-w-6xl px-5 md:px-8">
+
+              <Reveal>
+
+                <p
+                  className="
+                    text-[12px]
+                    font-bold
+                    tracking-[0.26em]
+                    text-[#2f89fc]
+                  "
+                >
+                  FREQUENTLY ASKED QUESTIONS
+                </p>
+
+
+                <h2
+                  className="
+                    mt-3
+                    break-keep
+                    text-[32px]
+                    font-semibold
+                    tracking-[-0.04em]
+                    text-[#071b33]
+                    md:text-[44px]
+                  "
+                >
+                  {service.title},
+                  {' '}
+                  자주 묻는 질문
+                </h2>
+
+
+                <p
+                  className="
+                    mt-4
+                    max-w-2xl
+                    break-keep
+                    text-[16px]
+                    leading-[1.8]
+                    text-[#657587]
+                  "
+                >
+                  진료 전 많이
+                  궁금해하시는 내용을
+                  정리했습니다.
+                  실제 치료 방법은
+                  검사 결과와 구강 상태에
+                  따라 달라질 수 있습니다.
+                </p>
+
+              </Reveal>
+
+
+              <div
+                className="
+                  mt-10
+                  border-t
+                  border-[#d7e0e9]
+                "
+              >
+
+                {service.faq.map(
+                  (
+                    item,
+                    index,
+                  ) => (
+                    <article
+                      key={
+                        item.question
+                      }
+                      className="
+                        grid
+                        gap-4
+                        border-b
+                        border-[#d7e0e9]
+                        py-7
+                        md:grid-cols-[72px_1fr]
+                        md:gap-7
+                        md:py-9
+                      "
+                    >
+
+                      <div
+                        className="
+                          text-[15px]
+                          font-bold
+                          text-[#2f89fc]
+                        "
+                      >
+                        Q
+                        {String(
+                          index +
+                            1,
+                        ).padStart(
+                          2,
+                          '0',
+                        )}
+                      </div>
+
+
+                      <div>
+
+                        <h3
+                          className="
+                            break-keep
+                            text-[20px]
+                            font-semibold
+                            leading-[1.55]
+                            tracking-[-0.025em]
+                            text-[#071b33]
+                            md:text-[23px]
+                          "
+                        >
+                          {
+                            item.question
+                          }
+                        </h3>
+
+
+                        <p
+                          className="
+                            mt-3
+                            max-w-3xl
+                            break-keep
+                            text-[16px]
+                            leading-[1.85]
+                            text-[#617182]
+                            md:text-[17px]
+                          "
+                        >
+                          {
+                            item.answer
+                          }
+                        </p>
+
+                      </div>
+
+                    </article>
+                  ),
+                )}
+
+              </div>
+
+            </div>
+
+          </section>
+        )}
+
+
+      {/* =====================================================
+          7. CONSULTATION
       ===================================================== */}
 
       <section
@@ -1082,7 +1406,9 @@ export default async function ServiceDetailPage({
               md:text-[44px]
             "
           >
-            {service.title} 문의
+            {service.title}
+            {' '}
+            문의
           </p>
 
 
@@ -1101,7 +1427,9 @@ export default async function ServiceDetailPage({
 
 
           <ConsultButton
-            value={service.consultationValue}
+            value={
+              service.consultationValue
+            }
             className="
               mt-8
               inline-flex
@@ -1120,31 +1448,43 @@ export default async function ServiceDetailPage({
               hover:bg-[#176fc2]
             "
           >
-            {service.title} 상담 신청
+            {service.title}
+            {' '}
+            상담 신청
 
             <span aria-hidden="true">
               →
             </span>
+
           </ConsultButton>
 
         </div>
+
       </section>
 
 
       {/* =====================================================
-          6. 다른 진료과목
+          8. OTHER SERVICES
       ===================================================== */}
 
       <section className="bg-white py-12 md:py-16">
 
         <div className="mx-auto max-w-6xl px-5 md:px-8">
 
-          {/* Prev / Next */}
-
-          <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
+          <div
+            className="
+              flex
+              flex-col
+              gap-3
+              sm:flex-row
+              sm:justify-between
+            "
+          >
 
             <Link
-              href={`/services/${prev.slug}`}
+              href={
+                `/services/${prev.slug}`
+              }
               className="
                 flex-1
                 rounded-2xl
@@ -1156,7 +1496,13 @@ export default async function ServiceDetailPage({
               "
             >
 
-              <p className="text-[14px] font-bold text-gray-400">
+              <p
+                className="
+                  text-[14px]
+                  font-bold
+                  text-gray-400
+                "
+              >
                 ‹ 이전 진료
               </p>
 
@@ -1175,7 +1521,9 @@ export default async function ServiceDetailPage({
 
 
             <Link
-              href={`/services/${next.slug}`}
+              href={
+                `/services/${next.slug}`
+              }
               className="
                 flex-1
                 rounded-2xl
@@ -1188,7 +1536,13 @@ export default async function ServiceDetailPage({
               "
             >
 
-              <p className="text-[14px] font-bold text-gray-400">
+              <p
+                className="
+                  text-[14px]
+                  font-bold
+                  text-gray-400
+                "
+              >
                 다음 진료 ›
               </p>
 
@@ -1208,34 +1562,41 @@ export default async function ServiceDetailPage({
           </div>
 
 
-          {/* All Services */}
-
           <div className="mt-6 flex flex-wrap gap-2">
 
-            {services.map((item) => (
-              <Link
-                key={item.slug}
-                href={`/services/${item.slug}`}
-                aria-current={
-                  item.slug === slug
-                    ? 'page'
-                    : undefined
-                }
-                className={[
-                  'rounded-full border-2 px-5 py-2.5 text-[16px] font-bold transition',
+            {services.map(
+              (item) => (
+                <Link
+                  key={
+                    item.slug
+                  }
+                  href={
+                    `/services/${item.slug}`
+                  }
+                  aria-current={
+                    item.slug ===
+                    slug
+                      ? 'page'
+                      : undefined
+                  }
+                  className={[
+                    'rounded-full border-2 px-5 py-2.5 text-[16px] font-bold transition',
 
-                  item.slug === slug
-                    ? 'border-[#071b33] bg-[#071b33] text-white'
-                    : 'border-[#d5dde7] text-[#344a61] hover:border-[#2f89fc] hover:text-[#176fc2]',
-                ].join(' ')}
-              >
-                {item.title}
-              </Link>
-            ))}
+                    item.slug ===
+                    slug
+                      ? 'border-[#071b33] bg-[#071b33] text-white'
+                      : 'border-[#d5dde7] text-[#344a61] hover:border-[#2f89fc] hover:text-[#176fc2]',
+                  ].join(' ')}
+                >
+                  {item.title}
+                </Link>
+              ),
+            )}
 
           </div>
 
         </div>
+
       </section>
 
     </main>
