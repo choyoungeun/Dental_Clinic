@@ -3,39 +3,88 @@ import Reveal from "@/components/Reveal";
 
 const equipmentItems = [
   {
+    category: "디지털 구강스캐너",
     eng: "DIGITAL INTRAORAL SCANNER",
+
     name: "Primescan",
-    sub: "디지털 구강스캐너",
-    desc: "불편한 인상재 대신 구강을 디지털로 스캔합니다. 치아와 잇몸을 3D 데이터로 정밀하게 기록하여 보철 및 임플란트 진료 계획에 활용합니다.",
-    image: "/images/equipment/primescan.png",
+
+    headline:
+      "불편한 본뜨기 대신, 구강을 디지털로 스캔합니다.",
+
+    desc:
+      "치아와 잇몸의 형태를 3D 데이터로 기록하는 디지털 구강스캐너입니다. 인상재를 이용한 기존 본뜨기의 불편함을 줄이고, 보철 및 임플란트 진료에 활용합니다.",
+
+    image: "/images/equipment/primescan.PNG",
+
+    blend: true,
   },
+
   {
+    category: "치과용 3D CT",
     eng: "3D DENTAL CT",
+
     name: "HDX WILL eco-x",
-    sub: "치과용 3D CT",
-    desc: "필요한 부위를 3차원 영상으로 확인합니다. 잇몸뼈와 신경관, 상악동 등 해부학적 구조를 입체적으로 파악해 진단과 치료계획 수립에 도움을 줍니다.",
-    image: "/images/equipment/hdx-ct.png",
+
+    headline:
+      "치아와 잇몸뼈, 주변 구조를 3차원으로 확인합니다.",
+
+    desc:
+      "평면 영상만으로 확인하기 어려운 잇몸뼈의 폭과 높이, 신경관과 상악동 등 주변 구조를 3차원 영상으로 확인합니다. 임플란트와 사랑니 등 진단과 치료계획 수립에 활용합니다.",
+
+    image: "/images/equipment/hdxCTecoX.png",
+
+    blend: false,
   },
+
   {
+    category: "바늘 없는 분사식 주입 시스템",
     eng: "NEEDLE-FREE INJECTION SYSTEM",
+
     name: "Comfort-in",
-    sub: "바늘 없는 분사식 주입 시스템",
-    desc: "주삿바늘 대신 미세한 약액을 빠르게 분사하는 방식입니다. 주사에 대한 부담이 큰 환자에게 진료 상황에 따라 선택적으로 활용합니다.",
-    image: "/images/equipment/comfort-in.png",
+
+    headline:
+      "주사에 대한 부담이 큰 분을 위한 또 하나의 선택입니다.",
+
+    desc:
+      "주삿바늘 대신 약액을 빠르게 분사하는 방식의 장치입니다. 주사에 대한 두려움이 큰 환자에게 진료 부위와 상황에 따라 선택적으로 활용합니다.",
+
+    image: "/images/equipment/comportin.png",
+
+    blend: true,
   },
+
   {
+    category: "광학식 치아우식 진단장치",
     eng: "OPTICAL CARIES DETECTION",
+
     name: "Qraypen C",
-    sub: "광학식 치아우식 진단장치",
-    desc: "특정 파장의 빛과 형광 반응을 이용하여 치아 상태를 영상으로 확인하는 진단장비입니다. 육안으로 확인하기 어려운 부분을 한 번 더 살펴보는 데 활용합니다.",
+
+    headline:
+      "눈으로만 확인하기 어려운 부분을 빛을 이용해 한 번 더 살펴봅니다.",
+
+    desc:
+      "특정 파장의 빛과 형광 반응을 이용하여 치아 상태를 영상으로 확인하는 장비입니다. 육안검사와 함께 우식이 의심되는 부위를 확인하고 환자에게 설명하는 데 활용합니다.",
+
     image: "/images/equipment/qraypen.png",
+
+    blend: true,
   },
+
   {
+    category: "LED 수술등",
     eng: "LED SURGICAL LIGHT",
+
     name: "LUVIS S300",
-    sub: "LED 수술등",
-    desc: "정밀한 진료를 위한 밝고 안정적인 시야를 확보합니다. 그림자를 줄이고 수술 부위를 선명하게 확인할 수 있도록 도와 세밀한 진료에 활용합니다.",
-    image: "/images/equipment/luvis-s300.png",
+
+    headline:
+      "세밀한 치료가 필요한 순간, 진료 부위를 더 선명하게 확인합니다.",
+
+    desc:
+      "여러 LED 광원을 이용해 진료 중 발생하는 그림자를 줄이고 수술 부위를 확인하는 데 도움을 주는 수술등입니다. 임플란트 및 구강외과 등 세밀한 시야가 필요한 진료에 활용합니다.",
+
+    image: "/images/equipment/luvisS300.jpg",
+
+    blend: true,
   },
 ];
 
@@ -43,83 +92,209 @@ export default function EquipmentSection() {
   return (
     <section
       id="equipment"
-      className="scroll-mt-24 bg-white py-20 md:py-28"
+      className="scroll-mt-24 overflow-hidden bg-white py-20 md:py-28 lg:py-32"
     >
-      <div className="mx-auto max-w-6xl px-5 md:px-8">
+      <div className="mx-auto max-w-7xl px-5 md:px-8">
+        {/* =====================================================
+            HEADER
+        ===================================================== */}
         <Reveal>
-          <div className="mb-14 max-w-3xl">
-            <p className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-[#17365D]">
-              Equipment
+          <div className="mx-auto mb-20 max-w-4xl text-center md:mb-28">
+            <p className="text-[12px] font-bold tracking-[0.26em] text-[#2f89fc]">
+              EQUIPMENT SYSTEM
             </p>
 
-            <h2 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
-              진단과 치료를 위한 장비도
+            <h2 className="mt-5 break-keep text-[31px] font-semibold leading-[1.4] tracking-[-0.045em] text-[#071b33] md:text-[45px]">
+              진료에 필요한 순간,
+              <br />
               <span className="text-[#2f89fc]">
-                <br className="hidden sm:block" />
-                필요한 기준에 맞춰 준비합니다.
+                필요한 장비를 활용합니다.
               </span>
             </h2>
 
-            <p className="mt-5 text-[15px] leading-7 text-slate-600 md:text-base">
-              장비는 많아 보이는 것보다,
-              어떤 상황에서 어떻게 활용되는지가 더 중요하다고 생각합니다.
-              수원세브란스치과는 진단과 설명, 치료계획 수립에 도움이 되는 장비를
-              실제 진료 흐름에 맞춰 사용합니다.
+            <p className="mx-auto mt-6 max-w-3xl break-keep text-[16px] leading-[1.9] text-[#68798a] md:text-[17px]">
+              장비의 이름보다 중요한 것은 환자분의 상태를 확인하고,
+              치료계획을 세우며 이해하기 쉽게 설명하는 데
+              어떻게 활용되는가라고 생각합니다.
             </p>
           </div>
         </Reveal>
 
-        <div className="space-y-8 md:space-y-10">
+        {/* =====================================================
+            EQUIPMENT LIST
+        ===================================================== */}
+        <div>
           {equipmentItems.map((item, index) => {
             const reversed = index % 2 === 1;
 
             return (
-              <Reveal key={item.name} delay={index * 70}>
-                <article className="overflow-hidden rounded-[32px] border border-slate-200 bg-[#f8fafc] shadow-sm">
-                  <div
-                    className={[
-                      "grid items-center gap-8 p-6 md:p-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 lg:p-10",
-                      reversed ? "lg:grid-cols-[1.05fr_0.95fr]" : "",
-                    ].join(" ")}
-                  >
-                    {/* 이미지 */}
-                    <div className={reversed ? "lg:order-2" : ""}>
-                      <div className="rounded-[28px] bg-white px-6 py-8 shadow-[0_8px_22px_rgba(15,23,42,0.04)]">
-                        <div className="relative mx-auto h-[280px] w-full max-w-[360px] md:h-[360px] md:max-w-[420px]">
+              <article
+                key={item.name}
+                className="relative border-t border-[#e1e7ed] py-16 md:py-20 lg:py-24"
+              >
+                <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+                  {/* =====================================================
+                      IMAGE
+                  ===================================================== */}
+                  <div className={reversed ? "lg:order-2" : ""}>
+                    <Reveal
+                      variant={reversed ? "fade" : "soft"}
+                      duration={950}
+                    >
+                      <div className="relative flex min-h-[320px] items-center justify-center md:min-h-[420px] lg:min-h-[500px]">
+                        {/* 배경 장식 */}
+                        <div
+                          aria-hidden="true"
+                          className="
+                            absolute
+                            left-1/2
+                            top-1/2
+                            h-[260px]
+                            w-[260px]
+                            -translate-x-1/2
+                            -translate-y-1/2
+                            rounded-full
+                            bg-[#f2f6fa]
+                            md:h-[350px]
+                            md:w-[350px]
+                            lg:h-[410px]
+                            lg:w-[410px]
+                          "
+                        />
+
+                        {/* 실제 장비 */}
+                        <div
+                          className="
+                            relative
+                            h-[300px]
+                            w-full
+                            max-w-[420px]
+                            md:h-[400px]
+                            md:max-w-[500px]
+                            lg:h-[470px]
+                            lg:max-w-[560px]
+                          "
+                        >
                           <Image
                             src={item.image}
-                            alt={item.name}
+                            alt={`${item.category} ${item.name}`}
                             fill
-                            className="object-contain drop-shadow-[0_18px_30px_rgba(15,23,42,0.12)]"
+                            sizes="(max-width: 1024px) 90vw, 50vw"
+                            className={[
+                              "object-contain",
+                              "drop-shadow-[0_20px_35px_rgba(7,27,51,0.13)]",
+                              item.blend ? "mix-blend-multiply" : "",
+                            ].join(" ")}
                           />
                         </div>
                       </div>
-                    </div>
-
-                    {/* 텍스트 */}
-                    <div className={reversed ? "lg:order-1" : ""}>
-                      <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[#2f89fc]">
-                        {item.eng}
-                      </p>
-
-                      <h3 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
-                        {item.name}
-                      </h3>
-
-                      <p className="mt-2 text-lg font-semibold text-[#17365D] md:text-xl">
-                        {item.sub}
-                      </p>
-
-                      <p className="mt-5 text-[15px] leading-8 text-slate-600 md:text-[16px]">
-                        {item.desc}
-                      </p>
-                    </div>
+                    </Reveal>
                   </div>
-                </article>
-              </Reveal>
+
+                  {/* =====================================================
+                      TEXT
+                  ===================================================== */}
+                  <div className={reversed ? "lg:order-1" : ""}>
+                    <Reveal variant="soft" delay={120}>
+                      <div className="max-w-xl">
+                        {/* 번호 + 영문 분류 */}
+                        <div className="flex items-center gap-4">
+                          <span className="text-[13px] font-bold tracking-[0.18em] text-[#2f89fc]">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+
+                          <span className="h-px w-10 bg-[#2f89fc]/40" />
+
+                          <p className="text-[11px] font-bold tracking-[0.16em] text-[#8996a4] md:text-[12px]">
+                            {item.eng}
+                          </p>
+                        </div>
+
+                        {/* 가장 중요한 것: 장비의 종류 */}
+                        <h3
+                          className="
+                            mt-5
+                            break-keep
+                            text-[31px]
+                            font-bold
+                            leading-[1.3]
+                            tracking-[-0.045em]
+                            text-[#071b33]
+                            md:text-[40px]
+                            lg:text-[44px]
+                          "
+                        >
+                          {item.category}
+                        </h3>
+
+                        {/* 환자가 느끼는 의미 */}
+                        <p
+                          className="
+                            mt-6
+                            break-keep
+                            text-[20px]
+                            font-semibold
+                            leading-[1.65]
+                            tracking-[-0.025em]
+                            text-[#2f89fc]
+                            md:text-[23px]
+                          "
+                        >
+                          {item.headline}
+                        </p>
+
+                        {/* 상세 설명 */}
+                        <p
+                          className="
+                            mt-5
+                            max-w-[560px]
+                            break-keep
+                            text-[16px]
+                            leading-[1.9]
+                            text-[#657587]
+                            md:text-[17px]
+                          "
+                        >
+                          {item.desc}
+                        </p>
+
+                        {/* 제품명은 마지막에 작게 */}
+                        <div className="mt-7 flex items-center gap-3 border-t border-[#e1e7ed] pt-5">
+                          <span className="text-[11px] font-bold tracking-[0.14em] text-[#9aa6b2]">
+                            EQUIPMENT
+                          </span>
+
+                          <span className="h-3 w-px bg-[#d2d9e0]" />
+
+                          <span className="text-[14px] font-semibold text-[#526475]">
+                            {item.name}
+                          </span>
+                        </div>
+                      </div>
+                    </Reveal>
+                  </div>
+                </div>
+              </article>
             );
           })}
         </div>
+
+        {/* =====================================================
+            BOTTOM MESSAGE
+        ===================================================== */}
+        <Reveal>
+          <div className="border-t border-[#e1e7ed] pt-12 text-center md:pt-16">
+            <p className="mx-auto max-w-4xl break-keep text-[19px] font-medium leading-[1.9] tracking-[-0.02em] text-[#637486] md:text-[22px]">
+              중요한 것은 장비의 이름이 아니라,
+              <br className="hidden md:block" />
+              <span className="font-semibold text-[#17365D]">
+                환자의 상태를 확인하고 필요한 치료를 판단하는 과정에
+                적절하게 활용하는 것
+              </span>
+              이라고 생각합니다.
+            </p>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
