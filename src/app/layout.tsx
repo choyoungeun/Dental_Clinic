@@ -11,17 +11,49 @@ export const metadata: Metadata = {
     template: "%s | 수원세브란스치과의원 | Suwon Severance Dental Clinic",
   },
   description: "북수원 송죽동 치과. 연세대 출신 대표원장이 직접 진료합니다. 임플란트, 자연치아 보존, 매복 사랑니 발치, 충치·보철, 턱관절 진료를 정밀 진단과 충분한 설명을 바탕으로 안내합니다.",
-  keywords: ["송죽동치과", "수원치과", "북수원치과","송죽치과", "성대치과", "수원세브란스치과", "임플란트", "자연치아", "충치치료","English Speaking Dentist Bundang", "Sunae Dental Clinic", "Bundang Dentist", "Foreigner Clinic"] as string[],
+  keywords: [    "한일타운치과",
+
+    "수원임플란트",
+
+    "수원사랑니",
+
+    "수원매복사랑니",
+
+    "수원신경치료",
+
+    "수원재신경치료",
+
+    "수원자연치아보존","송죽동치과", "수원치과", "북수원치과","송죽치과", "성대치과", "수원세브란스치과", "임플란트전문치과", "자연치아유지", "수원충치치료","English Speaking Dentist Suwon", "Suwon Dental Clinic", "JangAngu Dentist", "Foreigner Clinic"] as string[],
   icons: {
     icon: '/favicon.ico', // public 폴더에 넣었을 경우
   },
   openGraph: {
     title: "수원세브란스치과의원",
-    description: "정밀 진단과 충분한 설명을 바탕으로 필요한 치료를 안내하는 수원세브란스치과의원",
+    description: "대학병원과 종합병원 임상 경험을 바탕으로 진단부터 치료계획까지 신중하게 진료합니다.",
     // url: "https://도메인주소.com", // 실제 구매하신 도메인
     siteName: "수원세브란스치과의원",
     locale: "ko_KR",
     type: "website",
+    images: [
+      {
+        url: "/images/yonsei.jpg",
+        width: 1200,
+        height: 630,
+        alt: "수원세브란스치과",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "수원세브란스치과",
+    description:
+      "수원 장안구 송죽동 치과 · 자연치아 보존 · 임플란트 · 구강외과",
+    images: ["/images/yonsei.jpg"],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
