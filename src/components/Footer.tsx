@@ -1,9 +1,11 @@
 import Link from 'next/link';
 
+import { NAVER_BLOG_URL } from './clinicLinks';
+
 const Footer = () => {
   return (
-    <footer className="bg-[#001d4a] py-10 text-gray-400">
-      <div className="mx-auto max-w-7xl px-6">
+    <footer className="bg-[#001d4a] py-14 text-gray-400 md:py-16">
+      <div className="mx-auto max-w-7xl px-5 md:px-8 lg:px-12">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 items-start">
           
           {/* 1. 병원 브랜드 섹션 (조정됨) */}
@@ -98,15 +100,24 @@ const Footer = () => {
             
             <Link 
               href="https://booking.naver.com/"
-              className="block w-full rounded-md bg-[#2f89fc] py-3 text-center text-[16px] font-bold text-white hover:bg-blue-600 transition-all shadow-md"
+              className="flex h-12 w-full items-center justify-center rounded-btn bg-[#2f89fc] text-[16px] font-semibold text-white transition-colors duration-200 hover:bg-blue-600"
             >
               네이버 예약 바로가기
             </Link>
+
+            <a
+              href={NAVER_BLOG_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-12 w-full items-center justify-center rounded-btn border border-white/20 text-[16px] font-semibold text-white transition-colors duration-200 hover:bg-white/10"
+            >
+              대표원장 블로그
+            </a>
           </div>
         </div>
 
         {/* 하단 저작권 정보 */}
-        <div className="mt-12 border-t border-white/5 pt-6 text-[14px] opacity-60">
+        <div className="mt-12 border-t border-white/10 pt-6 text-[14px] text-gray-400">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="text-center md:text-left space-y-1">
               <p>© 2026 수원세브란스치과의원. All Rights Reserved.</p>

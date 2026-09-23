@@ -1,3 +1,5 @@
+import { NAVER_BLOG_URL } from "./clinicLinks";
+
 const SITE_URL = "https://suwonsevrance.vercel.app"; // 임시 도메인
 
 export default function ClinicJsonLd() {
@@ -10,6 +12,8 @@ export default function ClinicJsonLd() {
     alternateName: "수원세브란스치과의원",
 
     url: SITE_URL,
+
+    sameAs: [NAVER_BLOG_URL],
 
     description:
       "수원시 장안구 송죽동에 위치한 치과의원으로 자연치아 보존, 임플란트, 매복 사랑니 및 구강외과, 충치치료, 보철치료, 턱관절 진료를 제공합니다.",

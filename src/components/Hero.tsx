@@ -50,7 +50,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#06182e] text-white">
+    <section className="relative isolate overflow-hidden bg-ink text-white">
       {/* Background */}
       <RevealImage
         noZoom
@@ -70,20 +70,20 @@ const Hero = () => {
       </RevealImage>
 
       {/* Overlay */}
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-[#06182e]/60" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-ink/55" />
 
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-[#06182e] via-[#06182e]/80 to-[#06182e]/25" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-ink via-ink/75 to-ink/10" />
 
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-[#06182e] via-transparent to-[#06182e]/35" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-ink/90 via-transparent to-transparent" />
 
       {/* Content */}
-      <div className="relative z-10 mx-auto flex min-h-[790px] max-w-7xl flex-col justify-end px-5 pb-10 pt-36 md:min-h-[840px] md:px-8 md:pb-14 lg:pt-32">
+      <div className="relative z-10 mx-auto flex min-h-[640px] max-w-7xl flex-col justify-end px-5 pb-10 pt-28 md:min-h-[min(88svh,820px)] md:px-8 md:pb-14 lg:px-12">
         {/* Eyebrow */}
         <Reveal variant="fade" delay={100}>
           <div className="flex items-center gap-4">
-            <span className="h-px w-8 bg-[#8ec5ff]/70" />
+            <span className="h-px w-8 bg-sky/70" />
 
-            <p className="text-[11px] font-bold tracking-[0.25em] text-[#8ec5ff] md:text-[12px]">
+            <p className="text-[13px] font-medium tracking-[0.06em] text-sky md:text-[14px]">
               TOOTH PRESERVATION · IMPLANT · ORAL SURGERY
             </p>
           </div>
@@ -95,11 +95,11 @@ const Hero = () => {
           delay={220}
           stagger={150}
           duration={1000}
-          className="mt-6 max-w-[980px] break-keep text-[39px] font-semibold leading-[1.25] tracking-[-0.05em] md:text-[58px] lg:text-[70px]"
+          className="mt-6 max-w-[980px] break-keep text-[36px] font-bold leading-[1.22] tracking-[-0.03em] md:text-[52px] lg:text-[64px]"
           lines={[
             <span key="line-4" className="text-white">대학병원과 종합병원에서 이어온, </span>,
             
-            <span key="line-2" className="text-[#8ec5ff]">진료의 기준을 수원에서
+            <span key="line-2" className="text-sky">진료의 기준을 수원에서
             </span>,
 
           ]}
@@ -111,14 +111,14 @@ const Hero = () => {
           delay={780}
           className="mt-7 max-w-[720px]"
         >
-          <p className="break-keep text-[16px] leading-[1.9] text-white/78 md:text-[18px] md:leading-[1.9]">
+          <p className="break-keep text-[17px] font-medium leading-[1.6] text-white/85 md:text-[20px]">
             대학병원과 종합병원에서의 임상 경험을 바탕으로
 
             <br className="hidden md:block" />
             자연치아의 가능성을 먼저 살피고, 필요한 치료를 신중하게 계획합니다.
           </p>
 
-          <p className="mt-2 break-keep text-[15px] leading-[1.85] text-white/60 md:text-[16px]">
+          <p className="mt-3 break-keep text-[16px] leading-[1.7] text-white/65 md:text-[17px]">
             검사 결과를 함께 확인하고,
             치료가 필요한 이유와 선택지를 설명한 뒤
             진료계획을 세웁니다.
@@ -131,7 +131,7 @@ const Hero = () => {
           delay={900}
           className="mt-6"
         >
-          <p className="text-[14px] font-medium tracking-[-0.015em] text-white/75 md:text-[15px]">
+          <p className="text-[15px] font-medium tracking-[-0.01em] text-white/75 md:text-[16px]">
             수원세브란스치과
             <span className="mx-2 text-white/25">|</span>
             <strong className="font-semibold text-white">
@@ -150,22 +150,15 @@ const Hero = () => {
             <button
               type="button"
               onClick={goServices}
-              className="group flex h-12 min-w-[156px] items-center justify-center gap-3 rounded-md bg-white px-6 text-[14px] font-bold text-[#071b33] transition-colors duration-300 hover:bg-[#eaf3ff]"
+              className="flex h-12 min-w-[156px] items-center justify-center rounded-btn bg-white px-6 text-[15px] font-semibold text-navy transition-colors duration-200 hover:bg-fog"
             >
               주요 진료 보기
-
-              <span
-                aria-hidden="true"
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              >
-                →
-              </span>
             </button>
 
             <button
               type="button"
               onClick={goDoctors}
-              className="flex h-12 min-w-[156px] items-center justify-center rounded-md border border-white/30 px-6 text-[14px] font-bold text-white transition-colors duration-300 hover:bg-white/10"
+              className="flex h-12 min-w-[156px] items-center justify-center rounded-btn border border-white/40 px-6 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-white/10"
             >
               대표원장 소개
             </button>
@@ -189,11 +182,11 @@ const Hero = () => {
                   : '',
               ].join(' ')}
             >
-              <dt className="text-[10px] font-bold tracking-[0.22em] text-[#8ec5ff]">
+              <dt className="text-[12px] font-semibold tracking-[0.08em] text-sky">
                 {item.label}
               </dt>
 
-              <dd className="mt-2 break-keep text-[14px] font-medium leading-[1.55] text-white/90 md:text-[15px]">
+              <dd className="mt-2 break-keep text-[15px] font-medium leading-[1.55] text-white/90 md:text-[16px]">
                 {item.text}
               </dd>
             </Reveal>

@@ -303,7 +303,7 @@ export default async function ServiceDetailPage({
             mx-auto
             flex
             min-h-[640px]
-            max-w-6xl
+            max-w-7xl
             items-center
             px-5
             py-16
@@ -537,7 +537,7 @@ export default async function ServiceDetailPage({
           className="
             mx-auto
             grid
-            max-w-6xl
+            max-w-7xl
             gap-8
             px-5
             md:px-8
@@ -653,7 +653,7 @@ export default async function ServiceDetailPage({
         "
       >
 
-        <div className="mx-auto max-w-6xl px-5 py-8 md:px-8">
+        <div className="mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
 
           <p className="text-[16px] font-extrabold text-[#071b33]">
             세부 진료 바로가기
@@ -736,12 +736,12 @@ export default async function ServiceDetailPage({
       <section
         className="
           bg-[#f5f7fa]
-          py-14
-          md:py-20
+          py-16
+          md:py-24
         "
       >
 
-        <div className="mx-auto max-w-6xl px-5 md:px-8">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
 
           <Reveal>
 
@@ -845,14 +845,14 @@ export default async function ServiceDetailPage({
       <section
         id="details"
         className="
-          scroll-mt-28
+          scroll-mt-24
           bg-white
-          py-14
-          md:py-20
+          py-16
+          md:py-24
         "
       >
 
-        <div className="mx-auto max-w-6xl px-5 md:px-8">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
 
           <Reveal>
 
@@ -902,7 +902,7 @@ export default async function ServiceDetailPage({
                 <article
                   key={topic.id}
                   id={topic.id}
-                  className="scroll-mt-28"
+                  className="scroll-mt-24"
                 >
 
                   <Reveal>
@@ -1226,7 +1226,7 @@ export default async function ServiceDetailPage({
             "
           >
 
-            <div className="mx-auto max-w-6xl px-5 md:px-8">
+            <div className="mx-auto max-w-7xl px-5 md:px-8">
 
               <Reveal>
 
@@ -1385,14 +1385,14 @@ export default async function ServiceDetailPage({
           bg-gradient-to-br
           from-[#071b33]
           to-[#0f3d75]
-          py-14
+          py-12
           text-center
           text-white
-          md:py-20
+          md:py-16
         "
       >
 
-        <div className="mx-auto max-w-3xl px-5">
+        <div className="mx-auto max-w-3xl px-5 md:px-8">
 
           <p
             className="
@@ -1466,7 +1466,7 @@ export default async function ServiceDetailPage({
 
       <section className="bg-white py-12 md:py-16">
 
-        <div className="mx-auto max-w-6xl px-5 md:px-8">
+        <div className="mx-auto max-w-7xl px-5 md:px-8">
 
           <div
             className="

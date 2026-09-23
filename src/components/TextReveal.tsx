@@ -29,7 +29,7 @@ const TextReveal = ({
   lineClassName = '',
   delay = 0,
   stagger = 110,
-  duration = 900,
+  duration = 800,
 }: TextRevealProps) => {
   const ref = useRef<HTMLElement | null>(null);
 

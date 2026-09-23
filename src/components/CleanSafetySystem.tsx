@@ -23,18 +23,22 @@ const comfortCareItems = [
   {
     title: "가글마취",
     desc: "스케일링 등 비교적 간단한 처치 전, 구강 점막의 예민함을 줄이기 위해 적용합니다.",
+    image: "/images/gaggle.png",
   },
   {
     title: "도포마취",
     desc: "주사 전 점막 표면에 먼저 적용하여 바늘이 들어갈 때의 부담을 줄이는 데 도움을 줍니다.",
+    image: "/images/dopopng.png",
   },
   {
     title: "무통마취기",
     desc: "마취액을 천천히 주입하여 압력으로 인한 불편감을 줄이는 방식입니다. 주사바늘에 대한 느낌은 있을 수 있습니다.",
+    image: "/images/nopain.png",
   },
   {
     title: "무침마취기",
     desc: "바늘 없이 약액을 분사하는 방식으로, 주사에 대한 두려움이 큰 환자에게 진료 상황에 따라 활용합니다.",
+    image: "/images/noneedle.png",
   },
 ];
 
@@ -42,28 +46,28 @@ export default function CleanSafetySystem() {
   return (
     <section
       id="safety"
-      className="scroll-mt-24 overflow-hidden bg-[#f7f7f4] py-20 md:py-28"
+      className="scroll-mt-24 overflow-hidden bg-fog py-22 md:py-30 lg:py-40"
     >
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+      <div className="mx-auto max-w-7xl px-5 md:px-8 lg:px-12">
         {/* =====================================================
             HEADER
         ===================================================== */}
         <Reveal>
           <div className="mx-auto mb-14 max-w-4xl text-center md:mb-20">
-            <p className="text-[12px] font-bold tracking-[0.25em] text-[#2f89fc]">
+            <p className="text-[14px] font-semibold tracking-[0.04em] text-mist md:text-[15px]">
               CLEAN & SAFETY SYSTEM
             </p>
 
-            <h2 className="mt-4 break-keep text-[31px] font-semibold leading-[1.4] tracking-[-0.04em] text-[#071b33] md:text-[44px]">
+            <h2 className="mt-4 break-keep text-[28px] font-bold leading-[1.3] tracking-[-0.03em] text-navy md:text-[40px] lg:text-[48px]">
               진료의 기본은
               <br />
-              <span className="text-[#2f89fc]">
+              <span>
                 보이지 않는 곳에서부터
               </span>{" "}
               시작됩니다.
             </h2>
 
-            <p className="mx-auto mt-6 max-w-3xl break-keep text-[16px] leading-[1.9] text-[#657587] md:text-[17px]">
+            <p className="mx-auto mt-6 max-w-[680px] break-keep text-[17px] leading-[1.7] text-body md:text-[18px]">
               환자분의 눈에 잘 보이지 않는 기구 관리와 진료수,
               일회용품의 사용까지 진료의 한 과정이라고 생각합니다.
             </p>
@@ -155,17 +159,17 @@ export default function CleanSafetySystem() {
         <div className="mt-24 md:mt-32">
           <Reveal>
             <div className="max-w-4xl">
-              <p className="text-[12px] font-bold tracking-[0.25em] text-[#2f89fc]">
+              <p className="text-[14px] font-semibold tracking-[0.04em] text-mist md:text-[15px]">
                 COMFORT CARE
               </p>
 
-              <h2 className="mt-4 break-keep text-[30px] font-semibold leading-[1.45] tracking-[-0.04em] text-[#071b33] md:text-[42px]">
-                치과가 무서운 분들을 위한 배려도
+              <h2 className="mt-4 break-keep text-[28px] font-bold leading-[1.3] tracking-[-0.03em] text-navy md:text-[40px] lg:text-[48px]">
+                 <span>치과가 무서운 분들을 위한 배려</span>도
                 <br className="hidden md:block" />
                 진료의 한 부분이라고 생각합니다.
               </h2>
 
-              <p className="mt-5 max-w-3xl break-keep text-[16px] leading-[1.9] text-[#657587]">
+              <p className="mt-6 max-w-[680px] break-keep text-[17px] leading-[1.7] text-body md:text-[18px]">
                 통증과 주사에 대한 부담을 줄이기 위해 진료 상황에 따라
                 여러 방식의 마취 방법을 선택적으로 활용합니다.
               </p>
@@ -175,14 +179,26 @@ export default function CleanSafetySystem() {
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {comfortCareItems.map((item, index) => (
               <Reveal key={item.title} delay={index * 80}>
-                <article className="h-full rounded-[24px] border border-[#dde5ec] bg-white p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(7,27,51,0.07)]">
-                  <span className="inline-flex rounded-full bg-[#17365D] px-4 py-2 text-[15px] font-bold text-white">
-                    {item.title}
-                  </span>
+                <article className="h-full overflow-hidden rounded-[24px] border border-[#dde5ec] bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_35px_rgba(7,27,51,0.07)]">
+                  <div className="relative aspect-square w-full overflow-hidden bg-[#f2f6fa]">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 22vw"
+                      className="object-contain"
+                    />
+                  </div>
 
-                  <p className="mt-5 break-keep text-[15px] leading-[1.85] text-[#657587]">
-                    {item.desc}
-                  </p>
+                  <div className="p-6">
+                    <span className="inline-flex rounded-full bg-[#17365D] px-4 py-2 text-[15px] font-bold text-white">
+                      {item.title}
+                    </span>
+
+                    <p className="mt-5 break-keep text-[15px] leading-[1.85] text-[#657587]">
+                      {item.desc}
+                    </p>
+                  </div>
                 </article>
               </Reveal>
             ))}
@@ -238,7 +254,7 @@ function NovacareCard() {
 
           <div className="mt-7 h-px w-full bg-[#e0e6ec]" />
 
-          <p className="mt-5 text-[12px] font-bold tracking-[0.18em] text-[#2f89fc]">
+          <p className="mt-5 text-[12px] font-semibold tracking-[0.06em] text-mist">
             NOVACARE WATER MANAGEMENT SYSTEM
           </p>
         </div>

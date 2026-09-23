@@ -21,7 +21,7 @@ export default function AboutPage() {
       {/* 1. 서브 헤더 (기존 코드 유지) */}
 
       {/* 2. 소개 내용 */}
-      <section className="py-20 px-6 text-center">
+      <section className="py-20 px-5 md:py-28 md:px-8 text-center">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-2xl md:text-3xl font-black text-[#001d4a] mb-6">
             충분히 듣고, 정확히 진단하고, 차분히 설명합니다
@@ -34,8 +34,8 @@ export default function AboutPage() {
       </section>
 
       {/* 3. 병원 실내 자동 무한 슬라이드 */}
-      <section className="py-20 bg-[#f8f9fa] overflow-hidden dark:bg-[#f8f9fa]">
-        <div className="mx-auto max-w-7xl px-6 mb-12">
+      <section className="py-20 md:py-28 bg-[#f8f9fa] overflow-hidden dark:bg-[#f8f9fa]">
+        <div className="mx-auto max-w-7xl px-5 md:px-8 mb-12">
           <h2 className="text-[14px] font-black tracking-[0.3em] text-[#2f89fc] uppercase mb-2">Interior View</h2>
           <p className="text-2xl font-bold dark:text-[#001d4a]">편안하게 진료받는 공간</p>
         </div>
@@ -113,7 +113,7 @@ export default function AboutPage() {
       )}
 
       {/* 4. 마무리 섹션 */}
-      <section className="py-24 px-6 text-center">
+      <section className="py-20 px-5 md:py-28 md:px-8 text-center">
         <div className="mx-auto max-w-2xl">
           <h3 className="text-xl md:text-2xl font-bold text-[#001d4a] mb-4">
             눈에 보이지 않는 부분까지 꼼꼼히 확인합니다.

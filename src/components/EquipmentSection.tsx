@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
 
 const equipmentItems = [
   {
+    group: 1 as const,
+
     category: "디지털 구강스캐너",
     eng: "DIGITAL INTRAORAL SCANNER",
 
@@ -21,6 +23,8 @@ const equipmentItems = [
   },
 
   {
+    group: 1 as const,
+
     category: "치과용 3D CT",
     eng: "3D DENTAL CT",
 
@@ -36,21 +40,8 @@ const equipmentItems = [
   },
 
   {
-    category: "바늘 없는 분사식 주입 시스템",
-    eng: "NEEDLE-FREE INJECTION SYSTEM",
+    group: 1 as const,
 
-    headline:
-      "주사에 대한 부담이 큰 분을 위한 또 하나의 선택입니다.",
-
-    desc:
-      "주삿바늘 대신 약액을 빠르게 분사해 마취하는 장치입니다. 주사에 대한 두려움이 큰 환자를 위한 선택지 중 하나로, 진료 부위와 필요한 마취 범위를 확인한 뒤 사용 가능 여부를 안내해 드립니다.",
-
-    image: "/images/equipment/comportin.png",
-
-    blend: true,
-  },
-
-  {
     category: "광학식 치아우식 진단장치",
     eng: "OPTICAL CARIES DETECTION",
 
@@ -66,6 +57,25 @@ const equipmentItems = [
   },
 
   {
+    group: 2 as const,
+
+    category: "바늘 없는 분사식 주입 시스템",
+    eng: "NEEDLE-FREE INJECTION SYSTEM",
+
+    headline:
+      "주사에 대한 부담이 큰 분을 위한 또 하나의 선택입니다.",
+
+    desc:
+      "주삿바늘 대신 약액을 빠르게 분사해 마취하는 장치입니다. 주사에 대한 두려움이 큰 환자를 위한 선택지 중 하나로, 진료 부위와 필요한 마취 범위를 확인한 뒤 사용 가능 여부를 안내해 드립니다.",
+
+    image: "/images/equipment/comportin.png",
+
+    blend: true,
+  },
+
+  {
+    group: 2 as const,
+
     category: "LED 수술등",
     eng: "LED SURGICAL LIGHT",
 
@@ -79,7 +89,29 @@ const equipmentItems = [
 
     blend: true,
   },
+
+  {
+    group: 2 as const,
+
+    category: "증류수 시스템",
+    eng: "DISTILLED WATER SYSTEM",
+
+    headline:
+      "진료와 장비 관리에 사용하는 증류수를 안정적으로 공급·관리합니다.",
+
+    desc:
+      "진료와 장비 관리에 필요한 증류수를 안정적으로 공급·관리하여 깨끗한 진료 환경을 유지하는 데 활용합니다.",
+
+    image: "/images/equipment/novacare.jpg",
+
+    blend: true,
+  },
 ];
+
+const groupLabels: Record<1 | 2, string> = {
+  1: "정확한 진단을 위한 장비",
+  2: "진료를 돕는 장비",
+};
 
 function EquipmentImage({
   src,
@@ -97,7 +129,7 @@ function EquipmentImage({
       <div
         role="img"
         aria-label={alt}
-        className="flex h-full w-full items-center justify-center rounded-2xl border border-dashed border-[#c9d4de] bg-[#f2f6fa] px-4 text-center text-[13px] font-medium text-[#8996a4]"
+        className="flex h-full w-full items-center justify-center rounded-panel border border-dashed border-line bg-fog px-4 text-center text-[14px] font-medium text-muted"
       >
         이미지를 불러오지 못했습니다
       </div>
@@ -113,7 +145,6 @@ function EquipmentImage({
       onError={() => setFailed(true)}
       className={[
         "object-contain",
-        "drop-shadow-[0_20px_35px_rgba(7,27,51,0.13)]",
         blend ? "mix-blend-multiply" : "",
       ].join(" ")}
     />
@@ -124,30 +155,30 @@ export default function EquipmentSection() {
   return (
     <section
       id="equipment"
-      className="scroll-mt-24 overflow-hidden bg-white py-20 md:py-28 lg:py-32"
+      className="scroll-mt-24 overflow-hidden bg-white py-22 md:py-30 lg:py-40"
     >
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
+      <div className="mx-auto max-w-7xl px-5 md:px-8 lg:px-12">
 
         {/* =====================================================
             HEADER
         ===================================================== */}
         <Reveal>
-          <div className="mx-auto mb-20 max-w-4xl text-center md:mb-28">
+          <div className="mx-auto mb-14 max-w-4xl text-center md:mb-18">
 
-            <p className="text-[12px] font-bold tracking-[0.26em] text-[#2f89fc]">
+            <p className="text-[14px] font-semibold tracking-[0.04em] text-mist md:text-[15px]">
               EQUIPMENT SYSTEM
             </p>
 
-            <h2 className="mt-5 break-keep text-[31px] font-semibold leading-[1.4] tracking-[-0.045em] text-[#071b33] md:text-[45px]">
+            <h2 className="mt-4 break-keep text-[28px] font-bold leading-[1.3] tracking-[-0.03em] text-navy md:text-[40px] lg:text-[48px]">
               더 세밀하게 보고, 
               <br />
 
-              <span className="text-[#2f89fc]">
+              <span>
                 더 신중하게 치료합니다.
               </span>
             </h2>
 
-            <p className="mx-auto mt-6 max-w-3xl break-keep text-[16px] leading-[1.9] text-[#68798a] md:text-[17px]">
+            <p className="mx-auto mt-6 max-w-[680px] break-keep text-[17px] leading-[1.7] text-body md:text-[18px]">
               정밀한 진단을 돕는 디지털 장비와
               환자의 진료 부담까지 고려한 장비를 진료 상황에 맞게 활용합니다.
 
@@ -165,19 +196,34 @@ export default function EquipmentSection() {
         <div>
           {equipmentItems.map((item, index) => {
             const reversed = index % 2 === 1;
+            const showGroupHeader =
+              index === 0 || item.group !== equipmentItems[index - 1].group;
 
             return (
-              <article
-                key={item.category}
-                className="
-                  relative
-                  border-t
-                  border-[#e1e7ed]
-                  py-16
-                  md:py-20
-                  lg:py-24
-                "
-              >
+              <Fragment key={item.category}>
+                {showGroupHeader && (
+                  <Reveal variant="fade">
+                    <p
+                      className={[
+                        index === 0 ? "" : "pt-12 md:pt-16",
+                        "pb-3 text-[15px] font-semibold text-mist md:text-[16px]",
+                      ].join(" ")}
+                    >
+                      {groupLabels[item.group]}
+                    </p>
+                  </Reveal>
+                )}
+
+                <article
+                  className="
+                    relative
+                    border-t
+                    border-line
+                    py-14
+                    md:py-18
+                    lg:py-20
+                  "
+                >
                 <div
                   className="
                     grid
@@ -193,10 +239,7 @@ export default function EquipmentSection() {
                   ===================================================== */}
                   <div className={reversed ? "lg:order-2" : ""}>
 
-                    <Reveal
-                      variant={reversed ? "fade" : "soft"}
-                      duration={950}
-                    >
+                    <Reveal variant="fade">
 
                       <div
                         className="
@@ -215,18 +258,9 @@ export default function EquipmentSection() {
                           aria-hidden="true"
                           className="
                             absolute
-                            left-1/2
-                            top-1/2
-                            h-[260px]
-                            w-[260px]
-                            -translate-x-1/2
-                            -translate-y-1/2
-                            rounded-full
-                            bg-[#f2f6fa]
-                            md:h-[350px]
-                            md:w-[350px]
-                            lg:h-[410px]
-                            lg:w-[410px]
+                            inset-0
+                            rounded-panel
+                            bg-fog
                           "
                         />
 
@@ -270,34 +304,23 @@ export default function EquipmentSection() {
 
                       <div className="max-w-xl">
 
-                        {/* 번호 */}
-                        <div className="flex items-center gap-4">
-
-                          <span className="text-[13px] font-bold tracking-[0.18em] text-[#2f89fc]">
-                            {String(index + 1).padStart(2, "0")}
-                          </span>
-
-                          <span className="h-px w-10 bg-[#2f89fc]/40" />
-
-                          <p className="text-[11px] font-bold tracking-[0.16em] text-[#8996a4] md:text-[12px]">
-                            {item.eng}
-                          </p>
-
-                        </div>
+                        {/* 영문 분류 */}
+                        <p className="text-[12px] font-semibold tracking-[0.06em] text-mist md:text-[13px]">
+                          {item.eng}
+                        </p>
 
 
                         {/* 장비 종류 - 가장 크게 */}
                         <h3
                           className="
-                            mt-5
+                            mt-3
                             break-keep
-                            text-[31px]
+                            text-[26px]
                             font-bold
                             leading-[1.3]
-                            tracking-[-0.045em]
-                            text-[#071b33]
-                            md:text-[40px]
-                            lg:text-[44px]
+                            tracking-[-0.03em]
+                            text-ink
+                            md:text-[32px]
                           "
                         >
                           {item.category}
@@ -307,14 +330,14 @@ export default function EquipmentSection() {
                         {/* 핵심 효용 */}
                         <p
                           className="
-                            mt-6
+                            mt-5
                             break-keep
-                            text-[20px]
+                            text-[18px]
                             font-semibold
-                            leading-[1.65]
-                            tracking-[-0.025em]
-                            text-[#2f89fc]
-                            md:text-[23px]
+                            leading-[1.6]
+                            tracking-[-0.02em]
+                            text-navy
+                            md:text-[20px]
                           "
                         >
                           {item.headline}
@@ -328,8 +351,8 @@ export default function EquipmentSection() {
                             max-w-[560px]
                             break-keep
                             text-[16px]
-                            leading-[1.9]
-                            text-[#657587]
+                            leading-[1.7]
+                            text-body
                             md:text-[17px]
                           "
                         >
@@ -337,24 +360,23 @@ export default function EquipmentSection() {
                         </p>
 
 
-                        {/* 장식선 */}
-                        <div className="mt-8 flex items-center gap-3">
-
-                          <span className="h-px w-14 bg-[#17365D]/25" />
-
-                          <span className="h-[5px] w-[5px] rounded-full bg-[#2f89fc]" />
-
-                        </div>
-
                       </div>
 
                     </Reveal>
                   </div>
 
                 </div>
-              </article>
+                </article>
+              </Fragment>
             );
           })}
+
+          <Reveal variant="soft">
+            <p className="mx-auto mt-16 max-w-2xl break-keep border-t border-line pt-10 text-center text-[16px] leading-[1.7] text-body md:mt-20 md:pt-12 md:text-[17px]">
+              장비는 진단과 치료계획에 필요한 정보를 확인하고,
+              환자의 부담을 줄이는 데 도움을 주기 위한 도구입니다.
+            </p>
+          </Reveal>
         </div>
 
       </div>

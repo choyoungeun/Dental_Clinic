@@ -18,6 +18,12 @@ const affiliations = [
     logoScale: 1.02,
   },
   {
+    image: '/images/affiliations/snudh.png',
+    category: 'EDUCATION',
+    alt: '서울대학교치과병원 로고',
+    logoScale: 1,
+  },
+  {
     image: '/images/affiliations/mohw.png',
     category: 'GOVERNMENT',
     alt: '보건복지부 로고',
@@ -49,9 +55,9 @@ const AffiliationsCarousel = () => {
   return (
     <section
       aria-label="교육 및 임상경험, 학술활동"
-      className="overflow-hidden border-y border-white/10 bg-[#06182e] py-5 md:py-6"
+      className="overflow-hidden border-y border-white/10 bg-[#06182e] py-8 md:py-10"
     >
-      <div className="mx-auto mb-4 flex max-w-7xl items-end justify-between gap-5 px-4 md:mb-5 md:px-6">
+      <div className="mx-auto mb-4 flex max-w-7xl items-end justify-between gap-5 px-5 md:mb-5 md:px-8">
         <div>
           <Reveal variant="fade">
             <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-bold tracking-[0.28em] text-[#79b6ff] md:text-[20px]">

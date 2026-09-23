@@ -126,10 +126,10 @@ const QuickConsultation = () => {
   return (
     <section
       id="consultation"
-      className="scroll-mt-24 bg-white py-20 md:py-24"
+      className="scroll-mt-24 bg-white py-22 md:py-30 lg:py-40"
     >
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
-        <div className="overflow-hidden bg-[#071b33] lg:grid lg:grid-cols-[0.8fr_1.2fr]">
+      <div className="mx-auto max-w-7xl px-5 md:px-8 lg:px-12">
+        <div className="overflow-hidden rounded-card bg-ink lg:grid lg:grid-cols-[0.8fr_1.2fr]">
           {/* =====================================================
               LEFT
           ===================================================== */}
@@ -138,27 +138,25 @@ const QuickConsultation = () => {
             variant="left"
             className="relative overflow-hidden px-6 py-9 text-white md:px-9 md:py-12 lg:px-10 lg:py-14"
           >
-            <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full border border-white/[0.05]" />
-            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full border border-white/[0.07]" />
 
             <div className="relative z-10">
-              <p className="text-[11px] font-bold tracking-[0.26em] text-[#8ec5ff]">
+              <p className="text-[14px] font-semibold tracking-[0.04em] text-sky">
                 CONSULTATION
               </p>
 
-              <h2 className="mt-4 break-keep text-[32px] font-semibold leading-[1.35] tracking-[-0.04em] md:text-[40px]">
+              <h2 className="mt-4 break-keep text-[28px] font-bold leading-[1.3] tracking-[-0.03em] md:text-[36px]">
                 어떤 진료가 필요한지
                 <br />
                 상담해 보세요.
               </h2>
 
-              <p className="mt-5 max-w-sm break-keep text-[14px] leading-[1.85] text-white/60 md:text-[15px]">
+              <p className="mt-5 max-w-sm break-keep text-[16px] leading-[1.7] text-white/75">
                 현재 불편한 증상이나 상담받고 싶은 진료를 남겨주시면
                 내용을 확인한 뒤 연락드립니다.
               </p>
 
               <div className="mt-8 border-t border-white/15 pt-6">
-                <p className="text-[10px] font-bold tracking-[0.2em] text-[#8ec5ff]">
+                <p className="text-[12px] font-semibold tracking-[0.06em] text-sky">
                   BEFORE YOUR VISIT
                 </p>
 

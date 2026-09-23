@@ -65,6 +65,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
+      <head>
+        {/* Pretendard : 한글 unicode-range 분할 로드 (필요한 글자만 다운로드) */}
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="antialiased min-h-screen flex flex-col justify-between">
         {/* JS가 꺼진 환경에서도 내용이 보이도록 */}
         <noscript>

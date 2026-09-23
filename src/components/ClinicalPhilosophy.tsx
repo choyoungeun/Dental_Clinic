@@ -1,5 +1,6 @@
+import Image from 'next/image';
+
 import Reveal from './Reveal';
-import { stagger } from './stagger';
 import TextReveal from './TextReveal';
 
 const principles = [
@@ -33,21 +34,21 @@ const ClinicalPhilosophy = () => {
   return (
     <section
       id="brand-story"
-      className="scroll-mt-24 bg-white py-20 md:py-28"
+      className="scroll-mt-24 bg-white py-22 md:py-30 lg:py-40"
     >
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
+      <div className="mx-auto max-w-7xl px-5 md:px-8 lg:px-12">
         {/* Header */}
         <div className="grid gap-7 lg:grid-cols-[1fr_420px] lg:items-end">
           <div>
             <Reveal variant="fade">
-              <p className="text-[12px] font-bold tracking-[0.28em] text-[#2f89fc]">
+              <p className="text-[14px] font-semibold tracking-[0.04em] text-mist md:text-[15px]">
                 TREATMENT PROCESS
               </p>
             </Reveal>
 
             <TextReveal
               delay={120}
-              className="mt-4 break-keep text-4xl font-semibold leading-[1.3] tracking-[-0.04em] text-[#071b33] md:text-5xl lg:text-6xl"
+              className="mt-4 break-keep text-[28px] font-bold leading-[1.3] tracking-[-0.03em] text-navy md:text-[40px] lg:text-[48px]"
               lines={[
                 '치료를 시작하기 전에,',
                 '먼저 설명합니다.',
@@ -60,7 +61,7 @@ const ClinicalPhilosophy = () => {
             delay={220}
             className="lg:pb-2"
           >
-            <p className="break-keep text-[16px] leading-[1.85] text-[#5c6d7f] md:text-[17px]">
+            <p className="break-keep text-[17px] leading-[1.7] text-body md:text-[18px]">
               현재 상태가 어떤지,
               어떤 치료 방법을 고려할 수 있는지,
               그리고 어떤 순서로 진행되는지 확인한 뒤
@@ -69,29 +70,53 @@ const ClinicalPhilosophy = () => {
           </Reveal>
         </div>
 
+        {/* Photo : 진료철학을 보여주는 실제 진료 장면
+            - 원본 4:3 → 모바일은 원본 비율(크롭 없음), 태블릿 16:10, 데스크톱 2:1
+            - 크롭 시 상단 빈 벽을 덜어내고 원장 얼굴 · 모니터 영상 · 치아 모형이 함께 남도록 세로 위치 조정 */}
+        <Reveal
+          as="figure"
+          variant="fade"
+          duration={1000}
+          className="mt-12 md:mt-16"
+        >
+          <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-fog md:aspect-[16/10] lg:aspect-[2/1]">
+            <Image
+              src="/images/test03.png"
+              alt="수원세브란스치과 이현민 대표원장이 환자에게 검사 결과와 치료 계획을 설명하는 모습"
+              fill
+              sizes="(max-width: 768px) 100vw, 1200px"
+              className="object-cover object-center md:object-[center_75%] lg:object-[center_55%]"
+            />
+          </div>
+
+          <figcaption className="mt-4 break-keep text-[14px] leading-[1.6] text-muted md:text-[15px]">
+            검사 결과를 함께 확인하고,
+            <br className="hidden md:block" />
+            {' '}치료가 필요한 이유와 과정을 충분히 설명합니다.
+          </figcaption>
+        </Reveal>
+
         {/* Principles */}
-        <ol className="mt-12 grid gap-x-8 md:mt-16 md:grid-cols-2 lg:grid-cols-4">
-          {principles.map((item, index) => (
+        <ol className="mt-10 grid gap-x-8 md:mt-12 md:grid-cols-2 lg:grid-cols-4">
+          {principles.map((item) => (
             <Reveal
               key={item.number}
               as="li"
-              variant="soft"
-              delay={280 + stagger(index, 110)}
-              className="list-none border-t border-[#071b33]/20 py-6"
+              variant="fade"
+              className="list-none border-t-2 border-navy py-6"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[12px] font-bold tracking-[0.2em] text-[#2f89fc]">
+                <span className="text-[14px] font-bold tracking-[0.04em] text-navy">
                   {item.number}
                 </span>
 
-                <span className="h-px w-10 bg-[#071b33]/15" />
-              </div>
+                              </div>
 
-              <h3 className="mt-5 break-keep text-[22px] font-semibold leading-[1.45] tracking-[-0.03em] text-[#071b33] md:text-[24px]">
+              <h3 className="mt-4 break-keep text-[21px] font-bold leading-[1.4] tracking-[-0.03em] text-ink md:text-[22px]">
                 {item.title}
               </h3>
 
-              <p className="mt-4 break-keep text-[14px] leading-[1.8] text-[#667686] md:text-[15px]">
+              <p className="mt-3 break-keep text-[16px] leading-[1.7] text-body">
                 {item.body}
               </p>
             </Reveal>
@@ -104,8 +129,8 @@ const ClinicalPhilosophy = () => {
           delay={650}
           className="mt-8 md:mt-12"
         >
-          <div className="border-l-2 border-[#2f89fc] pl-5 md:pl-6">
-            <p className="max-w-4xl break-keep text-[18px] font-medium leading-[1.75] tracking-[-0.02em] text-[#263b50] md:text-[21px]">
+          <div className="border-l-2 border-navy pl-5 md:pl-6">
+            <p className="max-w-4xl break-keep text-[18px] font-semibold leading-[1.6] tracking-[-0.02em] text-ink md:text-[20px]">
               검사 결과와 치료 과정을 환자가 이해한 뒤
               진료를 시작하는 것을 중요하게 생각합니다.
             </p>

@@ -2,8 +2,8 @@ import { InteriorSection } from '@/components/InteriorSection';
 import QuickConsultation from '@/components/QuickConsultation';
 import Hero from '@/components/Hero';
 import AffiliationsCarousel from '@/components/AffiliationsCarousel';
-import FloatingBar from '@/components/FloatingBar';
 import ClinicalPhilosophy from '@/components/ClinicalPhilosophy';
+import ScrollStorySection from '@/components/ScrollStorySection';
 import Services from '@/components/Services';
 import Doctors from '@/components/Doctors';
 import Contact from '@/components/Contact';
@@ -18,13 +18,16 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white">
       <MainPopup />
-      <FloatingBar />
+      {/* FloatingBar는 layout.tsx에서 모든 페이지에 한 번만 렌더링 */}
 
       {/* 01. 첫 화면 */}
       <Hero />
 
       {/* 교육 · 임상경험 · 협력병원 자동 슬라이드 */}
       <AffiliationsCarousel />
+
+      {/* 스크롤 스토리 (배경 고정 · 텍스트 전환) */}
+      <ScrollStorySection />
 
       {/* 02. 주요 진료 */}
       <Services />

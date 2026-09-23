@@ -43,12 +43,12 @@ export default function DoctorsPage() {
       </section>
 
       {/* 원장님 단독 레이아웃이 적용된 Doctors 컴포넌트 호출 */}
-      <div className="py-12">
+      <div>
         <Doctors />
       </div>
 
       {/* 상세 페이지용 추가 문구 (선택 사항) */}
-      <section className="pb-24 text-center">
+      <section className="pt-20 pb-24 md:pt-28 text-center">
         <div className="mx-auto max-w-3xl px-6">
           <div className="rounded-2xl bg-blue-50 p-10">
             <p className="text-gray-700 leading-relaxed italic">

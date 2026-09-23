@@ -14,7 +14,7 @@ const NaverMap = dynamic(() => import('./NaverMap'), {
   ssr: false,
 
   loading: () => (
-    <div className="flex h-full w-full items-center justify-center bg-[#eef2f6] text-[13px] text-gray-400">
+    <div className="flex h-full w-full items-center justify-center bg-fog text-[14px] text-muted">
       지도를 불러오는 중입니다...
     </div>
   ),
@@ -87,9 +87,9 @@ const Contact = () => {
   return (
     <section
       id="location"
-      className="scroll-mt-24 bg-[#f4f7fa] py-20 md:py-28"
+      className="scroll-mt-24 bg-fog py-22 md:py-30 lg:py-40"
     >
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
+      <div className="mx-auto max-w-7xl px-5 md:px-8 lg:px-12">
         {/* =====================================================
             HEADER
         ===================================================== */}
@@ -97,14 +97,14 @@ const Contact = () => {
         <div className="grid gap-7 lg:grid-cols-[1fr_420px] lg:items-end">
           <div>
             <Reveal variant="fade">
-              <p className="text-[12px] font-bold tracking-[0.28em] text-[#2f89fc]">
+              <p className="text-[14px] font-semibold tracking-[0.04em] text-mist md:text-[15px]">
                 LOCATION & HOURS
               </p>
             </Reveal>
 
             <TextReveal
               delay={120}
-              className="mt-4 break-keep text-4xl font-semibold leading-[1.3] tracking-[-0.04em] text-[#071b33] md:text-5xl lg:text-6xl"
+              className="mt-4 break-keep text-[28px] font-bold leading-[1.3] tracking-[-0.03em] text-navy md:text-[40px] lg:text-[48px]"
               lines={['치과 오시는 길']}
             />
           </div>
@@ -117,7 +117,7 @@ const Contact = () => {
 
         <Reveal
           variant="soft"
-          className="mt-10 md:mt-14"
+          className="mt-14 md:mt-18"
         >
           <LocationGuideMap />
         </Reveal>
@@ -126,15 +126,14 @@ const Contact = () => {
             MAP + INFORMATION
         ===================================================== */}
 
-        <div className="mt-5 overflow-hidden bg-white lg:grid lg:h-[520px] lg:grid-cols-[1.5fr_0.68fr]">
+        <div className="mt-5 overflow-hidden rounded-card bg-white lg:grid lg:h-[520px] lg:grid-cols-[1.5fr_0.68fr]">
           {/* =================================================
               MAP
           ================================================= */}
 
           <Reveal
             variant="fade"
-            duration={1100}
-            className="relative h-[340px] bg-[#eef2f6] md:h-[400px] lg:h-full"
+            className="relative h-[340px] bg-fog md:h-[400px] lg:h-full"
           >
             <NaverMap />
 
@@ -142,10 +141,9 @@ const Contact = () => {
               href={naverMapUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="absolute bottom-4 left-4 z-20 inline-flex h-11 items-center gap-3 bg-[#03C75A] px-5 text-[13px] font-bold text-white shadow-lg transition hover:brightness-95"
+              className="absolute bottom-4 left-4 z-20 inline-flex h-11 items-center rounded-btn bg-[#03C75A] px-5 text-[14px] font-semibold text-white shadow-float transition hover:brightness-95"
             >
               네이버 길찾기
-              <span aria-hidden="true">→</span>
             </a>
           </Reveal>
 
@@ -154,22 +152,21 @@ const Contact = () => {
           ================================================= */}
 
           <Reveal
-            variant="right"
-            delay={150}
-            className="flex h-full flex-col bg-[#071b33] px-6 py-6 text-white md:px-7 md:py-7"
+            variant="fade"
+            className="flex h-full flex-col bg-ink px-6 py-6 text-white md:px-7 md:py-7"
           >
             {/* Address */}
 
             <div>
-              <p className="text-[9px] font-bold tracking-[0.2em] text-[#8ec5ff]">
+              <p className="text-[12px] font-semibold tracking-[0.06em] text-sky">
                 ADDRESS
               </p>
 
-              <h3 className="mt-2 text-[30px] font-semibold tracking-[-0.03em]">
+              <h3 className="mt-2 text-[28px] font-bold tracking-[-0.03em]">
                 수원세브란스치과
               </h3>
 
-              <p className="mt-2 text-[22px] leading-[1.65] text-white/55">
+              <p className="mt-2 text-[20px] leading-[1.6] text-white/70">
                 경기 수원시 장안구 경수대로 969
               </p>
 
@@ -181,29 +178,29 @@ const Contact = () => {
             {/* Hours */}
 
             <div className="mt-5 border-t border-white/15 pt-5">
-              <div className="flex items-center gap-2 text-[#8ec5ff]">
+              <div className="flex items-center gap-2 text-sky">
                 <ClockIcon />
 
-                <p className="text-[9px] font-bold tracking-[0.2em]">
+                <p className="text-[12px] font-semibold tracking-[0.06em]">
                   OPENING HOURS
                 </p>
               </div>
 
-              <div className="mt-3 space-y-2.5 text-[19px]">
+              <div className="mt-3 space-y-2.5 text-[18px]">
                 {/* 월 · 수 야간진료 */}
 
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-[#8ec5ff]">
+                    <span className="font-semibold text-sky">
                       월 · 수
                     </span>
 
-                    <span className="bg-[#176fc2] px-2 py-0.5 text-[12px] font-bold text-white">
+                    <span className="rounded-btn bg-navy px-2 py-0.5 text-[12px] font-semibold text-white">
                       야간진료
                     </span>
                   </div>
 
-                  <strong className="font-semibold text-[#8ec5ff]">
+                  <strong className="font-semibold text-sky">
                     09:30 - 20:30
                   </strong>
                 </div>
@@ -211,7 +208,7 @@ const Contact = () => {
                 {/* 화 · 목 · 금 */}
 
                 <div className="flex items-center justify-between gap-4">
-                  <span className="text-white/60">
+                  <span className="text-white/70">
                     화 · 목 · 금
                   </span>
 
@@ -223,7 +220,7 @@ const Contact = () => {
                 {/* 토요일 */}
 
                 <div className="flex items-center justify-between gap-4">
-                  <span className="text-white/60">
+                  <span className="text-white/70">
                     토요일
                   </span>
 
@@ -235,7 +232,7 @@ const Contact = () => {
                 {/* 점심 */}
 
                 <div className="flex items-center justify-between gap-4">
-                  <span className="text-white/60">
+                  <span className="text-white/70">
                     점심시간
                   </span>
 
@@ -246,7 +243,7 @@ const Contact = () => {
 
               </div>
 
-              <p className="mt-2.5 text-[15px] text-white/35">
+              <p className="mt-2.5 text-[14px] text-white/55">
                 * 토요일은 점심시간 없이 진료합니다.
               </p>
             </div>
@@ -257,7 +254,7 @@ const Contact = () => {
               href={naverMapUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-auto flex h-8 w-full items-center justify-center border border-white/20 text-[12px] font-bold text-white transition hover:bg-white hover:text-[#071b33]"
+              className="mt-auto flex h-12 w-full items-center justify-center rounded-btn border border-white/30 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-white hover:text-navy"
             >
               네이버 지도로 확인하기 →
             </a>
@@ -268,61 +265,59 @@ const Contact = () => {
             QUICK INFORMATION
         ===================================================== */}
 
-        <div className="mt-4 grid border-y border-[#071b33]/15 md:grid-cols-3">
+        <div className="mt-4 grid border-y border-line md:grid-cols-3">
           <Reveal
-            variant="soft"
+            variant="fade"
             className="flex gap-4 py-5 md:px-5"
           >
-            <div className="text-[#176fc2]">
+            <div className="text-navy">
               <BusIcon />
             </div>
 
             <div>
-              <p className="text-[20px] font-semibold text-[#071b33]">
+              <p className="text-[18px] font-bold text-ink">
                 가까운 버스정류장
               </p>
 
-              <p className="mt-1 text-[18px] text-gray-400">
+              <p className="mt-1 text-[16px] text-muted md:text-[17px]">
                 경기일보 · 한일타운
               </p>
             </div>
           </Reveal>
 
           <Reveal
-            variant="soft"
-            delay={100}
-            className="flex gap-4 border-t border-[#071b33]/10 py-5 md:border-l md:border-t-0 md:px-5"
+            variant="fade"
+            className="flex gap-4 border-t border-line py-5 md:border-l md:border-t-0 md:px-5"
           >
-            <div className="text-[#176fc2]">
+            <div className="text-navy">
               <PinIcon />
             </div>
 
             <div>
-              <p className="text-[20px] font-semibold text-[#071b33]">
+              <p className="text-[18px] font-bold text-ink">
                 주변 위치
               </p>
 
-              <p className="mt-1 text-[18px] text-gray-400">
+              <p className="mt-1 text-[16px] text-muted md:text-[17px]">
                 한일타운 · 홈플러스 북수원점 인근
               </p>
             </div>
           </Reveal>
 
           <Reveal
-            variant="soft"
-            delay={200}
-            className="flex gap-4 border-t border-[#071b33]/10 py-5 md:border-l md:border-t-0 md:px-5"
+            variant="fade"
+            className="flex gap-4 border-t border-line py-5 md:border-l md:border-t-0 md:px-5"
           >
-            <div className="text-[#176fc2]">
+            <div className="text-navy">
               <CarIcon />
             </div>
 
             <div>
-              <p className="text-[20px] font-semibold text-[#071b33]">
+              <p className="text-[18px] font-bold text-ink">
                 주차
               </p>
 
-              <p className="mt-1 text-[18px] text-gray-400">
+              <p className="mt-1 text-[16px] text-muted md:text-[17px]">
                 한국메디컬빌딩 지하주차장 (무료지원)
               </p>
             </div>

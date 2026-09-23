@@ -85,9 +85,9 @@ export const InteriorSection = () => {
   return (
     <section
       id="interior"
-      className="scroll-mt-24 overflow-hidden bg-[#f4f7fa] py-20 md:py-28"
+      className="scroll-mt-24 overflow-hidden bg-fog py-22 md:py-30 lg:py-40"
     >
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
+      <div className="mx-auto max-w-7xl px-5 md:px-8 lg:px-12">
         {/* =====================================================
             HEADER
         ===================================================== */}
@@ -95,14 +95,14 @@ export const InteriorSection = () => {
         <div className="grid gap-8 lg:grid-cols-[1fr_420px] lg:items-end">
           <div>
             <Reveal variant="fade">
-              <p className="text-[12px] font-bold tracking-[0.28em] text-[#2f89fc]">
+              <p className="text-[14px] font-semibold tracking-[0.04em] text-mist md:text-[15px]">
                 CLINIC SPACE
               </p>
             </Reveal>
 
             <TextReveal
               delay={120}
-              className="mt-4 break-keep text-4xl font-semibold leading-[1.3] tracking-[-0.04em] text-[#071b33] md:text-5xl lg:text-6xl"
+              className="mt-4 break-keep text-[28px] font-bold leading-[1.3] tracking-[-0.03em] text-navy md:text-[40px] lg:text-[48px]"
               lines={[
                 '진료 과정에 맞춰',
                 '공간을 나누었습니다.',
@@ -115,7 +115,7 @@ export const InteriorSection = () => {
             delay={220}
             className="lg:pb-2"
           >
-            <p className="break-keep text-[16px] leading-[1.85] text-[#5c6d7f] md:text-[17px]">
+            <p className="break-keep text-[17px] leading-[1.7] text-body md:text-[18px]">
               접수와 대기부터 검사, 상담, 진료까지
               환자가 이동하는 순서에 맞춰
               각 공간의 역할을 구분했습니다.
@@ -130,9 +130,9 @@ export const InteriorSection = () => {
         <Reveal
           variant="soft"
           delay={250}
-          className="mt-10 md:mt-12"
+          className="mt-14 md:mt-18"
         >
-          <div className="grid border-y border-[#071b33]/15 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid border-y border-line sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
                 number: '01',
@@ -160,28 +160,28 @@ export const InteriorSection = () => {
                 className={[
                   'px-1 py-5 sm:px-5',
                   index > 0
-                    ? 'border-t border-[#071b33]/10 sm:border-t-0'
+                    ? 'border-t border-line sm:border-t-0'
                     : '',
                   index % 2 === 1
-                    ? 'sm:border-l sm:border-[#071b33]/10'
+                    ? 'sm:border-l sm:border-line'
                     : '',
                   index >= 2
-                    ? 'lg:border-l lg:border-[#071b33]/10'
+                    ? 'lg:border-l lg:border-line'
                     : '',
                   index === 2
                     ? 'sm:border-l-0'
                     : '',
                 ].join(' ')}
               >
-                <p className="text-[10px] font-bold tracking-[0.18em] text-[#2f89fc]">
+                <p className="text-[13px] font-bold tracking-[0.04em] text-navy">
                   {item.number}
                 </p>
 
-                <p className="mt-2 text-[16px] font-semibold text-[#071b33]">
+                <p className="mt-2 text-[17px] font-bold text-ink">
                   {item.title}
                 </p>
 
-                <p className="mt-1 text-[12px] text-[#788694]">
+                <p className="mt-1 text-[14px] text-muted">
                   {item.text}
                 </p>
               </div>
@@ -193,7 +193,7 @@ export const InteriorSection = () => {
             GALLERY
         ===================================================== */}
 
-        <div className="mt-10 grid grid-cols-2 gap-2.5 md:mt-14 md:gap-3 lg:grid-cols-4 lg:grid-rows-2">
+        <div className="mt-8 grid grid-cols-2 gap-2.5 md:mt-10 md:gap-3 lg:grid-cols-4 lg:grid-rows-2">
           {photos.map((photo, index) => {
             const featured = index === 0;
             const wide = index === 1;
@@ -201,14 +201,14 @@ export const InteriorSection = () => {
             return (
               <Reveal
                 key={photo.src}
-                delay={stagger(index, 110)}
+                variant="fade"
                 className={[
                   'relative',
                   featured
                     ? 'col-span-2 aspect-[16/10] lg:row-span-2 lg:aspect-auto lg:min-h-[520px]'
                     : '',
                   wide
-                    ? 'col-span-2 aspect-[16/8] lg:col-span-2 lg:aspect-auto'
+                    ? 'col-span-2 aspect-[16/9] lg:col-span-2 lg:aspect-auto'
                     : '',
                   !featured && !wide
                     ? 'aspect-[4/3] lg:aspect-auto'
@@ -220,8 +220,8 @@ export const InteriorSection = () => {
                   onClick={() => setSelected(photo)}
                   aria-label={`${photo.title} 크게 보기`}
                   className={[
-                    'group absolute inset-0 overflow-hidden bg-[#e9eef3] text-left',
-                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2f89fc] focus-visible:ring-offset-2',
+                    'group absolute inset-0 overflow-hidden rounded-card bg-line text-left',
+                    'focus:outline-none focus-visible:ring-2 focus-visible:ring-navy focus-visible:ring-offset-2',
                   ].join(' ')}
                 >
                   <RevealImage
@@ -239,25 +239,25 @@ export const InteriorSection = () => {
                           ? '(max-width: 1024px) 100vw, 50vw'
                           : '(max-width: 1024px) 50vw, 25vw'
                       }
-                      className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.025]"
+                      className="object-cover"
                     />
                   </RevealImage>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#041326]/85 via-[#06182e]/10 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
 
                   <div className="absolute inset-x-0 bottom-0 p-4 md:p-6">
-                    <p className="text-[9px] font-bold tracking-[0.2em] text-[#8ec5ff] md:text-[10px]">
+                    <p className="text-[11px] font-semibold tracking-[0.06em] text-sky md:text-[12px]">
                       {photo.label}
                     </p>
 
                     <div className="mt-1.5 flex items-end justify-between gap-4">
                       <div>
-                        <h3 className="break-keep text-[18px] font-semibold tracking-[-0.025em] text-white md:text-[21px]">
+                        <h3 className="break-keep text-[18px] font-bold tracking-[-0.02em] text-white md:text-[21px]">
                           {photo.title}
                         </h3>
 
                         {featured && (
-                          <p className="mt-2 hidden max-w-md break-keep text-[13px] leading-[1.7] text-white/65 md:block">
+                          <p className="mt-2 hidden max-w-md break-keep text-[15px] leading-[1.6] text-white/75 md:block">
                             {photo.description}
                           </p>
                         )}
@@ -265,7 +265,7 @@ export const InteriorSection = () => {
 
                       <span
                         aria-hidden="true"
-                        className="flex h-8 w-8 shrink-0 items-center justify-center border border-white/30 bg-white/10 text-lg font-light text-white transition-colors group-hover:bg-white group-hover:text-[#071b33]"
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-btn border border-white/40 text-lg font-light text-white transition-colors duration-200 group-hover:bg-white group-hover:text-navy"
                       >
                         +
                       </span>
@@ -281,25 +281,24 @@ export const InteriorSection = () => {
             SPACE DESCRIPTIONS
         ===================================================== */}
 
-        <div className="mt-10 grid gap-x-8 gap-y-0 border-t border-[#071b33]/15 md:mt-14 md:grid-cols-2">
+        <div className="mt-10 grid gap-x-8 gap-y-0 border-t border-line md:mt-14 md:grid-cols-2">
           {photos.map((photo, index) => (
             <Reveal
               key={`${photo.src}-description`}
-              variant="soft"
-              delay={stagger(index, 80)}
-              className="border-b border-[#071b33]/10 py-6"
+              variant="fade"
+              className="border-b border-line py-6"
             >
               <div className="grid grid-cols-[42px_1fr] gap-4">
-                <span className="pt-0.5 text-[10px] font-bold tracking-[0.14em] text-[#2f89fc]">
+                <span className="pt-0.5 text-[13px] font-bold tracking-[0.04em] text-mist">
                   {String(index + 1).padStart(2, '0')}
                 </span>
 
                 <div>
-                  <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-[#071b33]">
+                  <h3 className="text-[18px] font-bold tracking-[-0.02em] text-ink">
                     {photo.title}
                   </h3>
 
-                  <p className="mt-2 break-keep text-[13px] leading-[1.8] text-[#697988] md:text-[14px]">
+                  <p className="mt-2 break-keep text-[15px] leading-[1.7] text-body md:text-[16px]">
                     {photo.description}
                   </p>
                 </div>
@@ -308,7 +307,7 @@ export const InteriorSection = () => {
           ))}
         </div>
 
-        <p className="mt-5 text-[11px] leading-[1.7] text-gray-400 md:text-[12px]">
+        <p className="mt-5 text-[13px] leading-[1.7] text-muted">
           사진을 선택하면 공간을 크게 확인할 수 있습니다.
         </p>
       </div>
@@ -319,7 +318,7 @@ export const InteriorSection = () => {
 
       {selected && (
         <div
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-[#020812]/90 p-4 backdrop-blur-md md:p-8"
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-ink/95 p-4 md:p-8"
           role="dialog"
           aria-modal="true"
           aria-label={`${selected.title} 이미지`}
@@ -333,13 +332,13 @@ export const InteriorSection = () => {
             type="button"
             onClick={() => setSelected(null)}
             aria-label="닫기"
-            className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/20 text-2xl font-light text-white transition hover:bg-white hover:text-[#071b33]"
+            className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-transparent text-2xl font-light text-white transition-colors duration-200 hover:bg-white hover:text-navy"
           >
             ×
           </button>
 
           <div className="w-full max-w-6xl">
-            <div className="relative aspect-[16/10] max-h-[78vh] w-full overflow-hidden bg-black">
+            <div className="relative aspect-[16/10] max-h-[78vh] w-full overflow-hidden rounded-card bg-black">
               <Image
                 src={selected.src}
                 alt={selected.alt}
@@ -350,7 +349,7 @@ export const InteriorSection = () => {
             </div>
 
             <div className="mx-auto mt-5 max-w-2xl text-center">
-              <p className="text-[10px] font-bold tracking-[0.2em] text-[#8ec5ff]">
+              <p className="text-[12px] font-semibold tracking-[0.06em] text-sky">
                 {selected.label}
               </p>
 
@@ -358,7 +357,7 @@ export const InteriorSection = () => {
                 {selected.title}
               </p>
 
-              <p className="mt-2 break-keep text-[13px] leading-[1.7] text-white/55">
+              <p className="mt-2 break-keep text-[15px] leading-[1.7] text-white/70">
                 {selected.description}
               </p>
             </div>
