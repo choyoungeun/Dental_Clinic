@@ -259,20 +259,18 @@ export default async function ServiceDetailPage({
           "
         />
 
-        {/* 기본 네이비 Overlay */}
-
+       {/* 기본 네이비 Overlay */}
         <div
           className="
             pointer-events-none
             absolute
             inset-0
             -z-20
-            bg-[#06182e]/60
+            bg-[#06182e]/38
           "
         />
-
+              
         {/* 왼쪽 텍스트를 위한 Gradient */}
-
         <div
           className="
             pointer-events-none
@@ -280,14 +278,13 @@ export default async function ServiceDetailPage({
             inset-0
             -z-10
             bg-gradient-to-r
-            from-[#041427]/95
-            via-[#071b33]/82
-            to-[#071b33]/35
+            from-[#041427]/78
+            via-[#071b33]/55
+            to-[#071b33]/12
           "
         />
-
+              
         {/* 위아래 톤 */}
-
         <div
           className="
             pointer-events-none
@@ -295,9 +292,9 @@ export default async function ServiceDetailPage({
             inset-0
             -z-10
             bg-gradient-to-t
-            from-[#041427]/65
+            from-[#041427]/42
             via-transparent
-            to-[#071b33]/25
+            to-[#071b33]/12
           "
         />
 
