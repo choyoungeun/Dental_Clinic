@@ -74,12 +74,6 @@ const photos = [
     alt: '수원세브란스치과 대기공간 전경',
     title: '대기공간 전경',
   },
-  {
-    category: 'waiting' as CategoryId,
-    src: '/images/loby.jpg',
-    alt: '수원세브란스치과 로비',
-    title: '로비',
-  },
 
   /* -------------------------------------------------------
      진료실
