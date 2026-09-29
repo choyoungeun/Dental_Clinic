@@ -254,7 +254,7 @@ const Contact = () => {
               href={naverMapUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-auto flex h-12 w-full items-center justify-center rounded-btn border border-white/30 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-white hover:text-navy"
+              className="mt-auto flex h-12 w-full items-center justify-center rounded-btn border border-white/30 text-[15px] bg-[#03C75A] font-semibold text-white transition-colors duration-200 hover:bg-white hover:text-navy"
             >
               네이버 지도로 확인하기 →
             </a>
@@ -314,11 +314,11 @@ const Contact = () => {
 
             <div>
               <p className="text-[18px] font-bold text-ink">
-                주차
+                주차 안내
               </p>
 
               <p className="mt-1 text-[16px] text-muted md:text-[17px]">
-                한국메디컬빌딩 지하주차장 (무료지원)
+                본 건물 내 지하추자장 (무료주차)
               </p>
             </div>
           </Reveal>
