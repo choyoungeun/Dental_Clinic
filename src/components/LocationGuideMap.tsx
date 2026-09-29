@@ -97,82 +97,75 @@ const LocationGuideMap = () => {
                   <rect width="900" height="620" fill="#f3f4f6" />
 
                   {/* ==================================================
-                      REFINED ROAD LAYOUT
-                      빨간 표시한 형태에 맞춰 재배치
+                      ROAD ARMS
+                      2번째 참고 이미지처럼 딱 4방향 X 사거리
                   =================================================== */}
                   <g
-                    stroke="#b8c7db"
-                    strokeWidth="34"
+                    stroke="#b9c8dc"
+                    strokeWidth="36"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    fill="none"
                   >
-                    {/* 좌상 -> 중앙 */}
-                    <path d="M210 150 L455 392" />
-
-                    {/* 상단 -> 중앙 */}
-                    <path d="M405 105 L580 280" />
-
-                    {/* 중앙 -> 우상 */}
-                    <path d="M585 285 L790 120" />
-
-                    {/* 좌하 -> 중앙 */}
-                    <path d="M400 505 L560 345" />
-
-                    {/* 중앙 -> 우하 */}
-                    <path d="M610 390 L810 535" />
+                    {/* 좌상 */}
+                    <path d="M255 155 L520 315" />
+                    {/* 우상 */}
+                    <path d="M790 155 L630 315" />
+                    {/* 좌하 */}
+                    <path d="M255 525 L520 365" />
+                    {/* 우하 */}
+                    <path d="M790 525 L630 365" />
                   </g>
 
                   {/* road center lines */}
                   <g
                     stroke="#ffffff"
-                    strokeWidth="3"
+                    strokeWidth="3.5"
                     strokeLinecap="round"
                     opacity="0.95"
                   >
-                    {/* 좌상 -> 중앙 */}
-                    <path d="M242 182 L272 212" />
-                    <path d="M292 232 L322 262" />
-                    <path d="M342 282 L372 312" />
-                    <path d="M392 332 L422 362" />
+                    {/* 좌상 */}
+                    <path d="M290 175 L305 184" />
+                    <path d="M335 202 L350 211" />
+                    <path d="M380 229 L395 238" />
+                    <path d="M425 256 L440 265" />
+                    <path d="M470 283 L485 292" />
 
-                    {/* 상단 -> 중앙 */}
-                    <path d="M432 132 L460 160" />
-                    <path d="M478 178 L506 206" />
-                    <path d="M524 224 L552 252" />
+                    {/* 우상 */}
+                    <path d="M755 175 L742 188" />
+                    <path d="M713 217 L700 230" />
+                    <path d="M671 259 L658 272" />
 
-                    {/* 중앙 -> 우상 */}
-                    <path d="M625 255 L653 232" />
-                    <path d="M675 215 L703 192" />
-                    <path d="M725 175 L753 152" />
+                    {/* 좌하 */}
+                    <path d="M290 505 L305 496" />
+                    <path d="M335 478 L350 469" />
+                    <path d="M380 451 L395 442" />
+                    <path d="M425 424 L440 415" />
+                    <path d="M470 397 L485 388" />
 
-                    {/* 좌하 -> 중앙 */}
-                    <path d="M430 475 L458 447" />
-                    <path d="M478 427 L506 399" />
-                    <path d="M526 379 L554 351" />
-
-                    {/* 중앙 -> 우하 */}
-                    <path d="M640 412 L670 434" />
-                    <path d="M690 448 L720 470" />
-                    <path d="M740 484 L770 506" />
+                    {/* 우하 */}
+                    <path d="M755 505 L742 496" />
+                    <path d="M713 478 L700 469" />
+                    <path d="M671 451 L658 442" />
                   </g>
 
                   {/* ==================================================
-                      INTERSECTION
+                      CENTER INTERSECTION LABEL - 정중앙
                   =================================================== */}
                   <g filter="url(#softShadow)">
                     <rect
-                      x="548"
-                      y="252"
-                      width="114"
-                      height="92"
-                      rx="28"
+                      x="520"
+                      y="290"
+                      width="110"
+                      height="100"
+                      rx="26"
                       fill="#eef2f7"
-                      stroke="#d3dbe7"
+                      stroke="#d7dfea"
                       strokeWidth="2"
                     />
                     <text
-                      x="605"
-                      y="286"
+                      x="575"
+                      y="327"
                       textAnchor="middle"
                       fontSize="18"
                       fontWeight="800"
@@ -181,8 +174,8 @@ const LocationGuideMap = () => {
                       장안구청
                     </text>
                     <text
-                      x="605"
-                      y="313"
+                      x="575"
+                      y="356"
                       textAnchor="middle"
                       fontSize="18"
                       fontWeight="800"
@@ -192,70 +185,77 @@ const LocationGuideMap = () => {
                     </text>
                   </g>
 
-                  {/* road label */}
+                  {/* ==================================================
+                      ROAD NAME
+                  =================================================== */}
                   <text
-                    x="360"
-                    y="185"
-                    fontSize="24"
+                    x="405"
+                    y="208"
+                    fontSize="26"
                     fontWeight="900"
                     fill="#21365d"
-                    transform="rotate(44 360 185)"
+                    transform="rotate(31 405 208)"
                   >
                     경수대로
                   </text>
 
                   {/* ==================================================
-                      CLINIC BUILDING - 왼쪽/위쪽으로 이동
+                      CLINIC BUILDING + LABEL
+                      건물과 네이비 라벨 중심축 동일
                   =================================================== */}
                   <g filter="url(#softShadow)">
-                    <rect x="155" y="188" width="96" height="116" fill="#a9bfd4" />
-                    <polygon points="155,188 203,154 251,188" fill="#d8e3ec" />
+                    {/* building */}
+                    <rect x="145" y="232" width="88" height="112" fill="#a9bfd4" />
+                    <polygon points="145,232 189,202 233,232" fill="#d8e3ec" />
 
-                    <rect x="172" y="206" width="17" height="19" fill="#f7fbff" />
-                    <rect x="197" y="206" width="17" height="19" fill="#f7fbff" />
+                    <rect x="160" y="250" width="15" height="18" fill="#f7fbff" />
+                    <rect x="182" y="250" width="15" height="18" fill="#f7fbff" />
+                    <rect x="204" y="250" width="15" height="18" fill="#f7fbff" />
 
-                    <rect x="172" y="234" width="17" height="19" fill="#f7fbff" />
-                    <rect x="197" y="234" width="17" height="19" fill="#f7fbff" />
+                    <rect x="160" y="276" width="15" height="18" fill="#f7fbff" />
+                    <rect x="182" y="276" width="15" height="18" fill="#f7fbff" />
+                    <rect x="204" y="276" width="15" height="18" fill="#f7fbff" />
 
-                    <rect x="172" y="262" width="17" height="19" fill="#f7fbff" />
-                    <rect x="197" y="262" width="17" height="19" fill="#f7fbff" />
+                    <rect x="160" y="302" width="15" height="18" fill="#f7fbff" />
+                    <rect x="182" y="302" width="15" height="18" fill="#f7fbff" />
+                    <rect x="204" y="302" width="15" height="18" fill="#f7fbff" />
 
-                    {/* red tooth pin */}
+                    {/* pin */}
                     <path
-                      d="M207 128C191 128 178 141 178 157C178 178 207 205 207 205C207 205 236 178 236 157C236 141 223 128 207 128Z"
+                      d="M189 160C173 160 160 173 160 189C160 210 189 237 189 237C189 237 218 210 218 189C218 173 205 160 189 160Z"
                       fill="#ef3a38"
                     />
-                    <circle cx="207" cy="156" r="12" fill="#ffffff" />
+                    <circle cx="189" cy="188" r="12" fill="#ffffff" />
                     <path
-                      d="M201 152C201 147.5 204.5 144 209 144C213.5 144 217 147.5 217 152C217 158.5 209 165 209 165C209 165 201 158.5 201 152Z"
+                      d="M183 184C183 179.5 186.5 176 191 176C195.5 176 199 179.5 199 184C199 190.5 191 197 191 197C191 197 183 190.5 183 184Z"
                       fill="#ef3a38"
                     />
-                    <rect x="205" y="149" width="8" height="14" rx="4" fill="#ffffff" />
+                    <rect x="187" y="181" width="8" height="14" rx="4" fill="#ffffff" />
 
                     {/* sparkle */}
-                    <path d="M174 138 L166 131" stroke="#f09a94" strokeWidth="4" strokeLinecap="round" />
-                    <path d="M240 139 L248 132" stroke="#f09a94" strokeWidth="4" strokeLinecap="round" />
-                    <path d="M207 118 L207 108" stroke="#f09a94" strokeWidth="4" strokeLinecap="round" />
+                    <path d="M158 172 L150 165" stroke="#f09a94" strokeWidth="4" strokeLinecap="round" />
+                    <path d="M220 172 L228 165" stroke="#f09a94" strokeWidth="4" strokeLinecap="round" />
+                    <path d="M189 150 L189 140" stroke="#f09a94" strokeWidth="4" strokeLinecap="round" />
                   </g>
 
-                  {/* clinic label */}
+                  {/* clinic navy label - same center x = 189 */}
                   <g filter="url(#labelShadow)">
                     <rect
-                      x="125"
-                      y="325"
-                      width="235"
-                      height="52"
-                      rx="14"
+                      x="102"
+                      y="366"
+                      width="174"
+                      height="48"
+                      rx="13"
                       fill="#1e3e7d"
                     />
                     <text
-                      x="242.5"
-                      y="359"
+                      x="189"
+                      y="397"
                       textAnchor="middle"
-                      fontSize="28"
+                      fontSize="24"
                       fontWeight="900"
                       fill="#ffffff"
-                      letterSpacing="-1"
+                      letterSpacing="-0.8"
                     >
                       수원세브란스치과
                     </text>
@@ -263,18 +263,18 @@ const LocationGuideMap = () => {
 
                   <g filter="url(#softShadow)">
                     <rect
-                      x="148"
-                      y="382"
-                      width="190"
-                      height="36"
-                      rx="14"
+                      x="123"
+                      y="418"
+                      width="132"
+                      height="32"
+                      rx="12"
                       fill="#e8edf5"
                     />
                     <text
-                      x="243"
-                      y="407"
+                      x="189"
+                      y="439"
                       textAnchor="middle"
-                      fontSize="16"
+                      fontSize="15"
                       fontWeight="800"
                       fill="#3c4b60"
                     >
@@ -283,17 +283,25 @@ const LocationGuideMap = () => {
                   </g>
 
                   {/* ==================================================
-                      LANDMARK LABELS - 새 배치
+                      LANDMARK DOTS + LABELS
                   =================================================== */}
-                  <g fontSize="20" fontWeight="700" fill="#27364d">
-                    <text x="420" y="126">수원한일타운</text>
+                  <g fill="#2a4a74" fontSize="18" fontWeight="700">
+                    {/* 수원한일타운 */}
+                    <circle cx="365" cy="170" r="5.5" fill="#6aa0d4" />
+                    <text x="378" y="176">수원한일타운</text>
 
-                    <text x="720" y="140">장안구청</text>
+                    {/* 장안구청 */}
+                    <circle cx="698" cy="182" r="5.5" fill="#6aa0d4" />
+                    <text x="711" y="188">장안구청</text>
 
-                    <text x="626" y="205">홈플러스</text>
-                    <text x="626" y="232">북수원점</text>
+                    {/* 홈플러스 북수원점 */}
+                    <circle cx="612" cy="238" r="5.5" fill="#6aa0d4" />
+                    <text x="625" y="227">홈플러스</text>
+                    <text x="625" y="249">북수원점</text>
 
-                    <text x="448" y="482">수원KT위즈파크</text>
+                    {/* 수원KT위즈파크 */}
+                    <circle cx="415" cy="485" r="5.5" fill="#6aa0d4" />
+                    <text x="428" y="491">수원KT위즈파크</text>
                   </g>
                 </svg>
               </div>
