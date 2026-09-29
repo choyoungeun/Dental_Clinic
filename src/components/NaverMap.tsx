@@ -34,7 +34,7 @@ type MapStatus =
   | 'error';
 
 /* =========================================================
-   LOAD NAVER MAP SDK
+   NAVER MAP SDK LOAD
 ========================================================= */
 
 const loadNaverMaps = () =>
@@ -86,24 +86,24 @@ const loadNaverMaps = () =>
   });
 
 /* =========================================================
-   CUSTOM MARKER
+   CUSTOM CLINIC MARKER
 
-   실제 치과 좌표 위에
-
-   ┌────────────────────────────┐
-   │  YONSEI  수원세브란스치과   │
-   └─────────────▼──────────────┘
-
-   형태로 표시
+   최종 크기:
+   - 전체 218 × 62
+   - 본체 218 × 48
+   - 로고 32
+   - 글자 17px
 ========================================================= */
 
 const getClinicMarkerHtml = () => `
   <div
     style="
       position: relative;
-      width: 286px;
-      height: 82px;
+      width: 218px;
+      height: 62px;
+
       pointer-events: none;
+
       font-family:
         Pretendard,
         -apple-system,
@@ -115,7 +115,7 @@ const getClinicMarkerHtml = () => `
   >
 
     <!-- =================================================
-         MAIN MARKER
+         MARKER BODY
     ================================================== -->
 
     <div
@@ -127,35 +127,33 @@ const getClinicMarkerHtml = () => `
         display: flex;
         align-items: center;
 
-        width: 286px;
-        height: 64px;
+        width: 218px;
+        height: 48px;
 
         box-sizing: border-box;
 
-        padding: 0 18px 0 10px;
+        padding: 0 14px 0 9px;
 
         background: #003876;
 
-        border: 1px solid rgba(255,255,255,0.12);
-
-        border-radius: 14px;
+        border-radius: 10px;
 
         box-shadow:
-          0 10px 28px rgba(7, 27, 51, 0.23),
-          0 3px 8px rgba(7, 27, 51, 0.16);
+          0 5px 14px rgba(7, 27, 51, 0.18),
+          0 2px 4px rgba(7, 27, 51, 0.10);
       "
     >
 
       <!-- ===============================================
-           YONSEI MARK
+           YONSEI LOGO
       ================================================ -->
 
       <div
         style="
-          width: 46px;
-          height: 46px;
+          width: 32px;
+          height: 32px;
 
-          flex: 0 0 46px;
+          flex: 0 0 32px;
 
           display: flex;
           align-items: center;
@@ -163,26 +161,24 @@ const getClinicMarkerHtml = () => `
 
           overflow: hidden;
 
-          box-sizing: border-box;
-
           background: #ffffff;
 
           border-radius: 50%;
 
-          margin-right: 11px;
+          margin-right: 9px;
         "
       >
         <img
-          src="/images/affiliations/yonsei.jpg"
+          src="/images/yonsei.png"
           alt=""
           draggable="false"
           style="
             display: block;
 
-            width: 42px;
-            height: 42px;
+            width: 29px;
+            height: 29px;
 
-            object-fit: cover;
+            object-fit: contain;
 
             border-radius: 50%;
           "
@@ -195,19 +191,16 @@ const getClinicMarkerHtml = () => `
 
       <div
         style="
-          display: flex;
-          align-items: center;
-
           min-width: 0;
 
           color: #ffffff;
 
-          font-size: 21px;
-          font-weight: 800;
+          font-size: 17px;
+          font-weight: 750;
 
           line-height: 1;
 
-          letter-spacing: -0.8px;
+          letter-spacing: -0.6px;
 
           white-space: nowrap;
         "
@@ -226,17 +219,17 @@ const getClinicMarkerHtml = () => `
         position: absolute;
 
         left: 50%;
-        top: 63px;
+        top: 47px;
 
         width: 0;
         height: 0;
 
         transform: translateX(-50%);
 
-        border-left: 11px solid transparent;
-        border-right: 11px solid transparent;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
 
-        border-top: 14px solid #003876;
+        border-top: 10px solid #003876;
       "
     ></div>
 
@@ -251,8 +244,8 @@ const getClinicMarkerHtml = () => `
         left: 50%;
         bottom: 0;
 
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
 
         transform: translateX(-50%);
 
@@ -265,7 +258,7 @@ const getClinicMarkerHtml = () => `
         border-radius: 9999px;
 
         box-shadow:
-          0 2px 7px rgba(7, 27, 51, 0.32);
+          0 1px 4px rgba(7, 27, 51, 0.28);
       "
     ></div>
 
@@ -289,7 +282,7 @@ const NaverMap = () => {
     let cancelled = false;
 
     /* =====================================================
-       NAVER AUTH FAILURE
+       AUTH FAILURE
     ===================================================== */
 
     window.navermap_authFailure =
@@ -304,7 +297,7 @@ const NaverMap = () => {
       };
 
     /* =====================================================
-       INITIALIZE MAP
+       LOAD + INITIALIZE MAP
     ===================================================== */
 
     loadNaverMaps()
@@ -334,31 +327,16 @@ const NaverMap = () => {
           new naver.maps.Map(
             mapRef.current,
             {
-              center:
-                position,
+              center: position,
 
-              /*
-                숫자가 클수록 확대.
-
-                16.8 → 주변 건물까지 적당히 보임.
-                더 확대하려면 17.2 정도.
-              */
               zoom: 16.8,
 
-              scaleControl:
-                false,
+              scaleControl: false,
+              mapDataControl: false,
+              zoomControl: false,
+              mapTypeControl: false,
 
-              mapDataControl:
-                false,
-
-              zoomControl:
-                false,
-
-              logoControl:
-                true,
-
-              mapTypeControl:
-                false,
+              logoControl: true,
 
               gestureHandling:
                 'cooperative',
@@ -366,7 +344,7 @@ const NaverMap = () => {
           );
 
         /* ===============================================
-           CUSTOM CLINIC MARKER
+           CUSTOM MARKER
         =============================================== */
 
         new naver.maps.Marker({
@@ -382,40 +360,30 @@ const NaverMap = () => {
 
             size:
               new naver.maps.Size(
-                286,
-                82,
+                218,
+                62,
               ),
 
-            /*
-              실제 좌표가
-              마커 중앙 하단에 위치하도록 설정
-            */
             anchor:
               new naver.maps.Point(
-                143,
-                82,
+                109,
+                62,
               ),
           },
 
           zIndex: 1000,
 
           animation:
-            naver.maps.Animation
-              .DROP,
+            naver.maps.Animation.DROP,
         });
 
         /* ===============================================
-           MAP RESIZE + CENTER
-
-           마커 자체가 위로 길기 때문에
-           화면에서 너무 위에 붙지 않도록 조정
+           RESIZE + CENTER
         =============================================== */
 
         window.setTimeout(
           () => {
-            if (
-              cancelled
-            ) {
+            if (cancelled) {
               return;
             }
 
@@ -429,16 +397,15 @@ const NaverMap = () => {
             );
 
             /*
-              y 값을 키우면
-              지도 내용이 아래쪽으로 이동하면서
-              마커가 조금 더 위에 보임.
+              마커가 너무 위/아래로 치우쳐 보이면
+              y값만 조절.
 
-              35 정도가 무난함.
+              20~30 정도 추천.
             */
             map.panBy(
               new naver.maps.Point(
                 0,
-                35,
+                22,
               ),
             );
           },
@@ -529,9 +496,6 @@ const NaverMap = () => {
 
       {/* =================================================
           NAVER MAP
-
-          styled-jsx 사용 안 함.
-          Turbopack parse 문제 방지.
       ================================================= */}
 
       <div
