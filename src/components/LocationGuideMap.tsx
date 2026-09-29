@@ -15,7 +15,6 @@ const LocationGuideMap = () => {
               <span className="text-[#1478b4]">진료시간 / 오시는 길</span>
             </h2>
 
-            {/* 야간/주말진료 안내만 유지 */}
             <div className="mt-8 rounded-[20px] border border-[#d8e2ec] bg-white px-5 py-5 shadow-[0_6px_16px_rgba(15,35,70,0.06)]">
               <div className="flex items-start gap-3">
                 <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#eaf3ff] text-[#0f5fa8]">
@@ -94,46 +93,77 @@ const LocationGuideMap = () => {
                     </filter>
                   </defs>
 
-                  {/* 배경 */}
+                  {/* background */}
                   <rect width="900" height="620" fill="#f3f4f6" />
 
                   {/* ==================================================
-                      X자 교차 도로
+                      REFINED ROAD LAYOUT
+                      빨간 표시한 형태에 맞춰 재배치
                   =================================================== */}
-                  <g stroke="#b8c7db" strokeWidth="34" strokeLinecap="round">
-                    <path d="M185 155 L420 390" />
-                    <path d="M365 120 L580 335" />
-                    <path d="M470 470 L690 250" />
-                    <path d="M625 425 L815 235" />
+                  <g
+                    stroke="#b8c7db"
+                    strokeWidth="34"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    {/* 좌상 -> 중앙 */}
+                    <path d="M210 150 L455 392" />
+
+                    {/* 상단 -> 중앙 */}
+                    <path d="M405 105 L580 280" />
+
+                    {/* 중앙 -> 우상 */}
+                    <path d="M585 285 L790 120" />
+
+                    {/* 좌하 -> 중앙 */}
+                    <path d="M400 505 L560 345" />
+
+                    {/* 중앙 -> 우하 */}
+                    <path d="M610 390 L810 535" />
                   </g>
 
-                  {/* 도로 중앙 점선 */}
-                  <g stroke="#ffffff" strokeWidth="3" strokeLinecap="round" opacity="0.9">
-                    <path d="M210 180 L245 215" />
-                    <path d="M270 240 L305 275" />
-                    <path d="M330 300 L365 335" />
+                  {/* road center lines */}
+                  <g
+                    stroke="#ffffff"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    opacity="0.95"
+                  >
+                    {/* 좌상 -> 중앙 */}
+                    <path d="M242 182 L272 212" />
+                    <path d="M292 232 L322 262" />
+                    <path d="M342 282 L372 312" />
+                    <path d="M392 332 L422 362" />
 
-                    <path d="M390 145 L425 180" />
-                    <path d="M450 205 L485 240" />
-                    <path d="M510 265 L545 300" />
+                    {/* 상단 -> 중앙 */}
+                    <path d="M432 132 L460 160" />
+                    <path d="M478 178 L506 206" />
+                    <path d="M524 224 L552 252" />
 
-                    <path d="M495 445 L530 410" />
-                    <path d="M555 385 L590 350" />
-                    <path d="M615 325 L650 290" />
+                    {/* 중앙 -> 우상 */}
+                    <path d="M625 255 L653 232" />
+                    <path d="M675 215 L703 192" />
+                    <path d="M725 175 L753 152" />
 
-                    <path d="M650 400 L685 365" />
-                    <path d="M705 345 L740 310" />
-                    <path d="M760 290 L795 255" />
+                    {/* 좌하 -> 중앙 */}
+                    <path d="M430 475 L458 447" />
+                    <path d="M478 427 L506 399" />
+                    <path d="M526 379 L554 351" />
+
+                    {/* 중앙 -> 우하 */}
+                    <path d="M640 412 L670 434" />
+                    <path d="M690 448 L720 470" />
+                    <path d="M740 484 L770 506" />
                   </g>
 
                   {/* ==================================================
-                      중앙 사거리 박스
+                      INTERSECTION
                   =================================================== */}
                   <g filter="url(#softShadow)">
                     <rect
-                      x="430"
-                      y="250"
-                      width="120"
+                      x="548"
+                      y="252"
+                      width="114"
                       height="92"
                       rx="28"
                       fill="#eef2f7"
@@ -141,8 +171,8 @@ const LocationGuideMap = () => {
                       strokeWidth="2"
                     />
                     <text
-                      x="490"
-                      y="285"
+                      x="605"
+                      y="286"
                       textAnchor="middle"
                       fontSize="18"
                       fontWeight="800"
@@ -151,8 +181,8 @@ const LocationGuideMap = () => {
                       장안구청
                     </text>
                     <text
-                      x="490"
-                      y="312"
+                      x="605"
+                      y="313"
                       textAnchor="middle"
                       fontSize="18"
                       fontWeight="800"
@@ -162,67 +192,65 @@ const LocationGuideMap = () => {
                     </text>
                   </g>
 
-                  {/* ==================================================
-                      경수대로 텍스트
-                  =================================================== */}
+                  {/* road label */}
                   <text
-                    x="315"
-                    y="205"
-                    fontSize="26"
+                    x="360"
+                    y="185"
+                    fontSize="24"
                     fontWeight="900"
                     fill="#21365d"
-                    transform="rotate(44 315 205)"
+                    transform="rotate(44 360 185)"
                   >
                     경수대로
                   </text>
 
                   {/* ==================================================
-                      치과 건물
+                      CLINIC BUILDING - 왼쪽/위쪽으로 이동
                   =================================================== */}
                   <g filter="url(#softShadow)">
-                    {/* 건물 */}
-                    <rect x="120" y="210" width="98" height="118" fill="#a9bfd4" />
-                    <polygon points="120,210 169,175 218,210" fill="#d8e3ec" />
-                    <rect x="138" y="228" width="18" height="20" fill="#f7fbff" />
-                    <rect x="164" y="228" width="18" height="20" fill="#f7fbff" />
-                    <rect x="138" y="257" width="18" height="20" fill="#f7fbff" />
-                    <rect x="164" y="257" width="18" height="20" fill="#f7fbff" />
-                    <rect x="138" y="286" width="18" height="20" fill="#f7fbff" />
-                    <rect x="164" y="286" width="18" height="20" fill="#f7fbff" />
+                    <rect x="155" y="188" width="96" height="116" fill="#a9bfd4" />
+                    <polygon points="155,188 203,154 251,188" fill="#d8e3ec" />
 
-                    {/* 핀 */}
+                    <rect x="172" y="206" width="17" height="19" fill="#f7fbff" />
+                    <rect x="197" y="206" width="17" height="19" fill="#f7fbff" />
+
+                    <rect x="172" y="234" width="17" height="19" fill="#f7fbff" />
+                    <rect x="197" y="234" width="17" height="19" fill="#f7fbff" />
+
+                    <rect x="172" y="262" width="17" height="19" fill="#f7fbff" />
+                    <rect x="197" y="262" width="17" height="19" fill="#f7fbff" />
+
+                    {/* red tooth pin */}
                     <path
-                      d="M175 142C160 142 148 154 148 169C148 189 175 214 175 214C175 214 202 189 202 169C202 154 190 142 175 142Z"
+                      d="M207 128C191 128 178 141 178 157C178 178 207 205 207 205C207 205 236 178 236 157C236 141 223 128 207 128Z"
                       fill="#ef3a38"
                     />
-                    <circle cx="175" cy="168" r="12" fill="#ffffff" />
+                    <circle cx="207" cy="156" r="12" fill="#ffffff" />
                     <path
-                      d="M169 164C169 159.5 172.5 156 177 156C181.5 156 185 159.5 185 164C185 170.5 177 177 177 177C177 177 169 170.5 169 164Z"
+                      d="M201 152C201 147.5 204.5 144 209 144C213.5 144 217 147.5 217 152C217 158.5 209 165 209 165C209 165 201 158.5 201 152Z"
                       fill="#ef3a38"
                     />
-                    <rect x="173" y="161" width="8" height="14" rx="4" fill="#ffffff" />
+                    <rect x="205" y="149" width="8" height="14" rx="4" fill="#ffffff" />
 
-                    {/* 반짝임 */}
-                    <path d="M145 150 L137 143" stroke="#f09a94" strokeWidth="4" strokeLinecap="round" />
-                    <path d="M207 151 L215 144" stroke="#f09a94" strokeWidth="4" strokeLinecap="round" />
-                    <path d="M175 132 L175 122" stroke="#f09a94" strokeWidth="4" strokeLinecap="round" />
+                    {/* sparkle */}
+                    <path d="M174 138 L166 131" stroke="#f09a94" strokeWidth="4" strokeLinecap="round" />
+                    <path d="M240 139 L248 132" stroke="#f09a94" strokeWidth="4" strokeLinecap="round" />
+                    <path d="M207 118 L207 108" stroke="#f09a94" strokeWidth="4" strokeLinecap="round" />
                   </g>
 
-                  {/* ==================================================
-                      치과 라벨
-                  =================================================== */}
+                  {/* clinic label */}
                   <g filter="url(#labelShadow)">
                     <rect
-                      x="92"
-                      y="350"
-                      width="230"
+                      x="125"
+                      y="325"
+                      width="235"
                       height="52"
                       rx="14"
                       fill="#1e3e7d"
                     />
                     <text
-                      x="207"
-                      y="384"
+                      x="242.5"
+                      y="359"
                       textAnchor="middle"
                       fontSize="28"
                       fontWeight="900"
@@ -235,16 +263,16 @@ const LocationGuideMap = () => {
 
                   <g filter="url(#softShadow)">
                     <rect
-                      x="112"
-                      y="406"
+                      x="148"
+                      y="382"
                       width="190"
                       height="36"
                       rx="14"
                       fill="#e8edf5"
                     />
                     <text
-                      x="207"
-                      y="431"
+                      x="243"
+                      y="407"
                       textAnchor="middle"
                       fontSize="16"
                       fontWeight="800"
@@ -255,14 +283,17 @@ const LocationGuideMap = () => {
                   </g>
 
                   {/* ==================================================
-                      랜드마크 텍스트
+                      LANDMARK LABELS - 새 배치
                   =================================================== */}
                   <g fontSize="20" fontWeight="700" fill="#27364d">
-                    <text x="305" y="155">수원한일타운</text>
-                    <text x="640" y="150">장안구청</text>
-                    <text x="540" y="225">홈플러스</text>
-                    <text x="540" y="252">북수원점</text>
-                    <text x="335" y="520">수원KT위즈파크</text>
+                    <text x="420" y="126">수원한일타운</text>
+
+                    <text x="720" y="140">장안구청</text>
+
+                    <text x="626" y="205">홈플러스</text>
+                    <text x="626" y="232">북수원점</text>
+
+                    <text x="448" y="482">수원KT위즈파크</text>
                   </g>
                 </svg>
               </div>
