@@ -85,23 +85,12 @@ const loadNaverMaps = () =>
     );
   });
 
-/* =========================================================
-   CUSTOM CLINIC MARKER
-
-   최종 크기:
-   - 전체 200 × 62
-   - 본체 200 × 48
-   - 로고 32
-   - 글자 17px
-========================================================= */
-
 const getClinicMarkerHtml = () => `
   <div
     style="
       position: relative;
-      width: 200px;
-      height: 62px;
-
+      width: 202px;
+      height: 59px;
       pointer-events: none;
 
       font-family:
@@ -114,10 +103,6 @@ const getClinicMarkerHtml = () => `
     "
   >
 
-    <!-- =================================================
-         MARKER BODY
-    ================================================== -->
-
     <div
       style="
         position: absolute;
@@ -127,31 +112,28 @@ const getClinicMarkerHtml = () => `
         display: flex;
         align-items: center;
 
-        width: 200px;
-        height: 48px;
+        width: 202px;
+        height: 46px;
 
         box-sizing: border-box;
 
-        padding: 0 14px 0 9px;
+        padding: 0 11px 0 9px;
 
         background: #003876;
 
         border-radius: 10px;
 
         box-shadow:
-          0 5px 14px rgba(7, 27, 51, 0.18),
+          0 5px 13px rgba(7, 27, 51, 0.18),
           0 2px 4px rgba(7, 27, 51, 0.10);
       "
     >
 
-      <!-- ===============================================
-           YONSEI LOGO
-      ================================================ -->
-
+      <!-- Yonsei logo -->
       <div
         style="
-          width: 32px;
-          height: 32px;
+          width: 30px;
+          height: 30px;
 
           flex: 0 0 30px;
 
@@ -159,13 +141,13 @@ const getClinicMarkerHtml = () => `
           align-items: center;
           justify-content: center;
 
+          margin-right: 8px;
+
           overflow: hidden;
 
           background: #ffffff;
 
           border-radius: 50%;
-
-          margin-right: 9px;
         "
       >
         <img
@@ -174,33 +156,24 @@ const getClinicMarkerHtml = () => `
           draggable="false"
           style="
             display: block;
-
-            width: 29px;
-            height: 29px;
-
+            width: 28px;
+            height: 28px;
             object-fit: contain;
-
-            border-radius: 50%;
           "
         />
       </div>
 
-      <!-- ===============================================
-           CLINIC NAME
-      ================================================ -->
-
+      <!-- clinic name -->
       <div
         style="
-          min-width: 0;
-
           color: #ffffff;
 
-          font-size: 17px;
+          font-size: 16.5px;
           font-weight: 750;
 
           line-height: 1;
 
-          letter-spacing: -0.6px;
+          letter-spacing: -0.65px;
 
           white-space: nowrap;
         "
@@ -210,33 +183,27 @@ const getClinicMarkerHtml = () => `
 
     </div>
 
-    <!-- =================================================
-         POINTER
-    ================================================== -->
-
+    <!-- pointer -->
     <div
       style="
         position: absolute;
 
         left: 50%;
-        top: 47px;
+        top: 45px;
 
         width: 0;
         height: 0;
 
         transform: translateX(-50%);
 
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
 
-        border-top: 10px solid #003876;
+        border-top: 9px solid #003876;
       "
     ></div>
 
-    <!-- =================================================
-         EXACT LOCATION DOT
-    ================================================== -->
-
+    <!-- location dot -->
     <div
       style="
         position: absolute;
@@ -347,35 +314,31 @@ const NaverMap = () => {
            CUSTOM MARKER
         =============================================== */
 
-        new naver.maps.Marker({
-          position,
-          map,
+       new naver.maps.Marker({
+        position,
+        map,
 
-          title:
-            '수원세브란스치과',
+      title: '수원세브란스치과',
 
-          icon: {
-            content:
-              getClinicMarkerHtml(),
+      icon: {
+        content: getClinicMarkerHtml(),
 
-            size:
-              new naver.maps.Size(
-                218,
-                62,
-              ),
+        size: new naver.maps.Size(
+          202,
+          59,
+        ),
 
-            anchor:
-              new naver.maps.Point(
-                109,
-                62,
-              ),
-          },
+        anchor: new naver.maps.Point(
+          101,
+          59,
+        ),
+      },
 
-          zIndex: 1000,
+      zIndex: 1000,
 
-          animation:
-            naver.maps.Animation.DROP,
-        });
+      animation:
+      naver.maps.Animation.DROP,
+    });
 
         /* ===============================================
            RESIZE + CENTER
