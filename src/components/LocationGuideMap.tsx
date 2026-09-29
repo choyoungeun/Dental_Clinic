@@ -443,41 +443,7 @@ const LocationGuideMap = () => {
               </svg>
             </div>
 
-            {/* bottom guide text */}
-            <div className="grid gap-4 border-t border-[#eef2f6] px-5 py-5 md:grid-cols-3 md:px-7 md:py-6">
-              <div>
-                <p className="text-[13px] font-semibold tracking-[0.12em] text-[#7b8aa0]">
-                  ADDRESS
-                </p>
-                <p className="mt-2 break-keep text-[16px] font-semibold text-[#0d2d5e]">
-                  경기 수원시 장안구 경수대로 969
-                  <br />
-                  한국메디컬빌딩 2층
-                </p>
-              </div>
-
-              <div>
-                <p className="text-[13px] font-semibold tracking-[0.12em] text-[#7b8aa0]">
-                  LANDMARK
-                </p>
-                <p className="mt-2 break-keep text-[15px] leading-[1.8] text-[#5b6a7d]">
-                  KT위즈파크, 장안구청,
-                  <br />
-                  홈플러스 북수원점 인근
-                </p>
-              </div>
-
-              <div>
-                <p className="text-[13px] font-semibold tracking-[0.12em] text-[#7b8aa0]">
-                  BUS STOP
-                </p>
-                <p className="mt-2 break-keep text-[15px] leading-[1.8] text-[#5b6a7d]">
-                  경기일보 · 한일타운 정류장
-                  <br />
-                  양방향 도보 접근 가능
-                </p>
-              </div>
-            </div>
+           
           </div>
         </div>
       </div>
