@@ -31,12 +31,12 @@ const comfortCareItems = [
     image: "/images/dopopng.png",
   },
   {
-    title: "무통마취기",
+    title: "무통마취",
     desc: "마취액을 천천히 주입하여 압력으로 인한 불편감을 줄이는 방식입니다. 주사바늘에 대한 느낌은 있을 수 있습니다.",
     image: "/images/nopain.png",
   },
   {
-    title: "무침마취기",
+    title: "무침마취",
     desc: "바늘 없이 약액을 분사하는 방식으로, 주사에 대한 두려움이 큰 환자에게 진료 상황에 따라 활용합니다.",
     image: "/images/noneedle.png",
   },
