@@ -1,517 +1,487 @@
+'use client';
+
 const LocationGuideMap = () => {
   return (
-    <div className="overflow-hidden rounded-[18px] border border-[#dfe5ec] bg-white shadow-[0_10px_30px_rgba(7,27,51,0.06)]">
-      {/* HEADER */}
-      <div className="flex flex-col gap-2 border-b border-gray-100 px-5 py-4 md:flex-row md:items-end md:justify-between md:px-7">
-        <div>
-          
-         
+    <section className="w-full">
+      <div className="overflow-hidden rounded-[24px] border border-[#e6ebf1] bg-white shadow-[0_10px_30px_rgba(10,20,40,0.06)]">
+        {/* ======================================================
+            TOP INFO BANNER
+        ====================================================== */}
+        <div className="border-b border-[#eef2f6] bg-[#f8fafc] px-5 py-5 md:px-7 md:py-6">
+          <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+            <div>
+              <p className="text-[12px] font-semibold tracking-[0.14em] text-[#7b8aa0]">
+                CLINIC HOURS GUIDE
+              </p>
+
+             <h3 className="mt-2 break-keep text-[22px] font-bold leading-[1.4] tracking-[-0.03em] text-[#0d2d5e] md:text-[28px]">
+              바쁜 직장인과 학생을 위해,
+              <br />
+              <span className="text-[#0d4aa5]">야간진료</span>와
+              <span className="text-[#1c7a4c]"> 주말진료</span>를 운영합니다.
+            </h3>
+
+             </div>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-[18px] border border-[#dce6f3] bg-white px-4 py-4 shadow-sm">
+                <div className="flex items-center gap-2">
+                  {/* moon icon */}
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#eaf2ff] text-[#0d4aa5]">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="h-5 w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z" />
+                    </svg>
+                  </div>
+
+                  <div>
+                    <p className="text-[14px] font-bold text-[#0d2d5e]">
+                      야간진료
+                    </p>
+                    <p className="text-[13px] text-[#6e7c8f]">
+                      월 · 수 09:30 ~ 20:30
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-[18px] border border-[#dce6f3] bg-white px-4 py-4 shadow-sm">
+                <div className="flex items-center gap-2">
+                  {/* calendar icon */}
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#eef7f2] text-[#1c7a4c]">
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="h-5 w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <rect x="3" y="5" width="18" height="16" rx="2" />
+                      <path d="M16 3v4" />
+                      <path d="M8 3v4" />
+                      <path d="M3 10h18" />
+                    </svg>
+                  </div>
+
+                  <div>
+                    <p className="text-[14px] font-bold text-[#0d2d5e]">
+                      주말진료
+                    </p>
+                    <p className="text-[13px] text-[#6e7c8f]">
+                      토 09:30 ~ 14:00
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-       
-      </div>
-
-      <div className="bg-[#f7f9fc] p-2 md:p-5">
-        <svg
-          viewBox="0 0 1000 590"
-          className="h-auto w-full"
-          role="img"
-          aria-label="경수대로 969 수원세브란스치과 주변 위치 약도"
-        >
-          <defs>
-            <pattern id="guideGrid" width="28" height="28" patternUnits="userSpaceOnUse">
-              <path d="M28 0H0V28" fill="none" stroke="#edf1f5" strokeWidth="1" />
-            </pattern>
-
-            <filter id="guideShadow" x="-30%" y="-30%" width="160%" height="160%">
-              <feDropShadow
-                dx="0"
-                dy="5"
-                stdDeviation="6"
-                floodColor="#071b33"
-                floodOpacity="0.10"
-              />
-            </filter>
-
-            <filter id="guidePinShadow" x="-50%" y="-50%" width="200%" height="200%">
-              <feDropShadow
-                dx="0"
-                dy="7"
-                stdDeviation="8"
-                floodColor="#176fc2"
-                floodOpacity="0.28"
-              />
-            </filter>
-          </defs>
-
-          {/* BACKGROUND */}
-          <rect width="1000" height="590" rx="22" fill="#f7f9fc" />
-          <rect width="1000" height="590" rx="22" fill="url(#guideGrid)" />
-
-          {/* NORTH */}
-          <g transform="translate(64 57)">
-            <circle r="27" fill="#fff" stroke="#dce4ec" />
-            <path d="M0 -16L8 7L0 2L-8 7Z" fill="#071b33" />
-            <text
-              x="0"
-              y="21"
-              textAnchor="middle"
-              fontSize="9"
-              fontWeight="800"
-              fill="#071b33"
-            >
-              N
-            </text>
-          </g>
-
-          {/* =====================================================
-              GYEONGSU-DAERO
-              실제 위치 이해를 위해 중앙의 큰 축으로 표현
-          ====================================================== */}
-          <path
-            d="M470 -40 L555 630"
-            stroke="#e3e9ef"
-            strokeWidth="148"
-            strokeLinecap="round"
-          />
-
-          <path
-            d="M470 -40 L555 630"
-            stroke="#ffffff"
-            strokeWidth="116"
-            strokeLinecap="round"
-          />
-
-          {/* ROAD EDGES */}
-          <path
-            d="M413 -30 L498 620"
-            fill="none"
-            stroke="#ccd5df"
-            strokeWidth="2"
-          />
-          <path
-            d="M527 -45 L612 605"
-            fill="none"
-            stroke="#ccd5df"
-            strokeWidth="2"
-          />
-
-          {/* CENTER LINE */}
-          <path
-            d="M470 -35 L555 620"
-            fill="none"
-            stroke="#b8c3ce"
-            strokeWidth="3"
-            strokeDasharray="18 15"
-          />
-
-          {/* ROAD NAME */}
-          <g transform="translate(513 295) rotate(82.5)">
-            <rect
-              x="-78"
-              y="-15"
-              width="156"
-              height="30"
-              rx="15"
-              fill="#071b33"
-            />
-            <text
-              x="0"
-              y="5"
-              textAnchor="middle"
-              fontSize="13"
-              fontWeight="800"
-              letterSpacing="3"
-              fill="#fff"
-            >
-              경 수 대 로
-            </text>
-          </g>
-
-          {/* NORTH LABEL */}
-          <g transform="translate(414 24)">
-            <rect width="180" height="34" rx="17" fill="#fff" stroke="#dfe5ec" />
-            <text
-              x="90"
-              y="22"
-              textAnchor="middle"
-              fontSize="11"
-              fontWeight="700"
-              fill="#667085"
-            >
-              ↑ 북수원 · 파장동 방향
-            </text>
-          </g>
-
-          {/* =====================================================
-              LEFT/WEST SIDE
-              병원 + 수원종합운동장/KT위즈파크
-          ====================================================== */}
-
-          {/* CLINIC */}
-          <g filter="url(#guideShadow)">
-            <rect
-              x="72"
-              y="100"
-              width="292"
-              height="158"
-              rx="22"
-              fill="#ffffff"
-              stroke="#2f89fc"
-              strokeWidth="3"
-            />
-
-            <rect
-              x="94"
-              y="122"
-              width="93"
-              height="25"
-              rx="12.5"
-              fill="#eaf3ff"
-            />
-            <text
-              x="140"
-              y="139"
-              textAnchor="middle"
-              fontSize="10"
-              fontWeight="800"
-              fill="#176fc2"
-            >
-              HERE · 2F
-            </text>
-
-            <text
-              x="94"
-              y="184"
-              fontSize="23"
-              fontWeight="800"
-              fill="#071b33"
-            >
-              수원세브란스치과
-            </text>
-
-            <text
-              x="94"
-              y="212"
-              fontSize="13"
-              fontWeight="700"
-              fill="#2f89fc"
-            >
-              한국메디컬빌딩 2층
-            </text>
-
-            <text x="94" y="238" fontSize="12" fill="#667085">
-              경수대로 969
-            </text>
-          </g>
-
-          {/* CLINIC CONNECTOR */}
-          <path
-            d="M364 182 C390 182 408 176 429 165"
-            fill="none"
-            stroke="#2f89fc"
-            strokeWidth="4"
-            strokeDasharray="7 7"
-            strokeLinecap="round"
-          />
-
-          {/* PIN */}
-          <g transform="translate(435 160)" filter="url(#guidePinShadow)">
-            <path
-              d="M0 -30C-19 -30 -33 -16 -33 3C-33 27 0 57 0 57C0 57 33 27 33 3C33 -16 19 -30 0 -30Z"
-              fill="#2f89fc"
-            />
-            <circle cx="0" cy="2" r="11" fill="#fff" />
-            <circle cx="0" cy="2" r="5" fill="#2f89fc" />
-          </g>
-
-          {/* STADIUM / KT WIZ PARK */}
-          <g filter="url(#guideShadow)">
-            <rect
-              x="70"
-              y="367"
-              width="310"
-              height="128"
-              rx="20"
-              fill="#ffffff"
-              stroke="#dfe5ec"
-            />
-
-            <ellipse
-              cx="121"
-              cy="420"
-              rx="34"
-              ry="24"
-              fill="#edf5ff"
-              stroke="#b7d4ef"
-              strokeWidth="3"
-            />
-            <ellipse
-              cx="121"
-              cy="420"
-              rx="21"
-              ry="12"
-              fill="#ffffff"
-              stroke="#b7d4ef"
-              strokeWidth="2"
-            />
-
-            <text
-              x="170"
-              y="397"
-              fontSize="10"
-              fontWeight="700"
-              fill="#8a96a3"
-            >
-              경수대로 893
-            </text>
-
-            <text
-              x="170"
-              y="423"
-              fontSize="18"
-              fontWeight="800"
-              fill="#071b33"
-            >
-              수원종합운동장
-            </text>
-
-            <text
-              x="170"
-              y="449"
-              fontSize="16"
-              fontWeight="800"
-              fill="#176fc2"
-            >
-              KT 위즈파크
-            </text>
-
-            <text
-              x="170"
-              y="472"
-              fontSize="10"
-              fontWeight="700"
-              fill="#8a96a3"
-            >
-              병원과 같은 경수대로 측
-            </text>
-          </g>
-
-          {/* LEFT SIDE LABEL */}
-          <g transform="translate(126 314)">
-            <rect
-              width="210"
-              height="31"
-              rx="15.5"
-              fill="#eaf3ff"
-            />
-            <text
-              x="105"
-              y="20"
-              textAnchor="middle"
-              fontSize="10"
-              fontWeight="800"
-              fill="#176fc2"
-            >
-              병원 · 종합운동장 / 위즈파크 측
-            </text>
-          </g>
-
-          {/* =====================================================
-              RIGHT/EAST SIDE
-              한일타운 + 홈플러스 + 장안구청
-          ====================================================== */}
-
-          {/* HANIL TOWN */}
-          <g filter="url(#guideShadow)">
-            <rect
-              x="648"
-              y="70"
-              width="270"
-              height="104"
-              rx="20"
-              fill="#ffffff"
-              stroke="#dfe5ec"
-            />
-
-            <g transform="translate(670 91)">
-              <rect x="0" y="12" width="28" height="43" rx="3" fill="#dce8f4" />
-              <rect x="34" y="0" width="37" height="55" rx="3" fill="#c8dcef" />
-              <rect x="77" y="16" width="27" height="39" rx="3" fill="#dce8f4" />
-            </g>
-
-
-            <text
-              x="818"
-              y="142"
-              textAnchor="middle"
-              fontSize="21"
-              fontWeight="800"
-              fill="#071b33"
-            >
-              수원한일타운
-            </text>
-          </g>
-
-          {/* HOMEPLUS + JANGAN OFFICE */}
-          <g filter="url(#guideShadow)">
-            <rect
-              x="634"
-              y="225"
-              width="304"
-              height="232"
-              rx="22"
-              fill="#ffffff"
-              stroke="#dfe5ec"
-            />
-
-            <rect
-              x="654"
-              y="244"
-              width="140"
-              height="25"
-              rx="12.5"
-              fill="#f1f6fc"
-            />
-
-            
-
-            {/* HOMEPLUS */}
-            <g transform="translate(654 287)">
-              <rect
-                width="264"
-                height="68"
-                rx="14"
-                fill="#f8fafc"
-                stroke="#e5eaf0"
-              />
-
-              <circle cx="31" cy="34" r="20" fill="#eaf3ff" />
-              <path
-                d="M21 34H41M31 24V44"
-                stroke="#176fc2"
-                strokeWidth="3.5"
-                strokeLinecap="round"
-              />
-
-              <text
-                x="65"
-                y="29"
-                fontSize="10"
-                fontWeight="700"
-                fill="#8a96a3"
+        {/* ======================================================
+            MAP BODY
+        ====================================================== */}
+        <div className="bg-[#fcfdfd] p-4 md:p-6">
+          <div className="overflow-hidden rounded-[22px] border border-[#edf1f5] bg-white">
+            <div className="relative aspect-[16/10] w-full md:aspect-[16/8]">
+              <svg
+                viewBox="0 0 1200 720"
+                className="h-full w-full"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                경수대로 930
-              </text>
+                <defs>
+                  <pattern
+                    id="smallGrid"
+                    width="28"
+                    height="28"
+                    patternUnits="userSpaceOnUse"
+                  >
+                    <path
+                      d="M28 0H0V28"
+                      fill="none"
+                      stroke="#f1f4f7"
+                      strokeWidth="1"
+                    />
+                  </pattern>
 
-              <text
-                x="65"
-                y="50"
-                fontSize="17"
-                fontWeight="800"
-                fill="#071b33"
-              >
-                홈플러스 북수원점
-              </text>
-            </g>
+                  <filter
+                    id="softShadow"
+                    x="-30%"
+                    y="-30%"
+                    width="160%"
+                    height="160%"
+                  >
+                    <feDropShadow
+                      dx="0"
+                      dy="8"
+                      stdDeviation="10"
+                      floodColor="#0b1f3a"
+                      floodOpacity="0.12"
+                    />
+                  </filter>
 
-            {/* NEARBY CONNECTOR */}
-            <path
-              d="M687 369 H886"
-              stroke="#ccd6e0"
-              strokeWidth="2"
-              strokeDasharray="6 6"
-            />
+                  <filter
+                    id="pinShadow"
+                    x="-40%"
+                    y="-40%"
+                    width="180%"
+                    height="180%"
+                  >
+                    <feDropShadow
+                      dx="0"
+                      dy="6"
+                      stdDeviation="8"
+                      floodColor="#0b2f67"
+                      floodOpacity="0.22"
+                    />
+                  </filter>
+                </defs>
 
+                {/* base */}
+                <rect width="1200" height="720" fill="#fbfcfd" />
+                <rect width="1200" height="720" fill="url(#smallGrid)" />
 
-            {/* JANGAN OFFICE */}
-            <g transform="translate(654 397)">
-              <rect
-                width="264"
-                height="44"
-                rx="13"
-                fill="#f8fafc"
-                stroke="#e5eaf0"
-              />
+                {/* blocks / background areas */}
+                <rect x="0" y="0" width="260" height="720" fill="#f7faf7" />
+                <rect x="930" y="0" width="270" height="720" fill="#fbfbfb" />
 
-              <rect
-                x="17"
-                y="11"
-                width="28"
-                height="23"
-                rx="3"
-                fill="#d5e0ea"
-              />
+                {/* green area / park side */}
+                <rect x="0" y="440" width="230" height="280" fill="#e8f4e7" />
+                <text
+                  x="52"
+                  y="590"
+                  fontSize="28"
+                  fill="#5d8d63"
+                  fontWeight="700"
+                >
+                  KT위즈파크
+                </text>
 
-              <text
-                x="62"
-                y="28"
-                fontSize="16"
-                fontWeight="800"
-                fill="#071b33"
-              >
-                장안구청
-              </text>
-            </g>
-          </g>
+                {/* main road : 경수대로 */}
+                <g>
+                  <path
+                    d="M170 120 L1080 620"
+                    stroke="#f3dc8f"
+                    strokeWidth="88"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M170 120 L1080 620"
+                    stroke="#d6bf72"
+                    strokeWidth="1.5"
+                    strokeDasharray="8 8"
+                    opacity="0.55"
+                  />
+                  <text
+                    x="720"
+                    y="402"
+                    fontSize="20"
+                    fill="#8a7740"
+                    fontWeight="700"
+                    transform="rotate(29 720 402)"
+                  >
+                    경수대로
+                  </text>
+                </g>
 
-         
+                {/* secondary streets */}
+                <g stroke="#e3e8ee" strokeWidth="18" strokeLinecap="round">
+                  <path d="M250 110 L250 610" />
+                  <path d="M360 130 L360 650" />
+                  <path d="M500 170 L500 690" />
+                  <path d="M675 90 L675 650" />
+                  <path d="M820 120 L820 660" />
+                  <path d="M960 170 L960 650" />
 
-          {/* CROSS ROAD VISUAL HINT */}
-          <g transform="translate(454 338)">
-            <path
-              d="M-18 0H18"
-              stroke="#2f89fc"
-              strokeWidth="3"
-              strokeLinecap="round"
-            />
-            <path
-              d="M11 -7L18 0L11 7"
-              fill="none"
-              stroke="#2f89fc"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </g>
+                  <path d="M110 220 L470 220" />
+                  <path d="M80 320 L560 320" />
+                  <path d="M300 450 L770 450" />
+                  <path d="M500 570 L1080 570" />
+                  <path d="M690 250 L1120 250" />
+                </g>
 
-          <g transform="translate(565 338)">
-            <path
-              d="M-18 0H18"
-              stroke="#2f89fc"
-              strokeWidth="3"
-              strokeLinecap="round"
-            />
-            <path
-              d="M-11 -7L-18 0L-11 7"
-              fill="none"
-              stroke="#2f89fc"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </g>
+                {/* clinic building highlight */}
+                <g filter="url(#pinShadow)">
+                  <rect
+                    x="566"
+                    y="308"
+                    width="128"
+                    height="76"
+                    rx="18"
+                    fill="#eaf2ff"
+                    stroke="#0d4aa5"
+                    strokeWidth="2"
+                  />
+                  <rect
+                    x="580"
+                    y="322"
+                    width="100"
+                    height="48"
+                    rx="12"
+                    fill="#0d4aa5"
+                  />
+                  <text
+                    x="630"
+                    y="352"
+                    textAnchor="middle"
+                    fontSize="18"
+                    fontWeight="800"
+                    fill="#ffffff"
+                  >
+                    한국메디컬빌딩
+                  </text>
+                </g>
 
-          {/* SOUTH DIRECTION */}
-          <g transform="translate(417 535)">
-            <rect width="190" height="34" rx="17" fill="#fff" stroke="#dfe5ec" />
-            <text
-              x="95"
-              y="22"
-              textAnchor="middle"
-              fontSize="11"
-              fontWeight="700"
-              fill="#667085"
-            >
-              ↓ 수원 시내 방향
-            </text>
-          </g>
+                {/* clinic pin */}
+                <g filter="url(#pinShadow)">
+                  <rect
+                    x="515"
+                    y="215"
+                    width="250"
+                    height="62"
+                    rx="16"
+                    fill="#083b7a"
+                  />
+                  <circle cx="550" cy="246" r="19" fill="#ffffff" />
+                  <image
+                    href="/images/yonsei.png"
+                    x="534"
+                    y="230"
+                    width="32"
+                    height="32"
+                    preserveAspectRatio="xMidYMid meet"
+                  />
+                  <text
+                    x="585"
+                    y="252"
+                    fontSize="26"
+                    fontWeight="800"
+                    fill="#ffffff"
+                    letterSpacing="-1"
+                  >
+                    수원세브란스치과
+                  </text>
 
-          
-        </svg>
+                  <path d="M630 277 L648 300 L666 277 Z" fill="#083b7a" />
+                </g>
+
+                {/* same building note */}
+                <g filter="url(#softShadow)">
+                  <rect
+                    x="725"
+                    y="315"
+                    width="180"
+                    height="60"
+                    rx="14"
+                    fill="#ffffff"
+                    stroke="#d9e3ef"
+                  />
+                  <text x="815" y="342" textAnchor="middle" fontSize="16" fontWeight="700" fill="#123562">
+                    경희수원한방병원
+                  </text>
+                  <text x="815" y="364" textAnchor="middle" fontSize="14" fill="#71839a">
+                    동일 건물 2층
+                  </text>
+                </g>
+
+                {/* bus stops both directions */}
+                <g filter="url(#softShadow)">
+                  <rect
+                    x="450"
+                    y="238"
+                    width="48"
+                    height="48"
+                    rx="14"
+                    fill="#ffffff"
+                    stroke="#cfdceb"
+                  />
+                  <text x="474" y="268" textAnchor="middle" fontSize="21">
+                    🚌
+                  </text>
+
+                  <rect
+                    x="780"
+                    y="410"
+                    width="48"
+                    height="48"
+                    rx="14"
+                    fill="#ffffff"
+                    stroke="#cfdceb"
+                  />
+                  <text x="804" y="440" textAnchor="middle" fontSize="21">
+                    🚌
+                  </text>
+
+                  <rect
+                    x="342"
+                    y="196"
+                    width="170"
+                    height="36"
+                    rx="18"
+                    fill="#fff6df"
+                    stroke="#ecd69a"
+                  />
+                  <text x="427" y="219" textAnchor="middle" fontSize="15" fontWeight="700" fill="#8f6c20">
+                    경기일보 정류장
+                  </text>
+
+                  <rect
+                    x="810"
+                    y="460"
+                    width="170"
+                    height="36"
+                    rx="18"
+                    fill="#fff6df"
+                    stroke="#ecd69a"
+                  />
+                  <text x="895" y="483" textAnchor="middle" fontSize="15" fontWeight="700" fill="#8f6c20">
+                    한일타운 정류장
+                  </text>
+                </g>
+
+                {/* landmark cards */}
+                <g filter="url(#softShadow)">
+                  <rect
+                    x="170"
+                    y="500"
+                    width="170"
+                    height="52"
+                    rx="16"
+                    fill="#ffffff"
+                    stroke="#e3eaf2"
+                  />
+                  <text x="255" y="532" textAnchor="middle" fontSize="18" fontWeight="700" fill="#23415f">
+                    KT위즈파크
+                  </text>
+
+                  <rect
+                    x="875"
+                    y="500"
+                    width="190"
+                    height="52"
+                    rx="16"
+                    fill="#ffffff"
+                    stroke="#e3eaf2"
+                  />
+                  <text x="970" y="532" textAnchor="middle" fontSize="18" fontWeight="700" fill="#23415f">
+                    홈플러스 북수원점
+                  </text>
+
+                  <rect
+                    x="925"
+                    y="240"
+                    width="150"
+                    height="52"
+                    rx="16"
+                    fill="#ffffff"
+                    stroke="#e3eaf2"
+                  />
+                  <text x="1000" y="272" textAnchor="middle" fontSize="18" fontWeight="700" fill="#23415f">
+                    장안구청
+                  </text>
+                </g>
+
+                {/* directional helpers */}
+                <g>
+                  <path
+                    d="M255 476 C350 430, 465 385, 560 350"
+                    fill="none"
+                    stroke="#8aa3c7"
+                    strokeWidth="4"
+                    strokeDasharray="8 8"
+                  />
+                  <polygon points="553,340 575,345 560,360" fill="#8aa3c7" />
+
+                  <path
+                    d="M945 490 C860 450, 780 410, 690 360"
+                    fill="none"
+                    stroke="#8aa3c7"
+                    strokeWidth="4"
+                    strokeDasharray="8 8"
+                  />
+                  <polygon points="680,348 702,353 688,368" fill="#8aa3c7" />
+
+                  <path
+                    d="M980 294 C890 305, 810 315, 705 330"
+                    fill="none"
+                    stroke="#8aa3c7"
+                    strokeWidth="4"
+                    strokeDasharray="8 8"
+                  />
+                  <polygon points="696,321 717,328 700,342" fill="#8aa3c7" />
+                </g>
+
+                {/* title badge */}
+                <g filter="url(#softShadow)">
+                  <rect
+                    x="40"
+                    y="40"
+                    width="320"
+                    height="54"
+                    rx="18"
+                    fill="#ffffff"
+                    stroke="#e3eaf2"
+                  />
+                  <text
+                    x="70"
+                    y="73"
+                    fontSize="24"
+                    fontWeight="800"
+                    fill="#0d2d5e"
+                  >
+                    LOCATION GUIDE
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            {/* bottom guide text */}
+            <div className="grid gap-4 border-t border-[#eef2f6] px-5 py-5 md:grid-cols-3 md:px-7 md:py-6">
+              <div>
+                <p className="text-[13px] font-semibold tracking-[0.12em] text-[#7b8aa0]">
+                  ADDRESS
+                </p>
+                <p className="mt-2 break-keep text-[16px] font-semibold text-[#0d2d5e]">
+                  경기 수원시 장안구 경수대로 969
+                  <br />
+                  한국메디컬빌딩 2층
+                </p>
+              </div>
+
+              <div>
+                <p className="text-[13px] font-semibold tracking-[0.12em] text-[#7b8aa0]">
+                  LANDMARK
+                </p>
+                <p className="mt-2 break-keep text-[15px] leading-[1.8] text-[#5b6a7d]">
+                  KT위즈파크, 장안구청,
+                  <br />
+                  홈플러스 북수원점 인근
+                </p>
+              </div>
+
+              <div>
+                <p className="text-[13px] font-semibold tracking-[0.12em] text-[#7b8aa0]">
+                  BUS STOP
+                </p>
+                <p className="mt-2 break-keep text-[15px] leading-[1.8] text-[#5b6a7d]">
+                  경기일보 · 한일타운 정류장
+                  <br />
+                  양방향 도보 접근 가능
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      </div>
+    </section>
   );
 };
 
