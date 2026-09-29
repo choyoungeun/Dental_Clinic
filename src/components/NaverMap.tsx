@@ -89,8 +89,8 @@ const loadNaverMaps = () =>
    CUSTOM CLINIC MARKER
 
    최종 크기:
-   - 전체 218 × 62
-   - 본체 218 × 48
+   - 전체 200 × 62
+   - 본체 200 × 48
    - 로고 32
    - 글자 17px
 ========================================================= */
@@ -99,7 +99,7 @@ const getClinicMarkerHtml = () => `
   <div
     style="
       position: relative;
-      width: 218px;
+      width: 200px;
       height: 62px;
 
       pointer-events: none;
@@ -127,7 +127,7 @@ const getClinicMarkerHtml = () => `
         display: flex;
         align-items: center;
 
-        width: 218px;
+        width: 200px;
         height: 48px;
 
         box-sizing: border-box;
@@ -153,7 +153,7 @@ const getClinicMarkerHtml = () => `
           width: 32px;
           height: 32px;
 
-          flex: 0 0 32px;
+          flex: 0 0 30px;
 
           display: flex;
           align-items: center;
