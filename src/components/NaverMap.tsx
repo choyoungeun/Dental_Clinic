@@ -89,7 +89,7 @@ const getClinicMarkerHtml = () => `
   <div
     style="
       position: relative;
-      width: 202px;
+      width: 198px;
       height: 59px;
       pointer-events: none;
 
@@ -112,7 +112,7 @@ const getClinicMarkerHtml = () => `
         display: flex;
         align-items: center;
 
-        width: 202px;
+        width: 198px;
         height: 46px;
 
         box-sizing: border-box;
@@ -168,7 +168,7 @@ const getClinicMarkerHtml = () => `
         style="
           color: #ffffff;
 
-          font-size: 16.5px;
+          font-size: 17px;
           font-weight: 750;
 
           line-height: 1;
