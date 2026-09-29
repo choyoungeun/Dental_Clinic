@@ -104,29 +104,34 @@ export const MainPopup = () => {
 
           {/* CONTENT */}
           <div className="px-6 pb-6 pt-7 md:px-7">
-            <p className="pr-10 text-[9px] font-bold tracking-[0.28em] text-[#2f89fc]">
-              SUWON SEVERANCE DENTAL CLINIC
-            </p>
-          
+                   
             <div className="mt-4 inline-flex rounded-full bg-[#eef6ff] px-3 py-1.5">
               <span className="text-[10px] font-bold text-[#176fc2]">
               <p className="mt-3 text-[13px] font-semibold leading-[1.7] text-[#34506d]">
-              12월 1일 GRAND OPEN
+              12월 1일 정식 개원
               </p>  
-              수원세브란스치과가 새롭게 시작합니다.
 
               </span>
             </div>
 
             <h2 className="mt-4 text-[27px] font-bold leading-[1.28] tracking-[-0.045em] text-[#071b33]">
-               대학병원·종합병원에서의 임상경험을 바탕으로,
-               연세대학교 치과대학 출신 이현민 대표원장이
-               수원에서 직접 진료합니다.
-              <br />
-              진단과 설명을 충분히 하고,
-               필요한 치료를 신중하게 결정하겠습니다.
+               
+              수원세브란스치과가 새롭게 시작합니다.
+              
+             
             </h2>
 
+            <h3 className="text-[14px] font-bold text-[#071b33]">
+            대학병원·종합병원에서의 임상경험을 바탕으로,
+            <br />
+            연세대학교 치과대학 출신 이현민 대표원장이
+            수원에서 직접 진료합니다.
+            </h3>
+             <p className="text-[12px] font-bold text-[#071b33]">
+              진단과 설명을 충분히 하고,
+               <br />
+              필요한 치료를 신중하게 결정하겠습니다.
+            </p>
             
 
             {/* LOCATION */}
