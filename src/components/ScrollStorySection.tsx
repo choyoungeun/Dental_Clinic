@@ -1,7 +1,20 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+
+/* =========================================================
+   SCROLL STORY
+   - 모바일 iOS / Android 대응
+   - 배경은 sticky 고정
+   - 텍스트는 scroll progress에 직접 연동
+   - 서로 다른 문구가 동시에 보이지 않도록
+     fade-out → 짧은 공백 → fade-in 구조
+========================================================= */
 
 const stories = [
   {
@@ -20,6 +33,7 @@ const stories = [
       '이현민 대표원장이 직접 진료합니다.',
     ],
   },
+
   {
     eyebrow: '02 · DIAGNOSIS',
     heading: [
@@ -36,6 +50,7 @@ const stories = [
       '현재 상태에서 가능한 선택지를 설명합니다.',
     ],
   },
+
   {
     eyebrow: '03 · TREATMENT OPTIONS',
     heading: [
@@ -52,6 +67,7 @@ const stories = [
       '가능한 방법과 치료 순서를 설명합니다.',
     ],
   },
+
   {
     eyebrow: '04 · SYSTEMIC CARE',
     heading: [
@@ -67,6 +83,7 @@ const stories = [
       '치료 전 확인이 필요한 사항을 점검합니다.',
     ],
   },
+
   {
     eyebrow: '05 · OUR STANDARD',
     heading: [
@@ -84,7 +101,15 @@ const stories = [
   },
 ];
 
-const Lines = ({ lines }: { lines: string[] }) => (
+/* =========================================================
+   TEXT
+========================================================= */
+
+const Lines = ({
+  lines,
+}: {
+  lines: string[];
+}) => (
   <>
     {lines.map((line, index) => (
       <span key={line}>
@@ -94,23 +119,95 @@ const Lines = ({ lines }: { lines: string[] }) => (
             <br className="hidden md:block" />
           </>
         )}
+
         {line}
       </span>
     ))}
   </>
 );
 
-const clamp = (value: number) =>
-  Math.min(1, Math.max(0, value));
+/* =========================================================
+   HELPERS
+========================================================= */
 
-export default function ScrollStorySection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
+const clamp = (
+  value: number,
+  min = 0,
+  max = 1,
+) => Math.min(max, Math.max(min, value));
 
-  const frameRef = useRef<number | null>(null);
+/*
+  linear보다 부드러운 변화.
+
+  0 → 1 변화 시
+  처음과 끝이 완만해짐.
+*/
+const smoothstep = (value: number) => {
+  const t = clamp(value);
+
+  return t * t * (3 - 2 * t);
+};
+
+/*
+  전체 ScrollStory 시작 / 마지막에서
+  첫 문구와 마지막 문구를 잠시 유지.
+*/
+const EDGE_HOLD = 0.06;
+
+/*
+  한 story → 다음 story 사이 타이밍.
+
+  0.00 ───── 0.30
+     현재 문구 완전히 표시
+
+  0.30 ───── 0.46
+     현재 문구 천천히 fade-out
+
+  0.46 ───── 0.54
+     짧은 visual pause
+
+  0.54 ───── 0.70
+     다음 문구 천천히 fade-in
+
+  0.70 ───── 1.00
+     다음 문구 완전히 표시
+*/
+const FADE_OUT_START = 0.3;
+const FADE_OUT_END = 0.46;
+
+const FADE_IN_START = 0.54;
+const FADE_IN_END = 0.7;
+
+/* =========================================================
+   COMPONENT
+========================================================= */
+
+const ScrollStorySection = () => {
+  const sectionRef =
+    useRef<HTMLElement | null>(null);
+
+  const stickyRef =
+    useRef<HTMLDivElement | null>(null);
+
+  const articleRefs =
+    useRef<(HTMLElement | null)[]>([]);
+
+  const frameRef =
+    useRef<number | null>(null);
 
   const activeRef = useRef(0);
-  const [active, setActive] = useState(0);
+
+  const metricsRef = useRef({
+    navHeight: 0,
+    distance: 1,
+  });
+
+  const [active, setActive] =
+    useState(0);
+
+  /* =======================================================
+     SCROLL ENGINE
+  ======================================================= */
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -119,31 +216,60 @@ export default function ScrollStorySection() {
     if (!section || !sticky) return;
 
     const nav =
-      document.querySelector<HTMLElement>('nav');
+      document.querySelector<HTMLElement>(
+        'nav',
+      );
 
-    let navHeight = nav?.offsetHeight ?? 0;
-    let scrollDistance = 1;
+    const reduceMotion =
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      );
+
+    /* -----------------------------------------------------
+       실제 DOM 크기 측정
+    ----------------------------------------------------- */
 
     const measure = () => {
-      navHeight = nav?.offsetHeight ?? 0;
+      const navHeight =
+        nav?.offsetHeight ?? 0;
 
       section.style.setProperty(
         '--story-nav-h',
         `${navHeight}px`,
       );
 
-      scrollDistance = Math.max(
+      /*
+        CSS에서 실제 만들어진 sticky 높이를 사용.
+
+        window.innerHeight와 svh를 혼용하지 않음.
+      */
+      const distance = Math.max(
         1,
-        section.offsetHeight - sticky.offsetHeight,
+        section.offsetHeight -
+          sticky.offsetHeight,
       );
+
+      metricsRef.current = {
+        navHeight,
+        distance,
+      };
     };
+
+    /* -----------------------------------------------------
+       SCROLL POSITION → STORY
+    ----------------------------------------------------- */
 
     const update = () => {
       frameRef.current = null;
 
+      const {
+        navHeight,
+        distance,
+      } = metricsRef.current;
+
       /*
-       * 문서 전체에서 section의 실제 시작 위치.
-       */
+        ScrollStory section의 실제 문서상 시작 지점
+      */
       const sectionTop =
         section.getBoundingClientRect().top +
         window.scrollY;
@@ -153,43 +279,293 @@ export default function ScrollStorySection() {
         navHeight -
         sectionTop;
 
-      const progress = clamp(
-        scrolled / scrollDistance,
+      /*
+        0 → 1
+      */
+      const rawProgress = clamp(
+        scrolled / distance,
       );
 
       /*
-       * 중요:
-       *
-       * crossfade 하지 않는다.
-       * 화면에는 반드시 하나의 story만 표시.
-       */
-      const nextActive = Math.min(
-        stories.length - 1,
-        Math.floor(
-          progress * stories.length,
-        ),
+        첫 문구 / 마지막 문구 hold
+      */
+      const storyProgress = clamp(
+        (rawProgress - EDGE_HOLD) /
+          (1 - EDGE_HOLD * 2),
       );
 
+      /*
+        5개 story이므로
+
+        0 = story 1
+        1 = story 2
+        2 = story 3
+        3 = story 4
+        4 = story 5
+
+        그 사이 값은 transition 구간.
+      */
+      const position =
+        storyProgress *
+        (stories.length - 1);
+
+      const baseIndex = Math.min(
+        stories.length - 1,
+        Math.floor(position),
+      );
+
+      const nextIndex = Math.min(
+        stories.length - 1,
+        baseIndex + 1,
+      );
+
+      const localProgress =
+        position - baseIndex;
+
+      /* =================================================
+         REDUCED MOTION
+      ================================================= */
+
+      if (reduceMotion.matches) {
+        const nearest =
+          Math.round(position);
+
+        articleRefs.current.forEach(
+          (element, index) => {
+            if (!element) return;
+
+            const visible =
+              index === nearest;
+
+            element.style.opacity =
+              visible ? '1' : '0';
+
+            element.style.transform =
+              'translate3d(0,0,0)';
+
+            element.style.pointerEvents =
+              visible
+                ? 'auto'
+                : 'none';
+          },
+        );
+
+        if (
+          nearest !== activeRef.current
+        ) {
+          activeRef.current = nearest;
+          setActive(nearest);
+        }
+
+        return;
+      }
+
+      /* =================================================
+         NORMAL SCROLL ANIMATION
+      ================================================= */
+
+      articleRefs.current.forEach(
+        (element, index) => {
+          if (!element) return;
+
+          let opacity = 0;
+          let translateY = 14;
+
+          /* ---------------------------------------------
+             마지막 story 도달 후에는 그대로 유지
+          --------------------------------------------- */
+
+          if (
+            baseIndex ===
+            stories.length - 1
+          ) {
+            if (
+              index ===
+              stories.length - 1
+            ) {
+              opacity = 1;
+              translateY = 0;
+            }
+          }
+
+          /* ---------------------------------------------
+             일반 story transition
+          --------------------------------------------- */
+
+          else {
+            /*
+              현재 story
+            */
+            if (index === baseIndex) {
+              /*
+                0 ~ 0.30
+                완전히 유지
+              */
+              if (
+                localProgress <=
+                FADE_OUT_START
+              ) {
+                opacity = 1;
+                translateY = 0;
+              }
+
+              /*
+                0.30 ~ 0.46
+                천천히 사라짐
+              */
+              else if (
+                localProgress <
+                FADE_OUT_END
+              ) {
+                const rawT =
+                  (localProgress -
+                    FADE_OUT_START) /
+                  (FADE_OUT_END -
+                    FADE_OUT_START);
+
+                const t =
+                  smoothstep(rawT);
+
+                opacity = 1 - t;
+
+                /*
+                  이전 글은 위쪽으로
+                  아주 살짝 빠짐.
+                */
+                translateY =
+                  -12 * t;
+              }
+
+              /*
+                0.46 이후
+                완전히 사라짐
+              */
+              else {
+                opacity = 0;
+                translateY = -12;
+              }
+            }
+
+            /*
+              다음 story
+            */
+            if (index === nextIndex) {
+              /*
+                0 ~ 0.54
+                아직 나타나지 않음
+              */
+              if (
+                localProgress <=
+                FADE_IN_START
+              ) {
+                opacity = 0;
+                translateY = 14;
+              }
+
+              /*
+                0.54 ~ 0.70
+                천천히 등장
+              */
+              else if (
+                localProgress <
+                FADE_IN_END
+              ) {
+                const rawT =
+                  (localProgress -
+                    FADE_IN_START) /
+                  (FADE_IN_END -
+                    FADE_IN_START);
+
+                const t =
+                  smoothstep(rawT);
+
+                opacity = t;
+
+                /*
+                  아래에서 위로 아주 살짝
+                */
+                translateY =
+                  14 * (1 - t);
+              }
+
+              /*
+                0.70 이후
+                완전히 표시
+              */
+              else {
+                opacity = 1;
+                translateY = 0;
+              }
+            }
+          }
+
+          /*
+            opacity / transform을
+            scroll position과 1:1 연결.
+
+            CSS transition 사용하지 않음.
+          */
+          element.style.opacity =
+            opacity.toFixed(3);
+
+          element.style.transform =
+            `translate3d(0, ${translateY}px, 0)`;
+
+          element.style.pointerEvents =
+            opacity > 0.5
+              ? 'auto'
+              : 'none';
+        },
+      );
+
+      /*
+        오른쪽 progress indicator.
+
+        화면에서 어느 story 쪽에 가까운지 표시.
+      */
+      let nextActive = baseIndex;
+
       if (
-        nextActive !== activeRef.current
+        baseIndex <
+          stories.length - 1 &&
+        localProgress >= 0.5
       ) {
-        activeRef.current = nextActive;
+        nextActive = nextIndex;
+      }
+
+      if (
+        nextActive !==
+        activeRef.current
+      ) {
+        activeRef.current =
+          nextActive;
+
         setActive(nextActive);
       }
     };
 
+    /* -----------------------------------------------------
+       requestAnimationFrame throttle
+    ----------------------------------------------------- */
+
     const requestUpdate = () => {
-      if (frameRef.current !== null) return;
+      if (
+        frameRef.current !== null
+      ) {
+        return;
+      }
 
       frameRef.current =
         requestAnimationFrame(update);
     };
 
-    measure();
-    update();
+    /* -----------------------------------------------------
+       Resize Observer
+    ----------------------------------------------------- */
 
     const resizeObserver =
-      typeof ResizeObserver !== 'undefined'
+      typeof ResizeObserver !==
+      'undefined'
         ? new ResizeObserver(() => {
             measure();
             requestUpdate();
@@ -203,28 +579,54 @@ export default function ScrollStorySection() {
       resizeObserver?.observe(nav);
     }
 
+    /* -----------------------------------------------------
+       INIT
+    ----------------------------------------------------- */
+
+    measure();
+    update();
+
+    /* -----------------------------------------------------
+       EVENTS
+    ----------------------------------------------------- */
+
     window.addEventListener(
       'scroll',
       requestUpdate,
-      { passive: true },
+      {
+        passive: true,
+      },
     );
 
-    const onOrientationChange = () => {
-      window.setTimeout(() => {
-        measure();
-        requestUpdate();
-      }, 150);
-    };
+    /*
+      회전 시에만 재측정.
+
+      모바일 주소창 animation으로
+      발생하는 resize에는 의존하지 않음.
+    */
+    const handleOrientationChange =
+      () => {
+        window.setTimeout(() => {
+          measure();
+          requestUpdate();
+        }, 150);
+      };
 
     window.addEventListener(
       'orientationchange',
-      onOrientationChange,
+      handleOrientationChange,
     );
+
+    /* -----------------------------------------------------
+       CLEANUP
+    ----------------------------------------------------- */
 
     return () => {
       resizeObserver?.disconnect();
 
-      if (frameRef.current !== null) {
+      if (
+        frameRef.current !== null
+      ) {
         cancelAnimationFrame(
           frameRef.current,
         );
@@ -237,10 +639,14 @@ export default function ScrollStorySection() {
 
       window.removeEventListener(
         'orientationchange',
-        onOrientationChange,
+        handleOrientationChange,
       );
     };
   }, []);
+
+  /* =======================================================
+     RENDER
+  ======================================================= */
 
   return (
     <section
@@ -248,17 +654,22 @@ export default function ScrollStorySection() {
       aria-labelledby="scroll-story-title"
       className="
         relative
-        h-[450svh]
+        h-[600svh]
         bg-[#2a2e33]
-        md:h-[500svh]
+        md:h-[550svh]
       "
     >
+      {/* SEO / AEO용 실제 heading */}
       <h2
         id="scroll-story-title"
         className="sr-only"
       >
         수원세브란스치과 진료 과정
       </h2>
+
+      {/* ===================================================
+          STICKY VIEWPORT
+      =================================================== */}
 
       <div
         ref={stickyRef}
@@ -272,7 +683,10 @@ export default function ScrollStorySection() {
             'calc(100svh - var(--story-nav-h, 0px))',
         }}
       >
-        {/* Background */}
+        {/* =================================================
+            BACKGROUND
+        ================================================= */}
+
         <Image
           src="/images/test04.png"
           alt=""
@@ -283,19 +697,31 @@ export default function ScrollStorySection() {
             object-cover
             object-[60%_center]
           "
+          priority={false}
         />
 
-        {/* Overlay */}
+        {/* =================================================
+            OVERLAY
+        ================================================= */}
+
         <div
           className="
             pointer-events-none
             absolute
             inset-0
-            bg-[radial-gradient(ellipse_at_center,rgba(28,31,35,0.72)_0%,rgba(28,31,35,0.58)_55%,rgba(28,31,35,0.44)_100%)]
+            bg-[radial-gradient(
+              ellipse_at_center,
+              rgba(28,31,35,0.72)_0%,
+              rgba(28,31,35,0.58)_55%,
+              rgba(28,31,35,0.44)_100%
+            )]
           "
         />
 
-        {/* Story */}
+        {/* =================================================
+            CONTENT
+        ================================================= */}
+
         <div
           className="
             relative
@@ -319,16 +745,21 @@ export default function ScrollStorySection() {
               md:pr-16
             "
           >
-            {stories.map((story, index) => {
-              const isActive =
-                index === active;
-
-              return (
+            {stories.map(
+              (story, index) => (
                 <article
                   key={story.eyebrow}
+                  ref={(element) => {
+                    articleRefs.current[
+                      index
+                    ] = element;
+                  }}
                   aria-labelledby={`scroll-story-step-${
                     index + 1
                   }`}
+                  aria-hidden={
+                    index !== active
+                  }
                   className={[
                     '[grid-area:story]',
                     'self-center',
@@ -336,34 +767,23 @@ export default function ScrollStorySection() {
                     'text-white',
 
                     /*
-                     * 핵심:
-                     * inactive story는 완전히 안 보이게.
-                     *
-                     * visibility를 같이 써서
-                     * opacity transition 중 글자가 겹치지 않도록 함.
-                     */
-                    isActive
-                      ? [
-                          'visible',
-                          'opacity-100',
-                          'translate-y-0',
-                          'transition-[opacity,transform]',
-                          'duration-500',
-                          'ease-out',
-                          'delay-100',
-                        ].join(' ')
-                      : [
-                          'invisible',
-                          'pointer-events-none',
-                          'opacity-0',
-                          'translate-y-4',
-                          'transition-none',
-                        ].join(' '),
+                      CSS transition 없음.
 
-                    'motion-reduce:transform-none',
-                    'motion-reduce:transition-none',
+                      JS scroll progress가 직접
+                      opacity / transform을 제어.
+                    */
+                    'will-change-[opacity,transform]',
+
+                    /*
+                      JS hydrate 전에는 첫 번째만 표시.
+                    */
+                    index === 0
+                      ? 'opacity-100'
+                      : 'opacity-0',
                   ].join(' ')}
                 >
+                  {/* EYEBROW */}
+
                   <p
                     className="
                       text-[12px]
@@ -376,6 +796,8 @@ export default function ScrollStorySection() {
                   >
                     {story.eyebrow}
                   </p>
+
+                  {/* TITLE */}
 
                   <h3
                     id={`scroll-story-step-${
@@ -406,6 +828,8 @@ export default function ScrollStorySection() {
                     )}
                   </h3>
 
+                  {/* BODY */}
+
                   <p
                     className="
                       mx-auto
@@ -424,6 +848,8 @@ export default function ScrollStorySection() {
                       lines={story.body}
                     />
                   </p>
+
+                  {/* NOTE */}
 
                   <p
                     className="
@@ -448,12 +874,15 @@ export default function ScrollStorySection() {
                     />
                   </p>
                 </article>
-              );
-            })}
+              ),
+            )}
           </div>
         </div>
 
-        {/* Desktop progress */}
+        {/* =================================================
+            DESKTOP PROGRESS
+        ================================================= */}
+
         <ol
           aria-hidden="true"
           className="
@@ -469,35 +898,43 @@ export default function ScrollStorySection() {
             lg:right-12
           "
         >
-          {stories.map((story, index) => (
-            <li
-              key={story.eyebrow}
-              className={[
-                'flex items-center justify-end gap-3',
-                'text-[13px] font-semibold',
-                'tracking-[0.04em]',
-                index === active
-                  ? 'text-white'
-                  : 'text-white/35',
-              ].join(' ')}
-            >
-              <span
+          {stories.map(
+            (story, index) => (
+              <li
+                key={story.eyebrow}
                 className={[
-                  'h-px bg-white',
-                  index === active
-                    ? 'w-6'
-                    : 'w-0',
-                ].join(' ')}
-              />
+                  'flex items-center justify-end gap-3',
+                  'text-[13px] font-semibold tracking-[0.04em]',
+                  'transition-colors duration-300',
 
-              {String(
-                index + 1,
-              ).padStart(2, '0')}
-            </li>
-          ))}
+                  index === active
+                    ? 'text-white'
+                    : 'text-white/35',
+                ].join(' ')}
+              >
+                <span
+                  className={[
+                    'h-px bg-white',
+                    'transition-[width] duration-300',
+
+                    index === active
+                      ? 'w-6'
+                      : 'w-0',
+                  ].join(' ')}
+                />
+
+                {String(
+                  index + 1,
+                ).padStart(2, '0')}
+              </li>
+            ),
+          )}
         </ol>
 
-        {/* Mobile progress */}
+        {/* =================================================
+            MOBILE PROGRESS
+        ================================================= */}
+
         <ol
           aria-hidden="true"
           className="
@@ -512,19 +949,25 @@ export default function ScrollStorySection() {
             md:hidden
           "
         >
-          {stories.map((story, index) => (
-            <li
-              key={story.eyebrow}
-              className={[
-                'h-5 w-[2px]',
-                index === active
-                  ? 'bg-white'
-                  : 'bg-white/25',
-              ].join(' ')}
-            />
-          ))}
+          {stories.map(
+            (story, index) => (
+              <li
+                key={story.eyebrow}
+                className={[
+                  'h-5 w-[2px]',
+                  'transition-colors duration-300',
+
+                  index === active
+                    ? 'bg-white'
+                    : 'bg-white/25',
+                ].join(' ')}
+              />
+            ),
+          )}
         </ol>
       </div>
     </section>
   );
-}
+};
+
+export default ScrollStorySection;
