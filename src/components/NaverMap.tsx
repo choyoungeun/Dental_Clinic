@@ -1,10 +1,6 @@
 'use client';
 
-import {
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 declare global {
   interface Window {
@@ -13,14 +9,19 @@ declare global {
   }
 }
 
+/* =========================================================
+   NAVER MAP CONFIG
+========================================================= */
+
 const NAVER_CLIENT_ID = '7le58fbcf6';
 const NAVER_SCRIPT_ID = 'naver-maps-sdk';
 
 const NAVER_SCRIPT_SRC =
   `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${NAVER_CLIENT_ID}`;
 
-/* 수원세브란스치과
-   경기 수원시 장안구 경수대로 969
+/*
+  수원세브란스치과
+  경기 수원시 장안구 경수대로 969
 */
 const CLINIC_POSITION = {
   lat: 37.3039347,
@@ -33,113 +34,128 @@ type MapStatus =
   | 'error';
 
 /* =========================================================
-   NAVER MAP LOAD
+   LOAD NAVER MAP SDK
 ========================================================= */
 
 const loadNaverMaps = () =>
-  new Promise<void>(
-    (resolve, reject) => {
-      if (window.naver?.maps) {
-        resolve();
-        return;
-      }
+  new Promise<void>((resolve, reject) => {
+    if (window.naver?.maps) {
+      resolve();
+      return;
+    }
 
-      let script =
-        document.getElementById(
-          NAVER_SCRIPT_ID,
-        ) as HTMLScriptElement | null;
+    let script = document.getElementById(
+      NAVER_SCRIPT_ID,
+    ) as HTMLScriptElement | null;
 
-      if (!script) {
-        script =
-          document.createElement(
-            'script',
-          );
+    if (!script) {
+      script = document.createElement('script');
 
-        script.id =
-          NAVER_SCRIPT_ID;
+      script.id = NAVER_SCRIPT_ID;
+      script.src = NAVER_SCRIPT_SRC;
+      script.async = true;
 
-        script.src =
-          NAVER_SCRIPT_SRC;
+      document.head.appendChild(script);
+    }
 
-        script.async = true;
+    const handleLoad = () => {
+      resolve();
+    };
 
-        document.head.appendChild(
-          script,
-        );
-      }
+    const handleError = () => {
+      script?.remove();
 
-      script.addEventListener(
-        'load',
-        () => resolve(),
+      reject(
+        new Error(
+          '네이버 지도 스크립트를 불러오지 못했습니다.',
+        ),
       );
+    };
 
-      script.addEventListener(
-        'error',
-        () => {
-          script?.remove();
+    script.addEventListener(
+      'load',
+      handleLoad,
+      { once: true },
+    );
 
-          reject(
-            new Error(
-              '네이버 지도 스크립트를 불러오지 못했습니다.',
-            ),
-          );
-        },
-      );
-    },
-  );
+    script.addEventListener(
+      'error',
+      handleError,
+      { once: true },
+    );
+  });
 
 /* =========================================================
-   CUSTOM CLINIC MARKER
+   CUSTOM MARKER
+
+   실제 치과 좌표 위에
+
+   ┌────────────────────────────┐
+   │  YONSEI  수원세브란스치과   │
+   └─────────────▼──────────────┘
+
+   형태로 표시
 ========================================================= */
 
 const getClinicMarkerHtml = () => `
   <div
     style="
       position: relative;
-      width: 250px;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 286px;
+      height: 82px;
       pointer-events: none;
+      font-family:
+        Pretendard,
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        'Noto Sans KR',
+        sans-serif;
     "
   >
 
-    <!-- 실제 네이비 마커 박스 -->
+    <!-- =================================================
+         MAIN MARKER
+    ================================================== -->
+
     <div
       style="
         position: absolute;
-        left: 0;
         top: 0;
-
-        width: 250px;
-        height: 58px;
+        left: 0;
 
         display: flex;
         align-items: center;
-        gap: 10px;
 
-        padding: 0 18px 0 11px;
+        width: 286px;
+        height: 64px;
 
         box-sizing: border-box;
 
+        padding: 0 18px 0 10px;
+
         background: #003876;
 
-        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.12);
+
+        border-radius: 14px;
 
         box-shadow:
-          0 6px 18px rgba(11, 31, 58, 0.20),
-          0 2px 5px rgba(11, 31, 58, 0.12);
+          0 10px 28px rgba(7, 27, 51, 0.23),
+          0 3px 8px rgba(7, 27, 51, 0.16);
       "
     >
 
-      <!-- 연세대학교 마크 -->
+      <!-- ===============================================
+           YONSEI MARK
+      ================================================ -->
+
       <div
         style="
-          width: 38px;
-          height: 38px;
+          width: 46px;
+          height: 46px;
 
-          flex: 0 0 38px;
+          flex: 0 0 46px;
 
           display: flex;
           align-items: center;
@@ -147,41 +163,51 @@ const getClinicMarkerHtml = () => `
 
           overflow: hidden;
 
+          box-sizing: border-box;
+
+          background: #ffffff;
+
           border-radius: 50%;
 
-          background: white;
+          margin-right: 11px;
         "
       >
         <img
           src="/images/affiliations/yonsei.jpg"
           alt=""
+          draggable="false"
           style="
-            width: 38px;
-            height: 38px;
+            display: block;
+
+            width: 42px;
+            height: 42px;
+
             object-fit: cover;
+
             border-radius: 50%;
           "
         />
       </div>
 
-      <!-- 치과명 -->
+      <!-- ===============================================
+           CLINIC NAME
+      ================================================ -->
+
       <div
         style="
-          color: white;
+          display: flex;
+          align-items: center;
 
-          font-family:
-            Pretendard,
-            -apple-system,
-            BlinkMacSystemFont,
-            system-ui,
-            sans-serif;
+          min-width: 0;
 
-          font-size: 20px;
-          font-weight: 700;
+          color: #ffffff;
 
-          letter-spacing: -0.7px;
+          font-size: 21px;
+          font-weight: 800;
 
           line-height: 1;
+
+          letter-spacing: -0.8px;
 
           white-space: nowrap;
         "
@@ -191,23 +217,55 @@ const getClinicMarkerHtml = () => `
 
     </div>
 
-    <!-- 말풍선 삼각형 -->
+    <!-- =================================================
+         POINTER
+    ================================================== -->
+
     <div
       style="
         position: absolute;
 
         left: 50%;
-        bottom: 2px;
+        top: 63px;
 
         width: 0;
         height: 0;
 
         transform: translateX(-50%);
 
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
+        border-left: 11px solid transparent;
+        border-right: 11px solid transparent;
 
-        border-top: 12px solid #003876;
+        border-top: 14px solid #003876;
+      "
+    ></div>
+
+    <!-- =================================================
+         EXACT LOCATION DOT
+    ================================================== -->
+
+    <div
+      style="
+        position: absolute;
+
+        left: 50%;
+        bottom: 0;
+
+        width: 8px;
+        height: 8px;
+
+        transform: translateX(-50%);
+
+        box-sizing: border-box;
+
+        background: #003876;
+
+        border: 2px solid #ffffff;
+
+        border-radius: 9999px;
+
+        box-shadow:
+          0 2px 7px rgba(7, 27, 51, 0.32);
       "
     ></div>
 
@@ -220,29 +278,34 @@ const getClinicMarkerHtml = () => `
 
 const NaverMap = () => {
   const mapRef =
-    useRef<HTMLDivElement>(null);
-
-  const [
-    status,
-    setStatus,
-  ] =
-    useState<MapStatus>(
-      'loading',
+    useRef<HTMLDivElement | null>(
+      null,
     );
+
+  const [status, setStatus] =
+    useState<MapStatus>('loading');
 
   useEffect(() => {
     let cancelled = false;
 
+    /* =====================================================
+       NAVER AUTH FAILURE
+    ===================================================== */
+
     window.navermap_authFailure =
       () => {
         console.error(
-          '[NaverMap] 인증 실패: 네이버 클라우드 콘솔 > Maps > Web 서비스 URL에 현재 접속 주소를 등록해 주세요.',
+          '[NaverMap] 인증 실패: 네이버 클라우드 콘솔 Maps Web 서비스 URL을 확인해 주세요.',
         );
 
         if (!cancelled) {
           setStatus('error');
         }
       };
+
+    /* =====================================================
+       INITIALIZE MAP
+    ===================================================== */
 
     loadNaverMaps()
       .then(() => {
@@ -263,9 +326,9 @@ const NaverMap = () => {
             CLINIC_POSITION.lng,
           );
 
-        /* =================================================
+        /* ===============================================
            MAP
-        ================================================= */
+        =============================================== */
 
         const map =
           new naver.maps.Map(
@@ -274,6 +337,12 @@ const NaverMap = () => {
               center:
                 position,
 
+              /*
+                숫자가 클수록 확대.
+
+                16.8 → 주변 건물까지 적당히 보임.
+                더 확대하려면 17.2 정도.
+              */
               zoom: 16.8,
 
               scaleControl:
@@ -285,17 +354,20 @@ const NaverMap = () => {
               zoomControl:
                 false,
 
+              logoControl:
+                true,
+
+              mapTypeControl:
+                false,
+
               gestureHandling:
                 'cooperative',
             },
           );
 
-        /* =================================================
-           CUSTOM MARKER
-
-           기본 네이버 핀 + InfoWindow 대신
-           마커 전체를 직접 디자인
-        ================================================= */
+        /* ===============================================
+           CUSTOM CLINIC MARKER
+        =============================================== */
 
         new naver.maps.Marker({
           position,
@@ -308,42 +380,45 @@ const NaverMap = () => {
             content:
               getClinicMarkerHtml(),
 
-            /*
-              마커 HTML 전체 크기
-            */
             size:
               new naver.maps.Size(
-                250,
-                70,
+                286,
+                82,
               ),
 
             /*
-              실제 좌표가 삼각형 아래 중앙에
-              맞도록 anchor 지정
+              실제 좌표가
+              마커 중앙 하단에 위치하도록 설정
             */
             anchor:
               new naver.maps.Point(
-                125,
-                70,
+                143,
+                82,
               ),
           },
 
-          /*
-            다른 POI보다 위에 보이도록
-          */
-          zIndex: 100,
+          zIndex: 1000,
+
+          animation:
+            naver.maps.Animation
+              .DROP,
         });
 
-        /* =================================================
-           MAP POSITION
+        /* ===============================================
+           MAP RESIZE + CENTER
 
-           마커가 위쪽으로 크게 올라오기 때문에
-           지도 중심을 살짝 위로 이동시켜
-           마커가 화면 중앙에 자연스럽게 보이게 함.
-        ================================================= */
+           마커 자체가 위로 길기 때문에
+           화면에서 너무 위에 붙지 않도록 조정
+        =============================================== */
 
         window.setTimeout(
           () => {
+            if (
+              cancelled
+            ) {
+              return;
+            }
+
             naver.maps.Event.trigger(
               map,
               'resize',
@@ -354,24 +429,27 @@ const NaverMap = () => {
             );
 
             /*
-              지도 자체를 아래쪽으로 조금 이동시키면
-              마커가 화면 중앙보다 위쪽에 위치함.
+              y 값을 키우면
+              지도 내용이 아래쪽으로 이동하면서
+              마커가 조금 더 위에 보임.
 
-              숫자를 조절해서 위치 튜닝 가능.
+              35 정도가 무난함.
             */
             map.panBy(
               new naver.maps.Point(
                 0,
-                25,
+                35,
               ),
             );
           },
           300,
         );
 
-        setStatus(
-          'ready',
-        );
+        if (!cancelled) {
+          setStatus(
+            'ready',
+          );
+        }
       })
 
       .catch((error) => {
@@ -387,41 +465,36 @@ const NaverMap = () => {
         }
       });
 
+    /* =====================================================
+       CLEANUP
+    ===================================================== */
+
     return () => {
       cancelled = true;
+
+      if (
+        window.navermap_authFailure
+      ) {
+        delete window
+          .navermap_authFailure;
+      }
     };
   }, []);
 
+  /* =======================================================
+     RENDER
+  ======================================================= */
+
   return (
-    <div
-      className="
-        relative
-        h-full
-        min-h-[300px]
-        w-full
-        overflow-hidden
-        rounded-2xl
-      "
-    >
+    <div className="relative h-full min-h-[300px] w-full overflow-hidden rounded-2xl">
+
       {/* =================================================
           LOADING
       ================================================= */}
 
       {status ===
         'loading' && (
-        <div
-          className="
-            absolute
-            inset-0
-            z-20
-            flex
-            items-center
-            justify-center
-            bg-gray-50
-            text-sm
-            text-gray-400
-          "
-        >
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-gray-50 text-sm text-gray-400">
           지도를 불러오고
           있습니다...
         </div>
@@ -433,69 +506,39 @@ const NaverMap = () => {
 
       {status ===
         'error' && (
-        <div
-          className="
-            absolute
-            inset-0
-            z-20
-            flex
-            flex-col
-            items-center
-            justify-center
-            gap-1
-            bg-gray-50
-            px-6
-            text-center
-            text-sm
-            text-gray-500
-          "
-        >
-          <p
-            className="
-              font-semibold
-              text-[#071b33]
-            "
-          >
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 bg-gray-50 px-6 text-center text-sm text-gray-500">
+
+          <p className="font-semibold text-[#071b33]">
             지도를 불러오지
             못했습니다.
           </p>
 
-          <p
-            className="
-              text-[13px]
-              text-gray-400
-            "
-          >
+          <p className="text-[13px] leading-[1.7] text-gray-400">
             경기 수원시 장안구
             경수대로 969
-            한국메디컬빌딩 2층
-
             <br />
-
-            아래
-            &lsquo;네이버
-            길찾기&rsquo;
+            한국메디컬빌딩 2층
+            <br />
+            아래 네이버 길찾기
             버튼으로 위치를
             확인해 주세요.
           </p>
+
         </div>
       )}
 
-      <style jsx global>{`
-        .naver-container
-          .naver-controls {
-          display: none !important;
-        }
-      `}</style>
+      {/* =================================================
+          NAVER MAP
+
+          styled-jsx 사용 안 함.
+          Turbopack parse 문제 방지.
+      ================================================= */}
 
       <div
         ref={mapRef}
-        className="
-          naver-container
-          h-full
-          w-full
-        "
+        className="h-full min-h-[300px] w-full"
       />
+
     </div>
   );
 };
