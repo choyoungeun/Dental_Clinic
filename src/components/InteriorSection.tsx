@@ -100,101 +100,196 @@ export const InteriorSection = () => {
   const [selectedIndex, setSelectedIndex] =
     useState<number | null>(null);
 
-  /* =======================================================
-     SLIDER
-  ======================================================= */
+{/* ===================================================
+    SLIDER
+=================================================== */}
 
-  const goToSlide = useCallback(
-    (index: number) => {
-      const safeIndex =
-        (index + photos.length) %
-        photos.length;
+<Reveal
+  variant="fade"
+  delay={300}
+  className="mt-7 md:mt-10"
+>
+  <div
+    className="
+      mx-auto
+      max-w-7xl
+      px-5
+      md:px-8
+    "
+  >
+    <div
+      ref={sliderRef}
+      className="
+        flex
+        snap-x
+        snap-mandatory
+        gap-4
+        overflow-x-auto
+        scroll-smooth
+        pb-5
+        [scrollbar-width:none]
+        [-ms-overflow-style:none]
+        [&::-webkit-scrollbar]:hidden
+        md:gap-6
+      "
+      style={{
+        WebkitOverflowScrolling: 'touch',
+      }}
+    >
+      {photos.map((photo, index) => (
+        <button
+          key={photo.src}
+          ref={(element) => {
+            slideRefs.current[index] = element;
+          }}
+          data-index={index}
+          type="button"
+          onClick={() => setSelectedIndex(index)}
+          aria-label={`${photo.title} 크게 보기`}
+          className="
+            group
+            relative
 
-      const element =
-        slideRefs.current[safeIndex];
+            aspect-[4/3]
+            w-[80vw]
+            max-w-[520px]
 
-      if (!element) return;
+            shrink-0
+            snap-center
+            overflow-hidden
+            rounded-[6px]
+            bg-line
+            text-left
 
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'center',
-      });
+            sm:aspect-[16/10]
+            sm:w-[72vw]
+            sm:max-w-[680px]
 
-      setActiveIndex(safeIndex);
-    },
-    [],
-  );
+            md:w-[68vw]
+            md:max-w-[820px]
 
-  const goPrevious = () => {
-    goToSlide(activeIndex - 1);
-  };
+            lg:aspect-[16/10]
+            lg:w-[62vw]
+            lg:max-w-[880px]
 
-  const goNext = () => {
-    goToSlide(activeIndex + 1);
-  };
+            focus:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-navy
+            focus-visible:ring-offset-2
+          "
+        >
+          <Image
+            src={photo.src}
+            alt={photo.alt}
+            fill
+            quality={92}
+            sizes="
+              (max-width: 640px) 80vw,
+              (max-width: 768px) 72vw,
+              (max-width: 1024px) 68vw,
+              880px
+            "
+            className="
+              object-cover
+              transition-transform
+              duration-700
+              ease-out
+              group-hover:scale-[1.01]
+            "
+          />
 
-  /* =======================================================
-     현재 보이는 slide 감지
+          {/* 하단 가독성용 최소 그라데이션 */}
+          <div
+            className="
+              absolute
+              inset-0
+              bg-gradient-to-t
+              from-black/40
+              via-transparent
+              to-transparent
+            "
+          />
 
-     scroll event로 좌표를 계속 계산하는 대신
-     IntersectionObserver 사용
-  ======================================================= */
+          {/* Caption */}
+          <div
+            className="
+              absolute
+              inset-x-0
+              bottom-0
+              flex
+              items-end
+              justify-between
+              gap-5
+              p-5
+              md:p-6
+            "
+          >
+            <div>
+              <p
+                className="
+                  text-[11px]
+                  font-semibold
+                  tracking-[0.1em]
+                  text-white/65
+                  md:text-[12px]
+                "
+              >
+                {photo.label}
+              </p>
 
-  useEffect(() => {
-    const slider = sliderRef.current;
+              <h3
+                className="
+                  mt-1.5
+                  text-[18px]
+                  font-semibold
+                  tracking-[-0.025em]
+                  text-white
+                  md:text-[21px]
+                "
+              >
+                {photo.title}
+              </h3>
+            </div>
 
-    if (!slider) return;
-
-    const observer =
-      new IntersectionObserver(
-        (entries) => {
-          const visible = entries
-            .filter(
-              (entry) =>
-                entry.isIntersecting,
-            )
-            .sort(
-              (a, b) =>
-                b.intersectionRatio -
-                a.intersectionRatio,
-            );
-
-          if (!visible.length) return;
-
-          const index = Number(
-            (
-              visible[0].target as HTMLElement
-            ).dataset.index,
-          );
-
-          if (!Number.isNaN(index)) {
-            setActiveIndex(index);
-          }
-        },
-        {
-          root: slider,
-          threshold: [
-            0.45,
-            0.6,
-            0.75,
-            0.9,
-          ],
-        },
-      );
-
-    slideRefs.current.forEach(
-      (element) => {
-        if (element) {
-          observer.observe(element);
-        }
-      },
-    );
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+            <span
+              aria-hidden="true"
+              className="
+                flex
+                h-9
+                w-9
+                shrink-0
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-white/35
+                bg-black/10
+                text-white
+                backdrop-blur-[2px]
+                transition
+                group-hover:bg-white
+                group-hover:text-navy
+              "
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="h-[17px] w-[17px]"
+              >
+                <circle cx="11" cy="11" r="6" />
+                <path d="m16 16 4 4" />
+                <path d="M11 8v6" />
+                <path d="M8 11h6" />
+              </svg>
+            </span>
+          </div>
+        </button>
+      ))}
+    </div>
+  </div>
+</Reveal>
 
   /* =======================================================
      LIGHTBOX
