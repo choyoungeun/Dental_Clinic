@@ -4,80 +4,134 @@ import Image from 'next/image';
 import {
   useCallback,
   useEffect,
-  useRef,
+  useMemo,
   useState,
 } from 'react';
 
 import Reveal from './Reveal';
 import TextReveal from './TextReveal';
 
+/* =========================================================
+   INTERIOR DATA
+========================================================= */
+
+const categories = [
+  {
+    id: 'waiting',
+    label: '접수 · 대기',
+    eng: 'RECEPTION & WAITING',
+  },
+  {
+    id: 'treatment',
+    label: '진료실',
+    eng: 'TREATMENT ROOM',
+  },
+  {
+    id: 'consultation',
+    label: '상담 · 편의',
+    eng: 'CONSULTATION',
+  },
+  {
+    id: 'hallway',
+    label: '진료 동선',
+    eng: 'CLINIC FLOW',
+  },
+] as const;
+
+type CategoryId =
+  (typeof categories)[number]['id'];
 
 const photos = [
+  /* =======================================================
+     접수 · 대기
+  ======================================================= */
+
   {
+    category: 'waiting' as CategoryId,
     src: '/images/entrance.jpg',
     alt: '수원세브란스치과 입구',
-    label: 'ENTRANCE',
     title: '치과 입구',
   },
   {
+    category: 'waiting' as CategoryId,
     src: '/images/infodesk.jpg',
     alt: '수원세브란스치과 접수 데스크',
-    label: 'RECEPTION',
     title: '접수 데스크',
   },
   {
+    category: 'waiting' as CategoryId,
     src: '/images/waitingarea.jpg',
     alt: '수원세브란스치과 대기공간',
-    label: 'WAITING LOUNGE',
     title: '대기공간',
   },
   {
+    category: 'waiting' as CategoryId,
     src: '/images/waitingarea2.jpg',
     alt: '수원세브란스치과 대기공간 전경',
-    label: 'WAITING LOUNGE',
-    title: '대기공간',
+    title: '대기공간 전경',
   },
+
+  /* =======================================================
+     진료실
+  ======================================================= */
+
   {
-    src: '/images/hallway.jpg',
-    alt: '수원세브란스치과 진료실 복도',
-    label: 'HALLWAY',
-    title: '진료 동선',
-  },
-  {
-    src: '/images/hallway2.jpg',
-    alt: '수원세브란스치과 내부 복도',
-    label: 'HALLWAY',
-    title: '진료실 복도',
-  },
-  {
+    category: 'treatment' as CategoryId,
     src: '/images/openclinic.jpg',
     alt: '수원세브란스치과 오픈 진료실',
-    label: 'TREATMENT ROOM',
-    title: '진료공간',
+    title: '오픈 진료실',
   },
   {
+    category: 'treatment' as CategoryId,
     src: '/images/openclinic2.jpg',
     alt: '수원세브란스치과 진료공간',
-    label: 'TREATMENT ROOM',
     title: '진료공간',
   },
   {
+    category: 'treatment' as CategoryId,
     src: '/images/implantroom.jpg',
     alt: '수원세브란스치과 임플란트 수술실',
-    label: 'IMPLANT ROOM',
     title: '임플란트 수술실',
   },
   {
+    category: 'treatment' as CategoryId,
+    src: '/images/clinic_room.jpg',
+    alt: '수원세브란스치과 독립 진료실',
+    title: '독립 진료실',
+  },
+
+  /* =======================================================
+     상담 · 편의
+  ======================================================= */
+
+  {
+    category: 'consultation' as CategoryId,
     src: '/images/counceling.jpg',
     alt: '수원세브란스치과 상담실',
-    label: 'CONSULTATION',
     title: '상담실',
   },
   {
+    category: 'consultation' as CategoryId,
     src: '/images/powderroom.jpg',
     alt: '수원세브란스치과 파우더룸',
-    label: 'POWDER ROOM',
     title: '파우더룸',
+  },
+
+  /* =======================================================
+     진료 동선
+  ======================================================= */
+
+  {
+    category: 'hallway' as CategoryId,
+    src: '/images/hallway.jpg',
+    alt: '수원세브란스치과 진료실 복도',
+    title: '진료실 복도',
+  },
+  {
+    category: 'hallway' as CategoryId,
+    src: '/images/hallway2.jpg',
+    alt: '수원세브란스치과 내부 동선',
+    title: '진료 동선',
   },
 ];
 
@@ -88,11 +142,8 @@ type Photo = (typeof photos)[number];
 ========================================================= */
 
 export const InteriorSection = () => {
-  const sliderRef =
-    useRef<HTMLDivElement | null>(null);
-
-  const slideRefs =
-    useRef<(HTMLButtonElement | null)[]>([]);
+  const [activeCategory, setActiveCategory] =
+    useState<CategoryId>('waiting');
 
   const [activeIndex, setActiveIndex] =
     useState(0);
@@ -100,196 +151,60 @@ export const InteriorSection = () => {
   const [selectedIndex, setSelectedIndex] =
     useState<number | null>(null);
 
-{/* ===================================================
-    SLIDER
-=================================================== */}
+  /* =======================================================
+     FILTER
+  ======================================================= */
 
-<Reveal
-  variant="fade"
-  delay={300}
-  className="mt-7 md:mt-10"
->
-  <div
-    className="
-      mx-auto
-      max-w-7xl
-      px-5
-      md:px-8
-    "
-  >
-    <div
-      ref={sliderRef}
-      className="
-        flex
-        snap-x
-        snap-mandatory
-        gap-4
-        overflow-x-auto
-        scroll-smooth
-        pb-5
-        [scrollbar-width:none]
-        [-ms-overflow-style:none]
-        [&::-webkit-scrollbar]:hidden
-        md:gap-6
-      "
-      style={{
-        WebkitOverflowScrolling: 'touch',
-      }}
-    >
-      {photos.map((photo, index) => (
-        <button
-          key={photo.src}
-          ref={(element) => {
-            slideRefs.current[index] = element;
-          }}
-          data-index={index}
-          type="button"
-          onClick={() => setSelectedIndex(index)}
-          aria-label={`${photo.title} 크게 보기`}
-          className="
-            group
-            relative
+  const filteredPhotos = useMemo(
+    () =>
+      photos.filter(
+        (photo) =>
+          photo.category === activeCategory,
+      ),
+    [activeCategory],
+  );
 
-            aspect-[4/3]
-            w-[80vw]
-            max-w-[520px]
+  const currentPhoto =
+    filteredPhotos[activeIndex] ??
+    filteredPhotos[0];
 
-            shrink-0
-            snap-center
-            overflow-hidden
-            rounded-[6px]
-            bg-line
-            text-left
+  const currentCategory =
+    categories.find(
+      (category) =>
+        category.id === activeCategory,
+    ) ?? categories[0];
 
-            sm:aspect-[16/10]
-            sm:w-[72vw]
-            sm:max-w-[680px]
+  /* =======================================================
+     TAB
+  ======================================================= */
 
-            md:w-[68vw]
-            md:max-w-[820px]
+  const changeCategory = (
+    category: CategoryId,
+  ) => {
+    setActiveCategory(category);
+    setActiveIndex(0);
+  };
 
-            lg:aspect-[16/10]
-            lg:w-[62vw]
-            lg:max-w-[880px]
+  /* =======================================================
+     MAIN IMAGE NAVIGATION
+  ======================================================= */
 
-            focus:outline-none
-            focus-visible:ring-2
-            focus-visible:ring-navy
-            focus-visible:ring-offset-2
-          "
-        >
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            fill
-            quality={92}
-            sizes="
-              (max-width: 640px) 80vw,
-              (max-width: 768px) 72vw,
-              (max-width: 1024px) 68vw,
-              880px
-            "
-            className="
-              object-cover
-              transition-transform
-              duration-700
-              ease-out
-              group-hover:scale-[1.01]
-            "
-          />
+  const goPrevious = () => {
+    setActiveIndex((current) =>
+      current === 0
+        ? filteredPhotos.length - 1
+        : current - 1,
+    );
+  };
 
-          {/* 하단 가독성용 최소 그라데이션 */}
-          <div
-            className="
-              absolute
-              inset-0
-              bg-gradient-to-t
-              from-black/40
-              via-transparent
-              to-transparent
-            "
-          />
-
-          {/* Caption */}
-          <div
-            className="
-              absolute
-              inset-x-0
-              bottom-0
-              flex
-              items-end
-              justify-between
-              gap-5
-              p-5
-              md:p-6
-            "
-          >
-            <div>
-              <p
-                className="
-                  text-[11px]
-                  font-semibold
-                  tracking-[0.1em]
-                  text-white/65
-                  md:text-[12px]
-                "
-              >
-                {photo.label}
-              </p>
-
-              <h3
-                className="
-                  mt-1.5
-                  text-[18px]
-                  font-semibold
-                  tracking-[-0.025em]
-                  text-white
-                  md:text-[21px]
-                "
-              >
-                {photo.title}
-              </h3>
-            </div>
-
-            <span
-              aria-hidden="true"
-              className="
-                flex
-                h-9
-                w-9
-                shrink-0
-                items-center
-                justify-center
-                rounded-full
-                border
-                border-white/35
-                bg-black/10
-                text-white
-                backdrop-blur-[2px]
-                transition
-                group-hover:bg-white
-                group-hover:text-navy
-              "
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                className="h-[17px] w-[17px]"
-              >
-                <circle cx="11" cy="11" r="6" />
-                <path d="m16 16 4 4" />
-                <path d="M11 8v6" />
-                <path d="M8 11h6" />
-              </svg>
-            </span>
-          </div>
-        </button>
-      ))}
-    </div>
-  </div>
-</Reveal>
+  const goNext = () => {
+    setActiveIndex((current) =>
+      current ===
+      filteredPhotos.length - 1
+        ? 0
+        : current + 1,
+    );
+  };
 
   /* =======================================================
      LIGHTBOX
@@ -305,29 +220,26 @@ export const InteriorSection = () => {
       setSelectedIndex((current) => {
         if (current === null) return null;
 
-        return (
-          (current - 1 + photos.length) %
-          photos.length
-        );
+        return current === 0
+          ? filteredPhotos.length - 1
+          : current - 1;
       });
-    }, []);
+    }, [filteredPhotos.length]);
 
   const showNextImage =
     useCallback(() => {
       setSelectedIndex((current) => {
         if (current === null) return null;
 
-        return (
-          (current + 1) %
-          photos.length
-        );
+        return current ===
+          filteredPhotos.length - 1
+          ? 0
+          : current + 1;
       });
-    }, []);
+    }, [filteredPhotos.length]);
 
   useEffect(() => {
-    if (selectedIndex === null) {
-      return;
-    }
+    if (selectedIndex === null) return;
 
     const previousOverflow =
       document.body.style.overflow;
@@ -374,36 +286,41 @@ export const InteriorSection = () => {
 
   const selectedPhoto =
     selectedIndex !== null
-      ? photos[selectedIndex]
+      ? filteredPhotos[selectedIndex]
       : null;
+
+  /* =======================================================
+     RENDER
+  ======================================================= */
 
   return (
     <section
       id="interior"
       className="
         scroll-mt-24
-        overflow-hidden
         bg-fog
         py-20
         md:py-28
+        lg:py-36
       "
     >
-      {/* ===================================================
-          HEADER
-      =================================================== */}
-
       <div
         className="
           mx-auto
           max-w-7xl
           px-5
           md:px-8
+          lg:px-12
         "
       >
+        {/* =================================================
+            HEADER
+        ================================================= */}
+
         <div
           className="
             grid
-            gap-8
+            gap-7
             lg:grid-cols-[1fr_420px]
             lg:items-end
           "
@@ -424,7 +341,7 @@ export const InteriorSection = () => {
             </Reveal>
 
             <TextReveal
-              delay={120}
+              delay={100}
               className="
                 mt-4
                 break-keep
@@ -445,8 +362,7 @@ export const InteriorSection = () => {
 
           <Reveal
             variant="soft"
-            delay={200}
-            className="lg:pb-1"
+            delay={180}
           >
             <p
               className="
@@ -466,295 +382,324 @@ export const InteriorSection = () => {
         </div>
 
         {/* =================================================
-            COUNTER + CONTROLS
+            TABS
         ================================================= */}
 
         <Reveal
           variant="fade"
-          delay={260}
+          delay={220}
           className="
             mt-10
-            flex
-            items-end
-            justify-between
-            border-t
+            border-b
             border-line
-            pt-5
             md:mt-14
           "
         >
           <div
+            role="tablist"
+            aria-label="치과 공간"
             className="
               flex
-              items-baseline
-              gap-2
+              gap-7
+              overflow-x-auto
+              [scrollbar-width:none]
+              [&::-webkit-scrollbar]:hidden
+              md:gap-10
             "
           >
-            <span
-              className="
-                text-[25px]
-                font-semibold
-                tracking-[-0.04em]
-                text-navy
-              "
-            >
-              {String(
-                activeIndex + 1,
-              ).padStart(2, '0')}
-            </span>
+            {categories.map(
+              (category) => {
+                const active =
+                  activeCategory ===
+                  category.id;
 
-            <span
-              className="
-                text-[13px]
-                text-muted
-              "
-            >
-              /{' '}
-              {String(
-                photos.length,
-              ).padStart(2, '0')}
-            </span>
-          </div>
+                return (
+                  <button
+                    key={category.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={
+                      active
+                    }
+                    onClick={() =>
+                      changeCategory(
+                        category.id,
+                      )
+                    }
+                    className={[
+                      'relative shrink-0 pb-4',
+                      'text-left transition-colors duration-200',
+                      active
+                        ? 'text-navy'
+                        : 'text-muted hover:text-ink',
+                    ].join(' ')}
+                  >
+                    <span
+                      className="
+                        block
+                        text-[11px]
+                        font-semibold
+                        tracking-[0.09em]
+                        opacity-60
+                      "
+                    >
+                      {category.eng}
+                    </span>
 
-          {/* Desktop arrows */}
+                    <span
+                      className="
+                        mt-1
+                        block
+                        text-[17px]
+                        font-semibold
+                        tracking-[-0.02em]
+                        md:text-[18px]
+                      "
+                    >
+                      {category.label}
+                    </span>
 
-          <div
-            className="
-              hidden
-              items-center
-              gap-2
-              md:flex
-            "
-          >
-            <button
-              type="button"
-              onClick={goPrevious}
-              aria-label="이전 공간 사진"
-              className="
-                flex
-                h-11
-                w-11
-                items-center
-                justify-center
-                rounded-full
-                border
-                border-line
-                bg-white
-                text-navy
-                transition
-                hover:border-navy
-              "
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                className="h-5 w-5"
-              >
-                <path d="m15 18-6-6 6-6" />
-              </svg>
-            </button>
-
-            <button
-              type="button"
-              onClick={goNext}
-              aria-label="다음 공간 사진"
-              className="
-                flex
-                h-11
-                w-11
-                items-center
-                justify-center
-                rounded-full
-                border
-                border-line
-                bg-white
-                text-navy
-                transition
-                hover:border-navy
-              "
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                className="h-5 w-5"
-              >
-                <path d="m9 18 6-6-6-6" />
-              </svg>
-            </button>
+                    {active && (
+                      <span
+                        className="
+                          absolute
+                          inset-x-0
+                          bottom-0
+                          h-[2px]
+                          bg-navy
+                        "
+                      />
+                    )}
+                  </button>
+                );
+              },
+            )}
           </div>
         </Reveal>
-      </div>
 
-      {/* ===================================================
-          SLIDER
+        {/* =================================================
+            MAIN GALLERY
+        ================================================= */}
 
-          max-width 바깥까지 사용해서
-          사진이 좀 더 시원하게 보이도록 함.
-      =================================================== */}
-
-      <Reveal
-        variant="fade"
-        delay={300}
-        className="mt-6 md:mt-8"
-      >
-        <div
-          ref={sliderRef}
-          className="
-            flex
-            snap-x
-            snap-mandatory
-            gap-3
-            overflow-x-auto
-            scroll-smooth
-            px-5
-            pb-4
-            [scrollbar-width:none]
-            [-ms-overflow-style:none]
-            [&::-webkit-scrollbar]:hidden
-            md:gap-5
-            md:px-[max(32px,calc((100vw-1280px)/2))]
-          "
-          style={{
-            WebkitOverflowScrolling:
-              'touch',
-          }}
+        <Reveal
+          variant="fade"
+          delay={280}
+          className="mt-8 md:mt-10"
         >
-          {photos.map(
-            (photo, index) => (
+          <div
+            className="
+              grid
+              gap-6
+              lg:grid-cols-[minmax(0,1fr)_260px]
+              lg:gap-8
+            "
+          >
+            {/* ===============================================
+                MAIN PHOTO
+            =============================================== */}
+
+            <div>
               <button
-                key={photo.src}
-                ref={(element) => {
-                  slideRefs.current[
-                    index
-                  ] = element;
-                }}
-                data-index={index}
                 type="button"
                 onClick={() =>
                   setSelectedIndex(
-                    index,
+                    activeIndex,
                   )
                 }
-                aria-label={`${photo.title} 크게 보기`}
+                aria-label={`${currentPhoto.title} 크게 보기`}
                 className="
                   group
                   relative
-                  aspect-[4/3]
-                  w-[86vw]
-                  max-w-[1100px]
-                  shrink-0
-                  snap-center
+                  block
+                  w-full
                   overflow-hidden
-                  rounded-[6px]
-                  bg-line
+                  rounded-card
+                  bg-white
                   text-left
                   focus:outline-none
                   focus-visible:ring-2
                   focus-visible:ring-navy
                   focus-visible:ring-offset-2
-                  sm:aspect-[16/10]
-                  md:w-[78vw]
-                  lg:aspect-[16/9]
-                  lg:w-[72vw]
                 "
               >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  sizes="
-                    (max-width: 768px) 86vw,
-                    (max-width: 1200px) 78vw,
-                    72vw
-                  "
-                  className="
-                    object-cover
-                    transition-transform
-                    duration-700
-                    ease-out
-                    group-hover:scale-[1.015]
-                  "
-                />
-
-                {/* 아주 약한 하단 그라데이션 */}
-
                 <div
                   className="
-                    absolute
-                    inset-0
-                    bg-gradient-to-t
-                    from-black/45
-                    via-transparent
-                    to-transparent
-                  "
-                />
-
-                {/* Caption */}
-
-                <div
-                  className="
-                    absolute
-                    inset-x-0
-                    bottom-0
-                    flex
-                    items-end
-                    justify-between
-                    gap-5
-                    p-5
-                    md:p-7
+                    relative
+                    aspect-[4/3]
+                    w-full
+                    sm:aspect-[16/10]
+                    lg:aspect-[3/2]
                   "
                 >
-                  <div>
-                    <p
-                      className="
-                        text-[11px]
-                        font-semibold
-                        tracking-[0.1em]
-                        text-white/65
-                        md:text-[12px]
-                      "
-                    >
-                      {photo.label}
-                    </p>
+                  <Image
+                    key={currentPhoto.src}
+                    src={
+                      currentPhoto.src
+                    }
+                    alt={
+                      currentPhoto.alt
+                    }
+                    fill
+                    quality={95}
+                    sizes="
+                      (max-width: 1024px) 100vw,
+                      900px
+                    "
+                    className="
+                      object-cover
+                      transition-transform
+                      duration-700
+                      ease-out
+                      group-hover:scale-[1.01]
+                    "
+                  />
 
-                    <h3
+                  <div
+                    className="
+                      absolute
+                      inset-0
+                      bg-gradient-to-t
+                      from-black/35
+                      via-transparent
+                      to-transparent
+                    "
+                  />
+
+                  {/* image caption */}
+
+                  <div
+                    className="
+                      absolute
+                      inset-x-0
+                      bottom-0
+                      flex
+                      items-end
+                      justify-between
+                      gap-5
+                      p-5
+                      md:p-7
+                    "
+                  >
+                    <div>
+                      <p
+                        className="
+                          text-[11px]
+                          font-semibold
+                          tracking-[0.1em]
+                          text-white/65
+                        "
+                      >
+                        {
+                          currentCategory.eng
+                        }
+                      </p>
+
+                      <h3
+                        className="
+                          mt-1.5
+                          text-[20px]
+                          font-semibold
+                          tracking-[-0.025em]
+                          text-white
+                          md:text-[24px]
+                        "
+                      >
+                        {
+                          currentPhoto.title
+                        }
+                      </h3>
+                    </div>
+
+                    <span
+                      aria-hidden="true"
                       className="
-                        mt-1.5
-                        text-[19px]
-                        font-semibold
-                        tracking-[-0.025em]
+                        flex
+                        h-10
+                        w-10
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-white/35
+                        bg-black/10
                         text-white
-                        md:text-[23px]
+                        backdrop-blur-[2px]
                       "
                     >
-                      {photo.title}
-                    </h3>
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        className="h-[18px] w-[18px]"
+                      >
+                        <circle
+                          cx="11"
+                          cy="11"
+                          r="6"
+                        />
+                        <path d="m16 16 4 4" />
+                        <path d="M11 8v6" />
+                        <path d="M8 11h6" />
+                      </svg>
+                    </span>
                   </div>
+                </div>
+              </button>
 
-                  {/* 확대 아이콘 */}
+              {/* =============================================
+                  CONTROL
+              ============================================= */}
 
-                  <span
-                    aria-hidden="true"
+              <div
+                className="
+                  mt-4
+                  flex
+                  items-center
+                  justify-between
+                "
+              >
+                <p
+                  className="
+                    text-[13px]
+                    text-muted
+                  "
+                >
+                  {String(
+                    activeIndex + 1,
+                  ).padStart(2, '0')}{' '}
+                  /{' '}
+                  {String(
+                    filteredPhotos.length,
+                  ).padStart(2, '0')}
+                </p>
+
+                <div
+                  className="
+                    flex
+                    items-center
+                    gap-2
+                  "
+                >
+                  <button
+                    type="button"
+                    onClick={
+                      goPrevious
+                    }
+                    aria-label="이전 사진"
                     className="
                       flex
                       h-10
                       w-10
-                      shrink-0
                       items-center
                       justify-center
                       rounded-full
                       border
-                      border-white/35
-                      bg-black/10
-                      text-white
-                      backdrop-blur-[2px]
+                      border-line
+                      bg-white
+                      text-navy
                       transition
-                      group-hover:bg-white
-                      group-hover:text-navy
+                      hover:border-navy
                     "
                   >
                     <svg
@@ -762,71 +707,151 @@ export const InteriorSection = () => {
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="1.5"
-                      className="h-[18px] w-[18px]"
+                      className="h-5 w-5"
                     >
-                      <circle
-                        cx="11"
-                        cy="11"
-                        r="6"
-                      />
-                      <path d="m16 16 4 4" />
-                      <path d="M11 8v6" />
-                      <path d="M8 11h6" />
+                      <path d="m15 18-6-6 6-6" />
                     </svg>
-                  </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={goNext}
+                    aria-label="다음 사진"
+                    className="
+                      flex
+                      h-10
+                      w-10
+                      items-center
+                      justify-center
+                      rounded-full
+                      border
+                      border-line
+                      bg-white
+                      text-navy
+                      transition
+                      hover:border-navy
+                    "
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      className="h-5 w-5"
+                    >
+                      <path d="m9 18 6-6-6-6" />
+                    </svg>
+                  </button>
                 </div>
-              </button>
-            ),
-          )}
-        </div>
-      </Reveal>
+              </div>
+            </div>
 
-      {/* ===================================================
-          MOBILE GUIDE / DOTS
-      =================================================== */}
+            {/* ===============================================
+                THUMBNAILS
+            =============================================== */}
 
-      <div
-        className="
-          mx-auto
-          mt-2
-          flex
-          max-w-7xl
-          items-center
-          justify-between
-          px-5
-          md:px-8
-        "
-      >
-        <div className="flex gap-1.5">
-          {photos.map(
-            (_, index) => (
-              <button
-                key={index}
-                type="button"
-                onClick={() =>
-                  goToSlide(index)
-                }
-                aria-label={`${index + 1}번째 사진 보기`}
-                className={[
-                  'h-[3px] transition-all duration-300',
-                  index ===
-                  activeIndex
-                    ? 'w-7 bg-navy'
-                    : 'w-3 bg-line',
-                ].join(' ')}
-              />
-            ),
-          )}
-        </div>
+            <div
+              className="
+                grid
+                grid-cols-2
+                gap-3
+                sm:grid-cols-3
+                lg:grid-cols-1
+              "
+            >
+              {filteredPhotos.map(
+                (photo, index) => {
+                  const active =
+                    index ===
+                    activeIndex;
 
-        <p
-          className="
-            text-[12px]
-            text-muted
-          "
-        >
-          사진을 눌러 크게 보기
-        </p>
+                  return (
+                    <button
+                      key={
+                        photo.src
+                      }
+                      type="button"
+                      onClick={() =>
+                        setActiveIndex(
+                          index,
+                        )
+                      }
+                      className={[
+                        'group relative overflow-hidden rounded-card',
+                        'border bg-white transition',
+                        active
+                          ? 'border-navy'
+                          : 'border-line hover:border-mist',
+                      ].join(' ')}
+                    >
+                      <div
+                        className="
+                          relative
+                          aspect-[4/3]
+                          w-full
+                        "
+                      >
+                        <Image
+                          src={
+                            photo.src
+                          }
+                          alt=""
+                          fill
+                          sizes="
+                            (max-width: 1024px) 33vw,
+                            260px
+                          "
+                          className="
+                            object-cover
+                          "
+                        />
+
+                        {!active && (
+                          <div
+                            className="
+                              absolute
+                              inset-0
+                              bg-white/12
+                              transition
+                              group-hover:bg-transparent
+                            "
+                          />
+                        )}
+
+                        <div
+                          className="
+                            absolute
+                            inset-x-0
+                            bottom-0
+                            bg-gradient-to-t
+                            from-black/50
+                            to-transparent
+                            px-3
+                            pb-3
+                            pt-7
+                            text-left
+                          "
+                        >
+                          <p
+                            className="
+                              text-[13px]
+                              font-medium
+                              text-white
+                            "
+                          >
+                            {
+                              photo.title
+                            }
+                          </p>
+                        </div>
+                      </div>
+                    </button>
+                  );
+                },
+              )}
+            </div>
+          </div>
+        </Reveal>
       </div>
 
       {/* ===================================================
@@ -846,11 +871,9 @@ export const InteriorSection = () => {
               flex
               items-center
               justify-center
-              bg-[#07111f]/95
-              px-3
-              py-16
-              backdrop-blur-sm
-              md:p-10
+              bg-[#07111f]/96
+              p-4
+              md:p-8
             "
             onMouseDown={(
               event,
@@ -863,19 +886,17 @@ export const InteriorSection = () => {
               }
             }}
           >
-            {/* close */}
-
             <button
               type="button"
               onClick={
                 closeLightbox
               }
-              aria-label="이미지 닫기"
+              aria-label="닫기"
               className="
                 absolute
                 right-4
                 top-4
-                z-30
+                z-20
                 flex
                 h-11
                 w-11
@@ -885,26 +906,12 @@ export const InteriorSection = () => {
                 border
                 border-white/25
                 text-white
-                transition
-                hover:bg-white
-                hover:text-navy
-                md:right-8
-                md:top-8
+                md:right-7
+                md:top-7
               "
             >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                className="h-5 w-5"
-              >
-                <path d="M6 6l12 12" />
-                <path d="M18 6 6 18" />
-              </svg>
+              ×
             </button>
-
-            {/* previous */}
 
             <button
               type="button"
@@ -914,9 +921,9 @@ export const InteriorSection = () => {
               aria-label="이전 이미지"
               className="
                 absolute
-                left-2
+                left-3
                 top-1/2
-                z-30
+                z-20
                 flex
                 h-11
                 w-11
@@ -926,27 +933,11 @@ export const InteriorSection = () => {
                 rounded-full
                 bg-black/25
                 text-white
-                backdrop-blur-sm
-                transition
-                hover:bg-white
-                hover:text-navy
                 md:left-7
-                md:h-13
-                md:w-13
               "
             >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                className="h-6 w-6"
-              >
-                <path d="m15 18-6-6 6-6" />
-              </svg>
+              ←
             </button>
-
-            {/* next */}
 
             <button
               type="button"
@@ -956,9 +947,9 @@ export const InteriorSection = () => {
               aria-label="다음 이미지"
               className="
                 absolute
-                right-2
+                right-3
                 top-1/2
-                z-30
+                z-20
                 flex
                 h-11
                 w-11
@@ -968,44 +959,23 @@ export const InteriorSection = () => {
                 rounded-full
                 bg-black/25
                 text-white
-                backdrop-blur-sm
-                transition
-                hover:bg-white
-                hover:text-navy
                 md:right-7
-                md:h-13
-                md:w-13
               "
             >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                className="h-6 w-6"
-              >
-                <path d="m9 18 6-6-6-6" />
-              </svg>
+              →
             </button>
-
-            {/* image */}
 
             <div
               className="
-                flex
-                h-full
                 w-full
-                max-w-[1500px]
-                flex-col
-                justify-center
+                max-w-6xl
               "
             >
               <div
                 className="
                   relative
-                  h-[65vh]
+                  h-[70vh]
                   w-full
-                  md:h-[78vh]
                 "
               >
                 <Image
@@ -1016,9 +986,9 @@ export const InteriorSection = () => {
                     selectedPhoto.alt
                   }
                   fill
-                  sizes="100vw"
+                  quality={100}
+                  sizes="95vw"
                   className="object-contain"
-                  priority
                 />
               </div>
 
@@ -1026,7 +996,6 @@ export const InteriorSection = () => {
                 className="
                   mt-4
                   text-center
-                  text-white
                 "
               >
                 <p
@@ -1034,11 +1003,11 @@ export const InteriorSection = () => {
                     text-[11px]
                     font-semibold
                     tracking-[0.1em]
-                    text-white/50
+                    text-white/45
                   "
                 >
                   {
-                    selectedPhoto.label
+                    currentCategory.eng
                   }
                 </p>
 
@@ -1047,34 +1016,12 @@ export const InteriorSection = () => {
                     mt-1
                     text-[17px]
                     font-medium
+                    text-white
                   "
                 >
                   {
                     selectedPhoto.title
                   }
-                </p>
-
-                <p
-                  className="
-                    mt-1
-                    text-[12px]
-                    text-white/40
-                  "
-                >
-                  {String(
-                    selectedIndex +
-                      1,
-                  ).padStart(
-                    2,
-                    '0',
-                  )}{' '}
-                  /{' '}
-                  {String(
-                    photos.length,
-                  ).padStart(
-                    2,
-                    '0',
-                  )}
                 </p>
               </div>
             </div>
