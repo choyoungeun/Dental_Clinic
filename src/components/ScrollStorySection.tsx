@@ -1,23 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import {
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-
-/* =========================================================
-   SCROLL STORY
-   Mobile-stable version
-
-   핵심:
-   1. vh / svh / innerHeight 혼용 제거
-   2. sticky 실제 높이를 기준으로 스크롤 거리 계산
-   3. CSS duration 기반 전환 제거
-   4. 스크롤 진행률과 opacity / translate를 직접 연결
-   5. 모바일 브라우저 주소창 resize에 영향 최소화
-========================================================= */
+import { useEffect, useRef, useState } from 'react';
 
 const stories = [
   {
@@ -100,15 +84,7 @@ const stories = [
   },
 ];
 
-/* =========================================================
-   TEXT LINES
-========================================================= */
-
-const Lines = ({
-  lines,
-}: {
-  lines: string[];
-}) => (
+const Lines = ({ lines }: { lines: string[] }) => (
   <>
     {lines.map((line, index) => (
       <span key={line}>
@@ -124,49 +100,17 @@ const Lines = ({
   </>
 );
 
-/* =========================================================
-   HELPERS
-========================================================= */
+const clamp = (value: number) =>
+  Math.min(1, Math.max(0, value));
 
-const clamp = (
-  value: number,
-  min = 0,
-  max = 1,
-) => Math.min(max, Math.max(min, value));
+export default function ScrollStorySection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
 
-/*
-  첫 번째와 마지막 문장이 너무 빨리 사라지지 않도록
-  전체 진행률 양 끝에 약간의 hold 구간을 둡니다.
-*/
-const HOLD = 0.08;
+  const frameRef = useRef<number | null>(null);
 
-const ScrollStorySection = () => {
-  const sectionRef =
-    useRef<HTMLElement | null>(null);
-
-  const stickyRef =
-    useRef<HTMLDivElement | null>(null);
-
-  const articleRefs =
-    useRef<(HTMLElement | null)[]>([]);
-
-  const activeRef =
-    useRef(0);
-
-  const frameRef =
-    useRef<number | null>(null);
-
-  const metricsRef = useRef({
-    navHeight: 0,
-    distance: 1,
-  });
-
-  const [active, setActive] =
-    useState(0);
-
-  /* =======================================================
-     MEASURE
-  ======================================================= */
+  const activeRef = useRef(0);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -174,50 +118,76 @@ const ScrollStorySection = () => {
 
     if (!section || !sticky) return;
 
-    /*
-      body > nav 같이 DOM 위치를 강하게 가정하지 않고
-      실제 nav 요소를 찾습니다.
-    */
     const nav =
       document.querySelector<HTMLElement>('nav');
 
+    let navHeight = nav?.offsetHeight ?? 0;
+    let scrollDistance = 1;
+
     const measure = () => {
-      const navHeight =
-        nav?.offsetHeight ?? 0;
+      navHeight = nav?.offsetHeight ?? 0;
 
       section.style.setProperty(
         '--story-nav-h',
         `${navHeight}px`,
       );
 
-      /*
-        CSS로 실제 렌더된 높이를 사용합니다.
-
-        window.innerHeight를 사용하지 않기 때문에
-        Safari / Chrome 모바일 주소창 변화와
-        진행도 계산이 서로 충돌하지 않습니다.
-      */
-      const distance = Math.max(
+      scrollDistance = Math.max(
         1,
-        section.offsetHeight -
-          sticky.offsetHeight,
+        section.offsetHeight - sticky.offsetHeight,
+      );
+    };
+
+    const update = () => {
+      frameRef.current = null;
+
+      /*
+       * 문서 전체에서 section의 실제 시작 위치.
+       */
+      const sectionTop =
+        section.getBoundingClientRect().top +
+        window.scrollY;
+
+      const scrolled =
+        window.scrollY +
+        navHeight -
+        sectionTop;
+
+      const progress = clamp(
+        scrolled / scrollDistance,
       );
 
-      metricsRef.current = {
-        navHeight,
-        distance,
-      };
+      /*
+       * 중요:
+       *
+       * crossfade 하지 않는다.
+       * 화면에는 반드시 하나의 story만 표시.
+       */
+      const nextActive = Math.min(
+        stories.length - 1,
+        Math.floor(
+          progress * stories.length,
+        ),
+      );
+
+      if (
+        nextActive !== activeRef.current
+      ) {
+        activeRef.current = nextActive;
+        setActive(nextActive);
+      }
+    };
+
+    const requestUpdate = () => {
+      if (frameRef.current !== null) return;
+
+      frameRef.current =
+        requestAnimationFrame(update);
     };
 
     measure();
+    update();
 
-    /*
-      orientation change / 실제 레이아웃 변화만
-      ResizeObserver가 처리합니다.
-
-      모바일 브라우저 주소창 때문에 발생하는
-      window resize 이벤트에는 의존하지 않습니다.
-    */
     const resizeObserver =
       typeof ResizeObserver !== 'undefined'
         ? new ResizeObserver(() => {
@@ -233,225 +203,32 @@ const ScrollStorySection = () => {
       resizeObserver?.observe(nav);
     }
 
-    /*
-      prefers-reduced-motion
-    */
-    const reduceMotion =
-      window.matchMedia(
-        '(prefers-reduced-motion: reduce)',
-      );
-
-    /* =====================================================
-       SCROLL UPDATE
-    ===================================================== */
-
-    const update = () => {
-      frameRef.current = null;
-
-      const {
-        navHeight,
-        distance,
-      } = metricsRef.current;
-
-      /*
-        section의 문서상 절대 위치.
-
-        rect.top 단독값 대신 scrollY와 합쳐서 사용해
-        모바일 visual viewport 변화의 영향을 줄입니다.
-      */
-      const sectionTop =
-        section.getBoundingClientRect().top +
-        window.scrollY;
-
-      const scrolled =
-        window.scrollY +
-        navHeight -
-        sectionTop;
-
-      const rawProgress =
-        clamp(scrolled / distance);
-
-      /*
-        양 끝 hold.
-
-        첫 문구가 들어오자마자 바로 사라지거나,
-        마지막 문구가 보이는 즉시 Services로
-        넘어가는 느낌을 줄입니다.
-      */
-      const storyProgress =
-        clamp(
-          (rawProgress - HOLD) /
-            (1 - HOLD * 2),
-        );
-
-      /*
-        0 → 4 사이의 연속된 값.
-
-        예:
-        0.0  = 1번 완전 표시
-        0.5  = 1번/2번 crossfade
-        1.0  = 2번 완전 표시
-    */
-      const position =
-        storyProgress *
-        (stories.length - 1);
-
-      /*
-        reduced-motion은 단계 전환만.
-      */
-      if (reduceMotion.matches) {
-        const nearest = Math.round(position);
-
-        articleRefs.current.forEach(
-          (element, index) => {
-            if (!element) return;
-
-            const visible =
-              index === nearest;
-
-            element.style.opacity =
-              visible ? '1' : '0';
-
-            element.style.transform =
-              'translate3d(0, 0, 0)';
-
-            element.style.pointerEvents =
-              visible ? 'auto' : 'none';
-          },
-        );
-
-        if (
-          nearest !== activeRef.current
-        ) {
-          activeRef.current = nearest;
-          setActive(nearest);
-        }
-
-        return;
-      }
-
-      /*
-        각 텍스트가 스크롤 위치를 직접 따라가게 합니다.
-
-        CSS transition 시간에 의존하지 않습니다.
-      */
-      articleRefs.current.forEach(
-        (element, index) => {
-          if (!element) return;
-
-          const delta =
-            index - position;
-
-          const distanceFromStep =
-            Math.abs(delta);
-
-          /*
-            인접한 2개 step만 crossfade.
-
-            cos² easing:
-            step 중앙 = opacity 1
-            두 step 사이 = 각각 0.5
-            한 step 이상 멀면 = 0
-          */
-          const opacity =
-            distanceFromStep >= 1
-              ? 0
-              : Math.pow(
-                  Math.cos(
-                    distanceFromStep *
-                      Math.PI *
-                      0.5,
-                  ),
-                  2,
-                );
-
-          /*
-            다음 문구는 살짝 아래,
-            지난 문구는 살짝 위로 이동.
-
-            모바일에서는 이동량을 작게 유지해
-            과한 모션을 막습니다.
-          */
-          const translateY =
-            clamp(delta, -1, 1) * 18;
-
-          element.style.opacity =
-            opacity.toFixed(3);
-
-          element.style.transform =
-            `translate3d(0, ${translateY}px, 0)`;
-
-          element.style.pointerEvents =
-            distanceFromStep < 0.5
-              ? 'auto'
-              : 'none';
-        },
-      );
-
-      /*
-        indicator만 nearest step 기준.
-        React state는 단계가 실제 변경될 때만 갱신.
-      */
-      const nearest =
-        Math.round(position);
-
-      if (
-        nearest !== activeRef.current
-      ) {
-        activeRef.current = nearest;
-        setActive(nearest);
-      }
-    };
-
-    function requestUpdate() {
-      if (
-        frameRef.current !== null
-      ) {
-        return;
-      }
-
-      frameRef.current =
-        requestAnimationFrame(update);
-    }
-
-    /*
-      최초 위치 반영
-    */
-    update();
-
     window.addEventListener(
       'scroll',
       requestUpdate,
       { passive: true },
     );
 
-    /*
-      orientationchange는 주소창 resize와 달리
-      실제 화면 구조 변경이므로 다시 측정.
-    */
-    const handleOrientationChange =
-      () => {
-        window.setTimeout(() => {
-          measure();
-          requestUpdate();
-        }, 100);
-      };
+    const onOrientationChange = () => {
+      window.setTimeout(() => {
+        measure();
+        requestUpdate();
+      }, 150);
+    };
 
     window.addEventListener(
       'orientationchange',
-      handleOrientationChange,
+      onOrientationChange,
     );
 
     return () => {
-      if (
-        frameRef.current !== null
-      ) {
+      resizeObserver?.disconnect();
+
+      if (frameRef.current !== null) {
         cancelAnimationFrame(
           frameRef.current,
         );
       }
-
-      resizeObserver?.disconnect();
 
       window.removeEventListener(
         'scroll',
@@ -460,7 +237,7 @@ const ScrollStorySection = () => {
 
       window.removeEventListener(
         'orientationchange',
-        handleOrientationChange,
+        onOrientationChange,
       );
     };
   }, []);
@@ -469,15 +246,6 @@ const ScrollStorySection = () => {
     <section
       ref={sectionRef}
       aria-labelledby="scroll-story-title"
-      /*
-        모바일:
-        500vh → 450svh
-
-        주소창 변화에 영향을 덜 받고,
-        5개 문장을 읽기에 너무 길지도 짧지도 않은 거리.
-
-        Desktop은 기존 느낌을 살려 500svh.
-      */
       className="
         relative
         h-[450svh]
@@ -485,7 +253,6 @@ const ScrollStorySection = () => {
         md:h-[500svh]
       "
     >
-      {/* SEO / AEO heading */}
       <h2
         id="scroll-story-title"
         className="sr-only"
@@ -493,9 +260,6 @@ const ScrollStorySection = () => {
         수원세브란스치과 진료 과정
       </h2>
 
-      {/* ===================================================
-          STICKY VIEWPORT
-      =================================================== */}
       <div
         ref={stickyRef}
         className="
@@ -519,7 +283,6 @@ const ScrollStorySection = () => {
             object-cover
             object-[60%_center]
           "
-          priority={false}
         />
 
         {/* Overlay */}
@@ -528,13 +291,11 @@ const ScrollStorySection = () => {
             pointer-events-none
             absolute
             inset-0
-            bg-[radial-gradient(ellipse_at_center,rgba(28,31,35,0.70)_0%,rgba(28,31,35,0.56)_55%,rgba(28,31,35,0.42)_100%)]
+            bg-[radial-gradient(ellipse_at_center,rgba(28,31,35,0.72)_0%,rgba(28,31,35,0.58)_55%,rgba(28,31,35,0.44)_100%)]
           "
         />
 
-        {/* =================================================
-            STORY CONTENT
-        ================================================= */}
+        {/* Story */}
         <div
           className="
             relative
@@ -558,15 +319,13 @@ const ScrollStorySection = () => {
               md:pr-16
             "
           >
-            {stories.map(
-              (story, index) => (
+            {stories.map((story, index) => {
+              const isActive =
+                index === active;
+
+              return (
                 <article
                   key={story.eyebrow}
-                  ref={(element) => {
-                    articleRefs.current[
-                      index
-                    ] = element;
-                  }}
                   aria-labelledby={`scroll-story-step-${
                     index + 1
                   }`}
@@ -575,21 +334,41 @@ const ScrollStorySection = () => {
                     'self-center',
                     'text-center',
                     'text-white',
-                    'will-change-[opacity,transform]',
+
                     /*
-                      JS 실행 전에도
-                      첫 번째만 보이도록.
-                    */
-                    index === 0
-                      ? 'opacity-100'
-                      : 'opacity-0',
+                     * 핵심:
+                     * inactive story는 완전히 안 보이게.
+                     *
+                     * visibility를 같이 써서
+                     * opacity transition 중 글자가 겹치지 않도록 함.
+                     */
+                    isActive
+                      ? [
+                          'visible',
+                          'opacity-100',
+                          'translate-y-0',
+                          'transition-[opacity,transform]',
+                          'duration-500',
+                          'ease-out',
+                          'delay-100',
+                        ].join(' ')
+                      : [
+                          'invisible',
+                          'pointer-events-none',
+                          'opacity-0',
+                          'translate-y-4',
+                          'transition-none',
+                        ].join(' '),
+
+                    'motion-reduce:transform-none',
+                    'motion-reduce:transition-none',
                   ].join(' ')}
                 >
                   <p
                     className="
                       text-[12px]
                       font-semibold
-                      tracking-[0.08em]
+                      tracking-[0.09em]
                       text-white/70
                       sm:text-[13px]
                       md:text-[14px]
@@ -608,8 +387,8 @@ const ScrollStorySection = () => {
                       text-[28px]
                       font-bold
                       leading-[1.32]
-                      tracking-[-0.03em]
-                      sm:text-[30px]
+                      tracking-[-0.035em]
+                      sm:text-[31px]
                       md:mt-6
                       md:text-[44px]
                       lg:text-[52px]
@@ -642,9 +421,7 @@ const ScrollStorySection = () => {
                     "
                   >
                     <Lines
-                      lines={
-                        story.body
-                      }
+                      lines={story.body}
                     />
                   </p>
 
@@ -667,20 +444,16 @@ const ScrollStorySection = () => {
                     "
                   >
                     <Lines
-                      lines={
-                        story.note
-                      }
+                      lines={story.note}
                     />
                   </p>
                 </article>
-              ),
-            )}
+              );
+            })}
           </div>
         </div>
 
-        {/* =================================================
-            DESKTOP PROGRESS
-        ================================================= */}
+        {/* Desktop progress */}
         <ol
           aria-hidden="true"
           className="
@@ -696,40 +469,35 @@ const ScrollStorySection = () => {
             lg:right-12
           "
         >
-          {stories.map(
-            (story, index) => (
-              <li
-                key={story.eyebrow}
+          {stories.map((story, index) => (
+            <li
+              key={story.eyebrow}
+              className={[
+                'flex items-center justify-end gap-3',
+                'text-[13px] font-semibold',
+                'tracking-[0.04em]',
+                index === active
+                  ? 'text-white'
+                  : 'text-white/35',
+              ].join(' ')}
+            >
+              <span
                 className={[
-                  'flex items-center justify-end gap-3',
-                  'text-[13px] font-semibold tracking-[0.04em]',
-                  'transition-colors duration-300',
+                  'h-px bg-white',
                   index === active
-                    ? 'text-white'
-                    : 'text-white/35',
+                    ? 'w-6'
+                    : 'w-0',
                 ].join(' ')}
-              >
-                <span
-                  className={[
-                    'h-px bg-white',
-                    'transition-[width] duration-300',
-                    index === active
-                      ? 'w-6'
-                      : 'w-0',
-                  ].join(' ')}
-                />
+              />
 
-                {String(
-                  index + 1,
-                ).padStart(2, '0')}
-              </li>
-            ),
-          )}
+              {String(
+                index + 1,
+              ).padStart(2, '0')}
+            </li>
+          ))}
         </ol>
 
-        {/* =================================================
-            MOBILE PROGRESS
-        ================================================= */}
+        {/* Mobile progress */}
         <ol
           aria-hidden="true"
           className="
@@ -744,24 +512,19 @@ const ScrollStorySection = () => {
             md:hidden
           "
         >
-          {stories.map(
-            (story, index) => (
-              <li
-                key={story.eyebrow}
-                className={[
-                  'h-5 w-[2px]',
-                  'transition-colors duration-200',
-                  index === active
-                    ? 'bg-white'
-                    : 'bg-white/25',
-                ].join(' ')}
-              />
-            ),
-          )}
+          {stories.map((story, index) => (
+            <li
+              key={story.eyebrow}
+              className={[
+                'h-5 w-[2px]',
+                index === active
+                  ? 'bg-white'
+                  : 'bg-white/25',
+              ].join(' ')}
+            />
+          ))}
         </ol>
       </div>
     </section>
   );
-};
-
-export default ScrollStorySection;
+}
