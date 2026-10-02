@@ -664,11 +664,17 @@ const ScrollStorySection =
       resizeObserver?.observe(
         section,
       );
-
-      resizeObserver?.observe(
-        sticky,
-      );
-
+      
+      if (
+        !window.matchMedia(
+          '(max-width: 767px)',
+        ).matches
+      ) {
+        resizeObserver?.observe(
+          sticky,
+        );
+      }
+      
       if (nav) {
         resizeObserver?.observe(
           nav,
@@ -785,26 +791,28 @@ const ScrollStorySection =
           className="
             sticky
             top-[var(--story-nav-h,0px)]
+            h-[calc(100svh-var(--story-nav-h,0px))]
             overflow-hidden
+            md:h-[calc(100dvh-var(--story-nav-h,0px))]
           "
-          style={{
-            height:
-              'calc(100dvh - var(--story-nav-h, 0px))',
-          }}
         >
           {/* BACKGROUND */}
 
-          <Image
-            src="/images/test04.png"
-            alt=""
+          <div
+            className="absolute inset-0"
             aria-hidden="true"
-            fill
-            sizes="100vw"
-            className="
-              object-cover
-              object-[60%_center]
-            "
-          />
+          >
+            <Image
+              src="/images/test04.png"
+              alt=""
+              fill
+              sizes="100vw"
+              className="
+                object-cover
+                object-[60%_center]
+              "
+            />
+          </div>
 
           {/* OVERLAY */}
 
