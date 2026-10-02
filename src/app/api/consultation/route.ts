@@ -1,127 +1,308 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
-const allowedTreatments = new Set([
-  '임플란트',
-  '자연치아 보존',
-  '사랑니 · 구강외과',
-  '충치 · 보철',
-  '턱관절 · 외상치료',
-  '잇몸치료',
-  '기타 상담',
-]);
+import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
-const clean = (value: unknown, maxLength: number) =>
-  typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const treatments = [
+  "자연치아 보존",
+  "임플란트",
+  "사랑니 · 구강외과",
+  "충치 · 보철",
+  "턱관절 · 외상치료",
+  "잇몸치료",
+  "기타 상담",
+] as const;
+
+const MAX_BODY_SIZE = 10_000;
+
+/* =========================================================
+   POST /api/consultation
+========================================================= */
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    /* =====================================================
+       1. 지나치게 큰 요청 차단
+    ===================================================== */
 
-    const name = clean(body.name, 30);
-    const phone = clean(body.phone, 30);
-    const treatment = clean(body.treatment, 50);
+    const contentLength =
+      request.headers.get("content-length");
 
-    if (!name || !phone || !allowedTreatments.has(treatment)) {
+    if (
+      contentLength &&
+      Number(contentLength) > MAX_BODY_SIZE
+    ) {
       return NextResponse.json(
-        { message: '입력 내용을 다시 확인해 주세요.' },
-        { status: 400 },
+        {
+          message:
+            "요청 데이터가 너무 큽니다.",
+        },
+        {
+          status: 413,
+        },
       );
     }
 
-    const resendApiKey = process.env.RESEND_API_KEY;
-    const toEmail = process.env.CONSULTATION_TO_EMAIL;
-    const fromEmail = process.env.CONSULTATION_FROM_EMAIL;
+    /* =====================================================
+       2. JSON 읽기
+    ===================================================== */
 
-    if (!resendApiKey || !toEmail || !fromEmail) {
+    let body: unknown;
+
+    try {
+      body = await request.json();
+    } catch {
+      return NextResponse.json(
+        {
+          message:
+            "올바른 요청 형식이 아닙니다.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    if (
+      !body ||
+      typeof body !== "object"
+    ) {
+      return NextResponse.json(
+        {
+          message:
+            "입력 내용을 확인해 주세요.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const data =
+      body as Record<
+        string,
+        unknown
+      >;
+
+    /* =====================================================
+       3. 입력값 정리
+    ===================================================== */
+
+    const name =
+      typeof data.name === "string"
+        ? data.name.trim()
+        : "";
+
+    const rawPhone =
+      typeof data.phone === "string"
+        ? data.phone.trim()
+        : "";
+
+    const treatment =
+      typeof data.treatment === "string"
+        ? data.treatment.trim()
+        : "";
+
+    const privacyConsent =
+      data.privacyConsent === true;
+
+    const sensitiveConsent =
+      data.sensitiveConsent === true;
+
+    /* =====================================================
+       4. 이름 검증
+    ===================================================== */
+
+    if (
+      !name ||
+      name.length < 2 ||
+      name.length > 50
+    ) {
+      return NextResponse.json(
+        {
+          message:
+            "이름을 다시 확인해 주세요.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    /* =====================================================
+       5. 연락처 검증
+    ===================================================== */
+
+    const phoneDigits =
+      rawPhone.replace(/\D/g, "");
+
+    if (
+      phoneDigits.length < 10 ||
+      phoneDigits.length > 11
+    ) {
+      return NextResponse.json(
+        {
+          message:
+            "연락처를 다시 확인해 주세요.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const phone =
+      phoneDigits.length === 11
+        ? `${phoneDigits.slice(
+            0,
+            3,
+          )}-${phoneDigits.slice(
+            3,
+            7,
+          )}-${phoneDigits.slice(7)}`
+        : `${phoneDigits.slice(
+            0,
+            3,
+          )}-${phoneDigits.slice(
+            3,
+            6,
+          )}-${phoneDigits.slice(6)}`;
+
+    /* =====================================================
+       6. 진료 분야 검증
+    ===================================================== */
+
+    if (
+      !treatments.includes(
+        treatment as
+          (typeof treatments)[number],
+      )
+    ) {
+      return NextResponse.json(
+        {
+          message:
+            "상담 분야를 다시 선택해 주세요.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    /* =====================================================
+       7. 개인정보 동의 검증
+    ===================================================== */
+
+    if (!privacyConsent) {
+      return NextResponse.json(
+        {
+          message:
+            "개인정보 수집·이용 동의가 필요합니다.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    if (!sensitiveConsent) {
+      return NextResponse.json(
+        {
+          message:
+            "민감정보 수집·이용 동의가 필요합니다.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    /* =====================================================
+       8. SUPABASE INSERT
+    ===================================================== */
+
+    const {
+      error,
+    } =
+      await supabaseAdmin
+        .from(
+          "consultation_requests",
+        )
+        .insert({
+          name,
+          phone,
+          treatment,
+
+          privacy_consent:
+            true,
+
+          sensitive_consent:
+            true,
+
+          status:
+            "new",
+        });
+
+    /* =====================================================
+       9. DB ERROR
+    ===================================================== */
+
+    if (error) {
+      /*
+        이름 / 전화번호 / 상담내용은
+        로그에 남기지 않습니다.
+      */
+
       console.error(
-        'Consultation email environment variables are not configured.',
+        "[consultation] database insert failed:",
+        error.code,
+        error.message,
       );
 
       return NextResponse.json(
         {
           message:
-            '온라인 상담 접수 설정이 아직 완료되지 않았습니다. 병원으로 전화 문의해 주세요.',
+            "상담 신청을 접수하지 못했습니다. 잠시 후 다시 시도해 주세요.",
         },
-        { status: 503 },
+        {
+          status: 500,
+        },
       );
     }
 
-    const createdAt = new Intl.DateTimeFormat('ko-KR', {
-      timeZone: 'Asia/Seoul',
-      dateStyle: 'long',
-      timeStyle: 'short',
-    }).format(new Date());
-
-    const resendResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: fromEmail,
-        to: [toEmail],
-        subject: `[홈페이지 상담] ${name}님 - ${treatment}`,
-        text: [
-          '수원세브란스치과 홈페이지 상담 신청',
-          '',
-          `이름: ${name}`,
-          `연락처: ${phone}`,
-          `상담 진료과목: ${treatment}`,
-          `접수시간: ${createdAt}`,
-        ].join('\n'),
-        html: `
-          <div style="font-family:Arial,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;line-height:1.7;color:#071b33">
-            <h2 style="margin:0 0 20px">홈페이지 간편 상담 신청</h2>
-            <table style="border-collapse:collapse;width:100%;max-width:600px">
-              <tr>
-                <td style="padding:10px;border-bottom:1px solid #eee;color:#777;width:120px">이름</td>
-                <td style="padding:10px;border-bottom:1px solid #eee;font-weight:700">${escapeHtml(name)}</td>
-              </tr>
-              <tr>
-                <td style="padding:10px;border-bottom:1px solid #eee;color:#777">연락처</td>
-                <td style="padding:10px;border-bottom:1px solid #eee;font-weight:700">${escapeHtml(phone)}</td>
-              </tr>
-              <tr>
-                <td style="padding:10px;border-bottom:1px solid #eee;color:#777">진료과목</td>
-                <td style="padding:10px;border-bottom:1px solid #eee;font-weight:700">${escapeHtml(treatment)}</td>
-              </tr>
-              <tr>
-                <td style="padding:10px;color:#777">접수시간</td>
-                <td style="padding:10px">${escapeHtml(createdAt)}</td>
-              </tr>
-            </table>
-          </div>
-        `,
-      }),
-    });
-
-    if (!resendResponse.ok) {
-      const responseText = await resendResponse.text();
-      console.error('Resend error:', responseText);
-
-      return NextResponse.json(
-        { message: '상담 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.' },
-        { status: 502 },
-      );
-    }
-
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    console.error('Consultation API error:', error);
+    /* =====================================================
+       10. SUCCESS
+    ===================================================== */
 
     return NextResponse.json(
-      { message: '상담 접수 중 오류가 발생했습니다.' },
-      { status: 500 },
+      {
+        success: true,
+        message:
+          "상담 신청이 접수되었습니다.",
+      },
+      {
+        status: 201,
+      },
+    );
+  } catch (error) {
+    console.error(
+      "[consultation] unexpected server error",
+      error instanceof Error
+        ? error.message
+        : "unknown error",
+    );
+
+    return NextResponse.json(
+      {
+        message:
+          "잠시 후 다시 시도해 주세요.",
+      },
+      {
+        status: 500,
+      },
     );
   }
-}
-
-function escapeHtml(value: string) {
-  return value
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;');
 }

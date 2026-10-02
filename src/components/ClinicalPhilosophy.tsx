@@ -123,19 +123,7 @@ const ClinicalPhilosophy = () => {
           ))}
         </ol>
 
-        {/* Bottom statement */}
-        <Reveal
-          variant="soft"
-          delay={650}
-          className="mt-8 md:mt-12"
-        >
-          <div className="border-l-2 border-navy pl-5 md:pl-6">
-            <p className="max-w-4xl break-keep text-[18px] font-semibold leading-[1.6] tracking-[-0.02em] text-ink md:text-[20px]">
-              검사 결과와 치료 과정을 환자가 이해한 뒤
-              진료를 시작하는 것을 중요하게 생각합니다.
-            </p>
-          </div>
-        </Reveal>
+        
       </div>
     </section>
   );

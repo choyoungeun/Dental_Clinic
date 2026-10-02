@@ -152,15 +152,22 @@ const Hero = () => {
               onClick={goServices}
               className="flex h-12 min-w-[156px] items-center justify-center rounded-btn bg-white px-6 text-[15px] font-semibold text-navy transition-colors duration-200 hover:bg-fog"
             >
-              주요 진료 보기
+              주요 진료
             </button>
 
             <button
               type="button"
-              onClick={goDoctors}
+              onClick={() => {
+                document
+                  .getElementById("consultation")
+                  ?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+              }}
               className="flex h-12 min-w-[156px] items-center justify-center rounded-btn border border-white/40 px-6 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-white/10"
             >
-              대표원장 소개
+              간편상담 바로가기
             </button>
           </div>
         </Reveal>

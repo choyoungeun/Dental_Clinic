@@ -164,14 +164,12 @@ export default function CleanSafetySystem() {
               </p>
 
               <h2 className="mt-4 break-keep text-[28px] font-bold leading-[1.3] tracking-[-0.03em] text-navy md:text-[40px] lg:text-[48px]">
-                 <span>치과가 무서운 분들을 위한 배려</span>도
-                <br className="hidden md:block" />
-                진료의 한 부분이라고 생각합니다.
+                 치과가 무서운 분들을 위한 통증 최소화 마취
               </h2>
 
               <p className="mt-6 max-w-[680px] break-keep text-[17px] leading-[1.7] text-body md:text-[18px]">
-                통증과 주사에 대한 부담을 줄이기 위해 진료 상황에 따라
-                여러 방식의 마취 방법을 선택적으로 활용합니다.
+                두려움은 덜고, 치료는 더 편안하게.
+                대학병원·종합병원에서도 활용되는 마취 방식을 적용합니다.
               </p>
             </div>
           </Reveal>

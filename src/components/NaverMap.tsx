@@ -10,14 +10,16 @@ declare global {
 }
 
 /* =========================================================
-   NAVER MAP CONFIG
+   NAVER MAP CONFIG -->추후 정식 도메인 구매 후 url을 naver cloud에 등록 필요
 ========================================================= */
 
-const NAVER_CLIENT_ID = '7le58fbcf6';
+
 const NAVER_SCRIPT_ID = 'naver-maps-sdk';
+const NAVER_CLIENT_ID =
+  process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
 
 const NAVER_SCRIPT_SRC =
-  `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${NAVER_CLIENT_ID}`;
+  `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${NAVER_CLIENT_ID}`;
 
 /*
   수원세브란스치과
