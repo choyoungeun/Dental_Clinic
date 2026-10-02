@@ -36,7 +36,7 @@ const ScrollProgress = () => {
   }, []);
 
   return (
-    <div className="pointer-events-none fixed left-0 top-0 z-[120] h-[2px] w-full bg-transparent">
+    <div className="pointer-events-none fixed left-0 top-0 z-[120] hidden h-[2px] w-full bg-transparent md:block">
       <div
         ref={barRef}
         className="h-full w-full origin-left bg-gradient-to-r from-[#0b3b72] to-[#2f89fc]"

@@ -508,127 +508,92 @@ body {
 }
 
 /* =========================================================
-   MOBILE STABILITY
+   MOBILE — ALL MOTION OFF
+   ScrollStorySection 제외
 ========================================================= */
 
-@media (
-  max-width:
-    767px
-) {
-  :root {
-    /*
-      일반 Reveal 이동량을 완전히 제거.
-    */
-    --reveal-k:
-      0;
+@media (max-width: 767px) {
+
+  /*
+    모바일에서는 일반적인 CSS 애니메이션과 transition 제거.
+    ScrollStorySection은 JS가 직접 opacity / transform을
+    제어하므로 이 설정으로 동작이 사라지지 않음.
+  */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+
+    scroll-behavior: auto !important;
   }
 
   /*
-    모바일에서는 콘텐츠가 원래 위치에 그대로 있고
-    opacity만 변경된다.
+    Reveal은 처음부터 표시.
+    IntersectionObserver를 기다릴 필요 없음.
   */
   .reveal {
-    transform:
-      none;
-
-    transition:
-      opacity
-        600ms
-        ease-out
-        var(
-          --reveal-delay,
-          0ms
-        );
-
-    will-change:
-      opacity;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto !important;
   }
 
   .reveal.is-visible {
-    transform:
-      none;
-
-    will-change:
-      auto;
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   /*
-    제목만 아주 짧게 올라옴.
-    기존 105% → 28%
+    TextReveal도 처음부터 최종 위치.
   */
   .text-reveal__line {
-    transform:
-      translate3d(
-        0,
-        28%,
-        0
-      );
-
-    transition:
-      transform
-        600ms
-        var(
-          --reveal-ease
-        )
-        var(
-          --reveal-delay,
-          0ms
-        ),
-      opacity
-        500ms
-        ease-out
-        var(
-          --reveal-delay,
-          0ms
-        );
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto !important;
   }
 
   .text-reveal.is-visible
-    .text-reveal__line {
-    transform:
-      none;
+  .text-reveal__line {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   /*
-    이미지 reveal scale도 크게 줄임.
+    이미지 Reveal 제거.
   */
   .reveal-image__inner {
-    transform:
-      scale(
-        1.012
-      );
-
-    transition:
-      opacity
-        600ms
-        ease-out
-        var(
-          --reveal-delay,
-          0ms
-        ),
-      transform
-        700ms
-        var(
-          --reveal-ease
-        )
-        var(
-          --reveal-delay,
-          0ms
-        );
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto !important;
   }
 
   .reveal-image.is-visible
-    .reveal-image__inner {
-    transform:
-      none;
+  .reveal-image__inner {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   /*
-    모바일에서는 parallax transform 강제 제거.
+    모바일 parallax 완전 제거.
   */
   .reveal-image__layer {
-    translate:
-      0 0 !important;
+    translate: 0 0 !important;
+    transform: none !important;
+  }
+
+  /*
+    협력병원 marquee 자동 이동 제거.
+  */
+  .credential-marquee {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto !important;
   }
 }
 

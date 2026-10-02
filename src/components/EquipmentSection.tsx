@@ -303,27 +303,37 @@ export default function EquipmentSection() {
     ];
 
   useEffect(() => {
-    if (paused) {
+    const mobile =
+      window.matchMedia(
+        "(max-width: 767px)",
+      );  
+
+    /*
+      모바일에서는 자동 탭 전환을 사용하지 않음.
+      사용자가 직접 눌렀을 때만 변경.
+    */
+    if (
+      mobile.matches ||
+      paused
+    ) {
       return;
-    }
+    } 
 
     const timer =
       window.setInterval(
         () => {
           setActiveId(
-            (
-              current,
-            ) => {
+            (current) => {
               const index =
                 workflowItems.findIndex(
                   (item) =>
                     item.id ===
                     current,
-                );
+                );  
 
               const nextIndex =
                 (index + 1) %
-                workflowItems.length;
+                workflowItems.length; 
 
               return workflowItems[
                 nextIndex
@@ -334,12 +344,12 @@ export default function EquipmentSection() {
         AUTO_INTERVAL,
       );
 
-    return () => {
-      window.clearInterval(
-        timer,
-      );
-    };
-  }, [paused]);
+  return () => {
+    window.clearInterval(
+      timer,
+    );
+  };
+}, [paused]);
 
   const scrollSupport = (
     direction:
@@ -363,13 +373,22 @@ export default function EquipmentSection() {
         slider.clientWidth *
           0.8) +
       20;
+    const isMobile =
+    window.matchMedia(
+     "(max-width: 767px)",
+    ).matches;
 
     slider.scrollBy({
       left:
         direction === "next"
           ? distance
           : -distance,
-      behavior: "smooth",
+      behavior:
+          isMobile
+          ? "auto"
+          : "smooth",
+
+      
     });
   };
 
