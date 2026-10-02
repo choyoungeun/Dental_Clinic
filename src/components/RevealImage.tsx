@@ -1,26 +1,27 @@
 'use client';
 
-import { CSSProperties, ReactNode, useEffect, useRef } from 'react';
-import { observeOnce } from './Reveal';
+import {
+  type CSSProperties,
+  type ReactNode,
+  useEffect,
+  useRef,
+} from 'react';
 
-/* =========================================================
-   RevealImage
-   - 이미지가 들어오면 opacity + scale(1.04 → 1)
-   - hover 시 아주 느린 zoom (1.03)
-   - parallax(px)를 주면 큰 이미지에만 약한 세로 이동을 적용합니다.
-     · 화면에 보이는 동안에만 requestAnimationFrame 으로 갱신
-     · 모바일은 강도를 절반으로, reduced-motion 은 사용하지 않음
-   - 부모(className)에는 크기(높이/aspect)를 지정해 주세요. (layout shift 방지)
-   - children 은 next/image 의 `fill` 이미지를 넣으면 됩니다.
-========================================================= */
+import {
+  observeOnce,
+} from './Reveal';
 
 interface RevealImageProps {
   children: ReactNode;
   className?: string;
-  /** 세로 parallax 최대 이동량(px). 0이면 사용하지 않음 */
+
+  /*
+    Desktop parallax 이동량.
+    Mobile에서는 자동 OFF.
+  */
   parallax?: number;
+
   delay?: number;
-  /** hover zoom 비활성화 */
   noZoom?: boolean;
 }
 
@@ -31,96 +32,300 @@ const RevealImage = ({
   delay = 0,
   noZoom = false,
 }: RevealImageProps) => {
-  const frameRef = useRef<HTMLDivElement | null>(null);
-  const layerRef = useRef<HTMLDivElement | null>(null);
+  const frameRef =
+    useRef<HTMLDivElement | null>(
+      null,
+    );
 
-  /* 등장 */
+  const layerRef =
+    useRef<HTMLDivElement | null>(
+      null,
+    );
+
+  /* =======================================================
+     REVEAL
+  ======================================================= */
+
   useEffect(() => {
-    const frame = frameRef.current;
-    if (!frame) return;
+    const frame =
+      frameRef.current;
 
-    return observeOnce(frame, () => frame.classList.add('is-visible'));
+    if (!frame) {
+      return;
+    }
+
+    return observeOnce(
+      frame,
+      () =>
+        frame.classList.add(
+          'is-visible',
+        ),
+    );
   }, []);
 
-  /* parallax : 화면에 보이는 동안만 rAF */
+  /* =======================================================
+     PARALLAX
+
+     Desktop only.
+
+     모바일 Safari / Android / Kakao in-app 브라우저는
+     주소창이 열리고 닫힐 때 viewport 높이가 계속 변함.
+
+     따라서 모바일에서는 아예 사용하지 않음.
+  ======================================================= */
+
   useEffect(() => {
-    const frame = frameRef.current;
-    const layer = layerRef.current;
-    if (!parallax || !frame || !layer) return;
+    const frame =
+      frameRef.current;
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const layer =
+      layerRef.current;
 
-    const amplitude = window.matchMedia('(max-width: 767px)').matches
-      ? parallax * 0.5
-      : parallax;
+    if (
+      !parallax ||
+      !frame ||
+      !layer
+    ) {
+      return;
+    }
+
+    const reducedMotion =
+      window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      );
+
+    const mobile =
+      window.matchMedia(
+        '(max-width: 767px)',
+      );
+
+    /*
+      모바일에서는 위치를 강제로 0으로 고정.
+    */
+    if (
+      reducedMotion.matches ||
+      mobile.matches
+    ) {
+      layer.style.setProperty(
+        '--parallax-y',
+        '0px',
+      );
+
+      return;
+    }
+
+    const amplitude =
+      parallax;
 
     let raf = 0;
     let active = false;
 
     const update = () => {
       raf = 0;
-      const rect = frame.getBoundingClientRect();
-      const viewport = window.innerHeight;
-      const progress =
-        (rect.top + rect.height / 2 - viewport / 2) /
-        (viewport / 2 + rect.height / 2);
-      const clamped = Math.max(-1, Math.min(1, progress));
 
-      layer.style.setProperty('--parallax-y', `${(-clamped * amplitude).toFixed(2)}px`);
+      const rect =
+        frame.getBoundingClientRect();
+
+      /*
+        Desktop에서만 사용하므로
+        innerHeight 사용에 따른 모바일 주소창 문제 없음.
+      */
+      const viewport =
+        window.innerHeight;
+
+      const progress =
+        (
+          rect.top +
+          rect.height / 2 -
+          viewport / 2
+        ) /
+        (
+          viewport / 2 +
+          rect.height / 2
+        );
+
+      const clamped =
+        Math.max(
+          -1,
+          Math.min(
+            1,
+            progress,
+          ),
+        );
+
+      layer.style.setProperty(
+        '--parallax-y',
+        `${(
+          -clamped *
+          amplitude
+        ).toFixed(2)}px`,
+      );
     };
 
     const onScroll = () => {
-      if (!raf) raf = window.requestAnimationFrame(update);
+      if (raf) {
+        return;
+      }
+
+      raf =
+        window.requestAnimationFrame(
+          update,
+        );
     };
 
     const start = () => {
-      if (active) return;
+      if (active) {
+        return;
+      }
+
       active = true;
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll);
+
+      window.addEventListener(
+        'scroll',
+        onScroll,
+        {
+          passive: true,
+        },
+      );
+
+      window.addEventListener(
+        'resize',
+        onScroll,
+      );
+
       onScroll();
     };
 
     const stop = () => {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
+
       active = false;
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
+
+      window.removeEventListener(
+        'scroll',
+        onScroll,
+      );
+
+      window.removeEventListener(
+        'resize',
+        onScroll,
+      );
+
+      if (raf) {
+        window.cancelAnimationFrame(
+          raf,
+        );
+
+        raf = 0;
+      }
     };
 
-    const observer = new IntersectionObserver(
-      ([entry]) => (entry.isIntersecting ? start() : stop()),
-      { rootMargin: '10% 0px 10% 0px' },
+    const observer =
+      new IntersectionObserver(
+        ([entry]) => {
+          if (
+            entry.isIntersecting
+          ) {
+            start();
+          } else {
+            stop();
+          }
+        },
+        {
+          rootMargin:
+            '10% 0px 10% 0px',
+        },
+      );
+
+    observer.observe(
+      frame,
     );
 
-    observer.observe(frame);
+    const handlePageShow =
+      () => {
+        layer.style.setProperty(
+          '--parallax-y',
+          '0px',
+        );
+
+        if (active) {
+          onScroll();
+        }
+      };
+
+    window.addEventListener(
+      'pageshow',
+      handlePageShow,
+    );
 
     return () => {
       observer.disconnect();
+
       stop();
-      if (raf) window.cancelAnimationFrame(raf);
+
+      window.removeEventListener(
+        'pageshow',
+        handlePageShow,
+      );
     };
   }, [parallax]);
 
-  // absolute/fixed 로 배치할 때는 relative 를 붙이지 않습니다.
-  // `lg:sticky` 처럼 breakpoint 접두사가 붙은 클래스는 모바일에서 적용되지 않으므로 제외합니다.
-  const position = /(^|\s)(absolute|fixed|sticky)(\s|$)/.test(className) ? '' : 'relative';
+  /*
+    absolute / fixed / sticky를 직접 전달한 경우에는
+    relative를 추가하지 않음.
+  */
+  const position =
+    /(^|\s)(absolute|fixed|sticky)(\s|$)/.test(
+      className,
+    )
+      ? ''
+      : 'relative';
 
   return (
     <div
       ref={frameRef}
-      className={`reveal-image ${position} overflow-hidden ${
-        noZoom ? '' : 'reveal-image--zoom'
-      } ${className}`}
-      style={{ '--reveal-delay': `${delay}ms` } as CSSProperties}
+      className={[
+        'reveal-image',
+        position,
+        'overflow-hidden',
+        noZoom
+          ? ''
+          : 'reveal-image--zoom',
+        className,
+      ].join(' ')}
+      style={
+        {
+          '--reveal-delay':
+            `${delay}ms`,
+        } as CSSProperties
+      }
     >
-      <div className="reveal-image__inner absolute inset-0">
+      <div
+        className="
+          reveal-image__inner
+          absolute
+          inset-0
+        "
+      >
         <div
           ref={layerRef}
-          className={`reveal-image__layer absolute ${parallax ? 'inset-x-0' : 'inset-0'}`}
+          className={[
+            'reveal-image__layer',
+            'absolute',
+            parallax
+              ? 'inset-x-0'
+              : 'inset-0',
+          ].join(' ')}
           style={
             parallax
-              ? { top: -parallax, bottom: -parallax }
+              ? {
+                  top:
+                    -parallax,
+                  bottom:
+                    -parallax,
+                }
               : undefined
           }
         >
