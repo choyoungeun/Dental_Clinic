@@ -631,3 +631,32 @@ body {
       0 0 !important;
   }
 }
+
+
+/* ================================================
+   MOBILE SCROLL STABILITY
+================================================ */
+
+@media (max-width: 767px) {
+  html {
+    scroll-behavior: auto !important;
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+  }
+
+  /* 스크롤 스토리는 모바일에서 고정하지 않음 */
+  section[aria-label="수원세브란스치과 진료 철학"] {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* 이미지 크기 변경으로 인한 레이아웃 이동 방지 */
+  img {
+    max-width: 100%;
+  }
+}
