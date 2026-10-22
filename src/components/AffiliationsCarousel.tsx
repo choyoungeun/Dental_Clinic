@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -49,8 +50,6 @@ const affiliations = [
   },
 ];
 
-const loopItems = [...affiliations, ...affiliations];
-
 const AffiliationsCarousel = () => {
   return (
     <section
@@ -64,46 +63,104 @@ const AffiliationsCarousel = () => {
               <span className="rounded-full border border-[#79b6ff]/50 px-3 py-0.5 tracking-normal">
                 협력병원
               </span>
-             
             </p>
           </Reveal>
 
           <TextReveal
             delay={120}
             className="mt-1.5 text-[18px] font-semibold tracking-[-0.03em] text-white md:text-[22px]"
-            lines={['더욱 편안하고 안전한 치료를 위해 나아가겠습니다.']}
+            lines={[
+              '더욱 편안하고 안전한 치료를 위해 나아가겠습니다.',
+            ]}
           />
         </div>
-
-       
       </div>
 
       <div className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-8 bg-gradient-to-r from-[#06182e] to-transparent md:w-20" />
+
         <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-8 bg-gradient-to-l from-[#06182e] to-transparent md:w-20" />
 
-        <div className="credential-marquee flex w-max gap-3 px-3 md:gap-4 md:px-4">
-          {loopItems.map((item, index) => (
-            <article
-              key={`${item.image}-${index}`}
-              className="group flex h-[104px] w-[240px] shrink-0 items-center justify-center overflow-hidden rounded-[16px] border border-white/10 bg-white px-6 shadow-[0_10px_30px_rgba(0,0,0,0.14)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(0,0,0,0.22)] md:h-[120px] md:w-[290px] md:px-8"
+        <div className="affiliations-track flex w-max gap-3 px-3 md:gap-4 md:px-4">
+          {[0, 1].map((copyIndex) => (
+            <div
+              key={copyIndex}
+              aria-hidden={copyIndex === 1}
+              className="flex shrink-0 gap-3 md:gap-4"
             >
-              <div className="relative h-[64px] w-full overflow-hidden md:h-[76px]">
-                <Image
-                  src={item.image}
-                  alt={item.alt}
-                  fill
-                  sizes="(max-width: 768px) 200px, 240px"
-                  className="object-contain object-center transition-transform duration-300"
-                  style={{
-                    transform: `scale(${item.logoScale})`,
-                  }}
-                />
-              </div>
-            </article>
+              {affiliations.map((item, index) => (
+                <article
+                  key={`${copyIndex}-${item.image}-${index}`}
+                  className="group flex h-[104px] w-[240px] shrink-0 items-center justify-center overflow-hidden rounded-[16px] border border-white/10 bg-white px-6 shadow-[0_10px_30px_rgba(0,0,0,0.14)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_36px_rgba(0,0,0,0.22)] md:h-[120px] md:w-[290px] md:px-8"
+                >
+                  <div className="relative h-[64px] w-full overflow-hidden md:h-[76px]">
+                    <Image
+                      src={item.image}
+                      alt={copyIndex === 1 ? '' : item.alt}
+                      fill
+                      sizes="(max-width: 768px) 200px, 240px"
+                      className="object-contain object-center transition-transform duration-300"
+                      style={{
+                        transform: `scale(${item.logoScale})`,
+                      }}
+                    />
+                  </div>
+                </article>
+              ))}
+            </div>
           ))}
         </div>
       </div>
+
+      <style jsx global>{`
+        @keyframes affiliationsAutoScroll {
+          from {
+            transform: translate3d(0, 0, 0);
+          }
+
+          to {
+            transform: translate3d(
+              calc(-50% - 6px),
+              0,
+              0
+            );
+          }
+        }
+
+        .affiliations-track {
+          animation: affiliationsAutoScroll 30s linear infinite;
+          animation-play-state: running;
+          will-change: transform;
+          backface-visibility: hidden;
+        }
+
+        @media (min-width: 768px) {
+          .affiliations-track {
+            animation-duration: 30s;
+          }
+
+          .affiliations-track:hover {
+            animation-play-state: paused;
+          }
+        }
+
+        @media (max-width: 767px) {
+          .affiliations-track {
+            animation: affiliationsAutoScroll 24s linear infinite !important;
+            animation-duration: 24s !important;
+            animation-play-state: running !important;
+            will-change: transform !important;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .affiliations-track {
+            animation: none !important;
+            transform: none !important;
+            will-change: auto !important;
+          }
+        }
+      `}</style>
     </section>
   );
 };
